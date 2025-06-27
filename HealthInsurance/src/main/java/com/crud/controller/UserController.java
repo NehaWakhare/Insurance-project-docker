@@ -1,0 +1,64 @@
+package com.crud.controller;
+
+import com.crud.dto.LoginDto;
+import com.crud.entity.User;
+import com.crud.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("api/v1")
+@CrossOrigin(value = "http://localhost:3000")
+public class UserController {
+
+    @Autowired
+    private UserService service;
+
+    @PostMapping("/save")
+    public User creteUser(@RequestBody User user){
+
+        return service.createUser(user);
+    }
+
+    @GetMapping()
+    public List<User> getAllUsers(){
+        return service.getAllUsers();
+
+    }
+
+   @GetMapping("{id}")
+    public User getUserById(@PathVariable Long id){
+        return service.getUserById(id);
+    }
+
+    @PutMapping("/update/{id}")
+    public User updateUser(@PathVariable Long id, @RequestBody User user){
+        return service.updateUser(id,user);
+
+    }
+
+    @DeleteMapping("delete/{id}")
+    public String deleteUser(@PathVariable Long id){
+        service.deleteUser(id);
+        return "user deleted successfully";
+
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody LoginDto loginDto) {
+        String response = service.loginUser(loginDto.getEmail(), loginDto.getPassword());
+        return ResponseEntity.ok(response);
+    }
+
+
+
+
+
+}
+
+
+
+
