@@ -1,8 +1,12 @@
 package com.crud.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
@@ -10,7 +14,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long userId;
     private String userName;
 
     private String email;
@@ -31,8 +35,13 @@ public class User {
     @JsonBackReference
     private UserProfile userProfile;
 
-    public User(Long id, String userName, String email, String password, String role) {
-        this.id = id;
+    @JsonManagedReference
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Policy> policies = new ArrayList<>() ;
+
+
+    public User(Long userId, String userName, String email, String password, String role) {
+        this.userId = userId;
         this.userName = userName;
         this.email = email;
 
@@ -43,12 +52,20 @@ public class User {
     public User() {
     }
 
-    public Long getId() {
-        return id;
+    public List<Policy> getPolicies() {
+        return policies;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setPolicies(List<Policy> policies) {
+        this.policies = policies;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public String getUserName() {

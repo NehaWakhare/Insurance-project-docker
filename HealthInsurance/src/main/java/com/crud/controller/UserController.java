@@ -29,20 +29,21 @@ public class UserController {
 
     }
 
-   @GetMapping("{id}")
-    public User getUserById(@PathVariable Long id){
-        return service.getUserById(id);
+   @GetMapping("{userId}")
+    public User getUserById(@PathVariable Long userId){
+
+        return service.getUserById(userId);
     }
 
-    @PutMapping("/update/{id}")
-    public User updateUser(@PathVariable Long id, @RequestBody User user){
-        return service.updateUser(id,user);
+    @PutMapping("/update/{userId}")
+    public User updateUser(@PathVariable Long userId, @RequestBody User user){
+        return service.updateUser(userId,user);
 
     }
 
-    @DeleteMapping("delete/{id}")
-    public String deleteUser(@PathVariable Long id){
-        service.deleteUser(id);
+    @DeleteMapping("delete/{userId}")
+    public String deleteUser(@PathVariable Long userId){
+        service.deleteUser(userId);
         return "user deleted successfully";
 
     }
@@ -53,8 +54,7 @@ public class UserController {
 
         if (user != null) {
             // Return only selected fields
-            LoginDto responseDto = new LoginDto(user.getId(),
-                    user.getEmail(),user.getPassword(),user.getRole());
+            LoginDto responseDto = new LoginDto(user.getUserId(),user.getEmail(),user.getPassword(),user.getRole());
             return ResponseEntity.ok(responseDto);
         } else
             {    return ResponseEntity.status(401).body("Invalid credentials");}

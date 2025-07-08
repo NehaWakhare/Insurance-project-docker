@@ -52,7 +52,7 @@ public class UserProfile {
     private String aadhaarNumber;
 
     @OneToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @JoinColumn(name = "user_id", referencedColumnName = "userId")
     @JsonManagedReference
     private User user;
 
