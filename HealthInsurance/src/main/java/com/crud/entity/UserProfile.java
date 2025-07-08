@@ -1,6 +1,9 @@
 package com.crud.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 
 
 import java.time.LocalDate;
@@ -25,6 +28,7 @@ public class UserProfile {
 
     private String address;
 
+//    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate dob;
 
     private String gender;
@@ -47,7 +51,21 @@ public class UserProfile {
 
     private String aadhaarNumber;
 
+    @OneToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @JsonManagedReference
+    private User user;
+
     // Getters and Setters
+
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     public Long getId() {
         return id;

@@ -48,16 +48,19 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody LoginDto loginDto) {
-        String response = service.loginUser(loginDto.getEmail(), loginDto.getPassword());
-        return ResponseEntity.ok(response);
-    }
+    public ResponseEntity<?> login(@RequestBody LoginDto loginDto) {
+       User user = service.loginUser(loginDto.getEmail(), loginDto.getPassword());
+
+        if (user != null) {
+            // Return only selected fields
+            LoginDto responseDto = new LoginDto(user.getId(),
+                    user.getEmail(),user.getPassword(),user.getRole());
+            return ResponseEntity.ok(responseDto);
+        } else
+            {    return ResponseEntity.status(401).body("Invalid credentials");}
 
 
-
-
-
-}
+}}
 
 
 

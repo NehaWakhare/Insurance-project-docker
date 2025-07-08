@@ -11,18 +11,19 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/user-profiles")
+@CrossOrigin(value = "http://localhost:3000")
 public class UserProfileController {
     @Autowired
     private UserProfileService userProfileService;
 
-    @PostMapping("/save")
-    public UserProfile createUserProfile(@RequestBody UserProfile userProfile) {
-        return userProfileService.createUserProfile(userProfile);
+    @PostMapping("/save/{userId}")
+    public UserProfile createUserProfile(@PathVariable Long userId, @RequestBody UserProfile userProfile) {
+        return userProfileService.createProfileWithUserId(userId, userProfile);
     }
 
-    @GetMapping("/{id}")
-    public Optional<UserProfile> getUserProfileById(@PathVariable Long id) {
-        return userProfileService.getUserProfileById(id);
+    @GetMapping("/by-user/{userId}")
+    public UserProfile getByUserId(@PathVariable Long userId) {
+        return userProfileService.getProfileByUserId(userId);
     }
 
     @GetMapping
@@ -41,4 +42,18 @@ public class UserProfileController {
         return "User profile with ID " + id + " deleted successfully.";
     }
 
+    // Optional: Update by user ID
+    @PutMapping("/by-user/{userId}")
+    public UserProfile updateByUserId(@PathVariable Long userId, @RequestBody UserProfile updatedProfile) {
+        UserProfile existing = userProfileService.getProfileByUserId(userId);
+        return userProfileService.updateUserProfile(existing.getId(), updatedProfile);
+    }
+
+    //  Optional: Delete by user ID
+    @DeleteMapping("/by-user/{userId}")
+    public String deleteByUserId(@PathVariable Long userId) {
+        UserProfile existing = userProfileService.getProfileByUserId(userId);
+        userProfileService.deleteUserProfile(existing.getId());
+        return "Deleted profile of user ID: " + userId;
+    }
 }

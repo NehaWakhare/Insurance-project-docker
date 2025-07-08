@@ -1,6 +1,9 @@
 package com.crud.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 
 @Entity
 public class User {
@@ -14,12 +17,27 @@ public class User {
 
     private String password;
 
-    public User(Long id, String userName, String email, String password) {
+    private String role;
+
+    public UserProfile getUserProfile() {
+        return userProfile;
+    }
+
+    public void setUserProfile(UserProfile userProfile) {
+        this.userProfile = userProfile;
+    }
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonBackReference
+    private UserProfile userProfile;
+
+    public User(Long id, String userName, String email, String password, String role) {
         this.id = id;
         this.userName = userName;
         this.email = email;
 
         this.password = password;
+        this.role = role;
     }
 
     public User() {
@@ -56,5 +74,12 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getRole(){
+        return role;
+    }
+    public void setRole(String role){
+        this.role = role;
     }
 }

@@ -18,5 +18,5 @@ public interface UserService {
     public void deleteUser(Long id);
 
     // for login
-    String loginUser(String email, String password);
+    User loginUser(String email, String password);
 }

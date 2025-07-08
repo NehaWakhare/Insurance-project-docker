@@ -41,6 +41,7 @@ public class UserImpl implements UserService {
             user1.setUserName(user.getUserName());
             user1.setEmail(user.getEmail());
             user1.setPassword(user.getPassword());
+            user1.setRole(user.getRole());
             return repository.save(user1);
         } else {
             return null;
@@ -57,12 +58,12 @@ public class UserImpl implements UserService {
     }
 
     @Override
-    public String loginUser(String email, String password) {
+    public User loginUser(String email, String password) {
         Optional<User> user = repository.findByEmailAndPassword(email, password);
         if (user.isPresent()) {
-            return "user login successfully";
+            return user.get();
         } else {
-            return "Invalid credentials";
+            return null;
         }
 
 

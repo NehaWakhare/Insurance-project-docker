@@ -16,6 +16,9 @@ public interface UserProfileService {
 
     void deleteUserProfile(Long id);
 
+    UserProfile getProfileByUserId(Long userId);
+
+    UserProfile createProfileWithUserId(Long userId, UserProfile profile);
 
 
 }
