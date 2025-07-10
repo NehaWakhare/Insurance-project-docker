@@ -1,13 +1,32 @@
 .dashboard-card {
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  padding: 20px;
-  width: 200px;
-  background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  flex: 1;
+  min-width: 220px;
+  padding: 20px 25px;
+  border-radius: 20px;
+  color: white;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  transition: transform 0.3s ease;
+  background: linear-gradient(135deg, #667eea, #764ba2); /* default gradient */
+}
+
+.dashboard-card:hover {
+  transform: translateY(-6px);
+}
+
+.dashboard-card h4 {
+  font-size: 18px;
+  margin-bottom: 10px;
+  font-weight: 600;
 }
 
 .dashboard-card p {
-  font-size: 24px;
+  font-size: 30px;
   font-weight: bold;
+  margin: 0;
+}
+
+.dashboard-content {
+  flex-grow: 1;
+  padding: 40px;
+  margin-left: 180px; /* match sidebar width */
 }

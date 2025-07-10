@@ -1,0 +1,38 @@
+.footer-section {
+  background-color: #f9f9f9;
+  padding: 30px 20px;
+  border-radius: 12px;
+  margin: 40px auto 0;
+  max-width: 1000px;
+  text-align: center;
+  font-size: 14px;
+  line-height: 1.7;
+  color: #333;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.footer-section p {
+  margin: 10px 0;
+}
+
+.footer-section a {
+  color: #0077cc;
+  text-decoration: none;
+}
+
+.footer-section a:hover {
+  text-decoration: underline;
+}
+
+.footer-copy {
+  margin-top: 20px;
+  font-size: 13px;
+  color: #666;
+}
+
+.footer-heading {
+  font-size: 18px;
+  font-weight: bold;
+  color: #007bff;
+  margin-bottom: 16px;
+}

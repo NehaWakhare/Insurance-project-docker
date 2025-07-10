@@ -1,0 +1,26 @@
+.my-documents-container {
+  max-width: 800px;
+  margin: auto;
+  padding: 20px;
+}
+
+.upload-form {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.upload-form input, .upload-form button {
+  padding: 10px;
+}
+
+.documents-list table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.documents-list th, td {
+  padding: 10px;
+  border: 1px solid #ccc;
+}

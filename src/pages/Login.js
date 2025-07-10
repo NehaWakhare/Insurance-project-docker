@@ -3,34 +3,34 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './Login.css';
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
+import ImageSlider from '../components/ImageSlider';
 
 export default function Login() {
   const navigate = useNavigate();
-
   const [formData, setFormData] = useState({
     userName: '',
     email: '',
-    password: ''
+    password: '',
+    role: 'USER',
   });
 
   const [showPassword, setShowPassword] = useState(false);
   const [message, setMessage] = useState('');
   const [messageType, setMessageType] = useState('');
-  const [isLogin, setIsLogin] = useState(true); 
+  const [isLogin, setIsLogin] = useState(true);
 
   const handleChange = (e) => {
-    setFormData(prev => ({
-      ...prev,
-      [e.target.name]: e.target.value
-    }));
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const togglePassword = () => {
-    setShowPassword(prev => !prev);
+    setShowPassword((prev) => !prev);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
       const apiUrl = isLogin
         ? 'http://localhost:8089/api/v1/login'
@@ -40,17 +40,38 @@ export default function Login() {
         ? { email: formData.email, password: formData.password }
         : formData;
 
-      const response = await axios.post(apiUrl, payload);
+      const response = await axios.post(apiUrl, payload, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
 
-      setMessage(response.data);
-      setMessageType('success');
-      setFormData({ userName: '', email: '', password: '' });
+      console.log("Full login response:", response.data);
+
+      setFormData({ userName: '', email: '', password: '', role: 'USER' });
 
       if (isLogin) {
-        navigate('/admin/dashboard');
+        const { id, role, email } = response.data;
+
+      
+        sessionStorage.setItem('userRole', role);
+        sessionStorage.setItem('userEmail', email);
+        sessionStorage.setItem('userId', id);
+
+        console.log('User ID from login:', id);
+        console.log('Saved userId to sessionStorage:', sessionStorage.getItem('userId'));
+
+        // setMessage(`Welcome, ${userName}!`);
+        setMessageType('success');
+
+        navigate(role === 'ADMIN' ? '/admin/dashboard' : '/');
+        setTimeout(() => window.location.reload(), 100);
+      } else {
+        setMessage('Registration successful!');
+        setMessageType('success');
       }
     } catch (error) {
-      setMessage(isLogin ? 'Login failed. Please try again.' : 'Registration failed. Please try again.');
+      setMessage(isLogin ? 'Login failed.' : 'Registration failed.');
       setMessageType('error');
       console.error(error);
     }
@@ -58,28 +79,42 @@ export default function Login() {
 
   const switchMode = (mode) => {
     setIsLogin(mode === 'login');
-    setFormData({ userName: '', email: '', password: '' });
+    setFormData({ userName: '', email: '', password: '', role: 'USER' });
     setMessage('');
     setMessageType('');
   };
 
-  return (
-    <div className="login-page-wrapper">
+
+return (
+  <div className="login-page">
+    <div className="left-panel">
+      <ImageSlider />
+    </div>
+
+    <div className="right-panel">
       <form className="registration-form" onSubmit={handleSubmit}>
         <h2>{isLogin ? 'Login' : 'Register'}</h2>
 
         {!isLogin && (
-          <div className="form-group">
-            <label>Name</label>
-            <input
-              type="text"
-              name="userName"
-              placeholder="Enter your name"
-              value={formData.userName}
-              onChange={handleChange}
-              required
-            />
-          </div>
+          <>
+            <div className="form-group">
+              <label>Name</label>
+              <input
+                type="text"
+                name="userName"
+                value={formData.userName}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="form-group">
+              <label>Select Role</label>
+              <select name="role" value={formData.role} onChange={handleChange} required>
+                <option value="USER">User</option>
+                <option value="ADMIN">Admin</option>
+              </select>
+            </div>
+          </>
         )}
 
         <div className="form-group">
@@ -87,7 +122,6 @@ export default function Login() {
           <input
             type="email"
             name="email"
-            placeholder="Enter your email"
             value={formData.email}
             onChange={handleChange}
             required
@@ -100,7 +134,6 @@ export default function Login() {
             <input
               type={showPassword ? 'text' : 'password'}
               name="password"
-              placeholder={isLogin ? 'Enter password' : 'Create password'}
               value={formData.password}
               onChange={handleChange}
               required
@@ -113,11 +146,7 @@ export default function Login() {
 
         <button type="submit">{isLogin ? 'Login' : 'Create Account'}</button>
 
-        {message && (
-          <p className={`response-message ${messageType === 'error' ? 'error' : 'success'}`}>
-            {message}
-          </p>
-        )}
+        {message && <p className={`response-message ${messageType}`}>{message}</p>}
 
         <div className="footer-text">
           {isLogin ? (
@@ -138,5 +167,8 @@ export default function Login() {
         </div>
       </form>
     </div>
-  );
+  </div>
+);
 }
+
+

@@ -1,0 +1,52 @@
+.why-choose {
+  background-color: #ffffff;
+  padding: 50px 20px;
+  max-width: 1000px;
+  margin: auto;
+}
+
+.why-choose h2 {
+  text-align: center;
+  color: #0077cc;
+  margin-bottom: 40px;
+  font-size: 26px;
+}
+
+.benefits-list {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.benefit-item {
+  display: flex;
+  align-items: flex-start;
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.05);
+  transition: transform 0.2s ease;
+}
+
+.benefit-item:hover {
+  transform: translateY(-3px);
+}
+
+.benefit-icon {
+  font-size: 32px;
+  color: #007bff;
+  margin-right: 20px;
+  flex-shrink: 0;
+}
+
+.benefit-item h3 {
+  margin: 0 0 5px;
+  font-size: 18px;
+  color: #333;
+}
+
+.benefit-item p {
+  margin: 0;
+  color: #666;
+  font-size: 14px;
+}

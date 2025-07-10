@@ -1,0 +1,55 @@
+.policies-container {
+  padding: 30px;
+  max-width: 1100px;
+  margin: auto;
+}
+
+.heading {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #004080;
+}
+
+.success-message {
+  color: green;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.empty-message {
+  text-align: center;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.browse-link {
+  display: block;
+  text-align: center;
+  color: #0078d4;
+  text-decoration: underline;
+  margin-top: 10px;
+}
+
+.policy-grid {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+.policy-card {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 20px;
+  background-color: #fdfdfd;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.policy-card h3 {
+  color: #004080;
+  margin-bottom: 10px;
+}
+
+.status {
+  font-weight: bold;
+  text-transform: uppercase;
+}

@@ -1,0 +1,28 @@
+.hospital-search-container {
+  padding: 20px;
+  text-align: center;
+}
+
+.hospital-search-container input {
+  width: 60%;
+  padding: 10px;
+  margin: 15px 0;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.hospital-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.hospital-card {
+  background-color: #f1f1f1;
+  border-radius: 10px;
+  padding: 15px;
+  width: 280px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  text-align: left;
+}
