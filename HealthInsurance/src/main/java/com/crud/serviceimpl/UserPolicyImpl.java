@@ -41,8 +41,14 @@ public class UserPolicyImpl implements UserPolicyService {
     }
 
     @Override
-    public Optional<UserPolicy> getPolicyById(Long id) {
-        return userPolicyRepository.findById(id);
+    public UserPolicy getPolicyByUserId(Long userId) {
+        return userPolicyRepository.findByUserId(userId)
+                .orElseThrow(() -> new RuntimeException("Policy not found for user ID: " + userId));
+    }
+
+    @Override
+    public List<UserPolicy> getAllPoliciesByUserId(Long userId) {
+        return userPolicyRepository.findAllByUserId(userId);
     }
 
 

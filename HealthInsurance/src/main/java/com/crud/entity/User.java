@@ -36,7 +36,6 @@ public class User {
     private UserProfile userProfile;
 
 
-
     public User(Long userId, String userName, String email, String password, String role) {
         this.userId = userId;
         this.userName = userName;

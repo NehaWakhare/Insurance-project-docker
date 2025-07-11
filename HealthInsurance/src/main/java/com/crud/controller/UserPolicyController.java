@@ -32,11 +32,16 @@ public class UserPolicyController {
         return userPolicyService.purchasePolicy(request);
     }
 
-    @GetMapping("/user-policy/{id}")
-    public ResponseEntity<UserPolicy> getPolicyById(@PathVariable Long id) {
-        return userPolicyService.getPolicyById(id)
-                .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+//    @GetMapping("/get-policy/{userId}")
+//    public ResponseEntity<UserPolicy> getPolicyByUserId(@PathVariable Long userId) {
+//        UserPolicy userPolicy = userPolicyService.getPolicyByUserId(userId);
+//        return ResponseEntity.ok(userPolicy);
+//
+//    }
+    @GetMapping("/get-policies/{userId}")
+    public ResponseEntity<List<UserPolicy>> getPoliciesByUserId(@PathVariable Long userId) {
+        List<UserPolicy> policies = userPolicyService.getAllPoliciesByUserId(userId);
+        return ResponseEntity.ok(policies);
     }
 
 
