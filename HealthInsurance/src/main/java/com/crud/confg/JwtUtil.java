@@ -16,18 +16,20 @@ public class JwtUtil {
 
     public String generateToken(String email) {
         Map<String, Object> claims = new HashMap<>();
-        claims.put("role", "ROLE_USER");  // ✅ Add this!
+
+        claims.put("role", "ROLE_USER");
 
         return Jwts.builder()
                 .setClaims(claims)
                 .setSubject(email)
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60)) // 1 hour
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 2)) // 2 hour
                 .signWith(SECRET_KEY)
                 .compact();
     }
 
     public String extractEmail(String token) {
+
         return getClaims(token).getSubject();
     }
 
@@ -44,6 +46,11 @@ public class JwtUtil {
     }
 
     private boolean isTokenExpired(String token) {
+
         return getClaims(token).getExpiration().before(new Date());
     }
+
+
+
+
 }

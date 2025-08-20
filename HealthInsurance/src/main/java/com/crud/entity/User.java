@@ -1,15 +1,14 @@
 package com.crud.entity;
 
+import com.crud.enums.Role;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 
@@ -28,6 +27,10 @@ public class User {
     private String otp;
     private boolean otpVerified;
     private LocalDateTime otpGeneratedAt;
+
+    @Enumerated(EnumType.STRING)
+    private Role role;     // SUPER_ADMIN, ADMIN, USER
+
 
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)

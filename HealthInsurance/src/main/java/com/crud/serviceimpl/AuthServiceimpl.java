@@ -46,22 +46,22 @@ public class AuthServiceimpl implements AuthService {
         return "OTP sent to email";
     }
 
-    public String verifyOtp(String email, String otp) {
+    public User verifyOtp(String email, String otp) {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         // ✅ Check expiry
         if (user.getOtpGeneratedAt() == null ||
                 user.getOtpGeneratedAt().plusMinutes(5).isBefore(LocalDateTime.now())) {
-            return "OTP expired";
+            throw new RuntimeException("OTP expired");
         }
 
         if (user.getOtp().equals(otp)) {
             user.setOtpVerified(true);
             userRepository.save(user);
-            return "success";
+            return user;
         } else {
-            return "Invalid OTP";
+            throw new RuntimeException("Invalid OTP");
         }
     }
 

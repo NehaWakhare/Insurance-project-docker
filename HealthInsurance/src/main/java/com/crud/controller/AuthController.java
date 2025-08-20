@@ -3,6 +3,7 @@ package com.crud.controller;
 import com.crud.confg.JwtUtil;
 import com.crud.dto.LoginDto;
 import com.crud.dto.OtpRequest;
+import com.crud.entity.User;
 import com.crud.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -28,28 +29,33 @@ public class AuthController {
         return ResponseEntity.ok(authService.login(request.getEmail(), request.getPassword()));
     }
 
-//    @PostMapping("/verify-otp")
-//    public ResponseEntity<?> verifyOtp(@RequestBody OtpRequest request) {
-//        String jwt = authService.verifyOtp(request.getEmail(), request.getOtp());
-//        return ResponseEntity.ok(Map.of("jwt", jwt));
-//    }
-
     // Step 2: Verify OTP -> Return JWT
     @PostMapping("/verify-otp")
     public ResponseEntity<?> verifyOtp(@RequestBody OtpRequest dto) {
-        String result = authService.verifyOtp(dto.getEmail(), dto.getOtp());
+        try {
+            User user = authService.verifyOtp(dto.getEmail(), dto.getOtp());
 
-        if ("success".equals(result)) {
-            String token = jwtUtil.generateToken(dto.getEmail());
-            return ResponseEntity.ok(Map.of(
-                    "message", "Login successful ✅",
-                    "token", token
-            ));
-        } else {
-            return ResponseEntity.badRequest().body(Map.of("error", result));
+
+
+                String token = jwtUtil.generateToken(dto.getEmail());
+                return ResponseEntity.ok(Map.of(
+                        "message", "Login successful ✅",
+                        "userId", user.getUserId(),
+                        "userName", user.getUserName(),
+                        "email", user.getEmail(),
+                        "role", user.getRole().name(),
+                        "token", token
+
+                ));
+               } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
         }
+
     }
 
-}
+    }
+
+
+
 
 

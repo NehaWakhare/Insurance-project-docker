@@ -1,6 +1,7 @@
 package com.crud.serviceimpl;
 
 import com.crud.entity.User;
+import com.crud.enums.Role;
 import com.crud.repository.UserRepository;
 import com.crud.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,7 @@ public class UserImpl implements UserService {
     @Override
     public User createUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setRole(Role.USER);
 
         return repository.save(user);
     }

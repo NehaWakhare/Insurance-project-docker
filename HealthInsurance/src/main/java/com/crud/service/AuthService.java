@@ -1,10 +1,12 @@
 package com.crud.service;
 
+import com.crud.entity.User;
+
 public interface AuthService {
 
     String login(String email, String password);
 
-    String verifyOtp(String email, String otp);
+    User verifyOtp(String email, String otp);
 
 
 
