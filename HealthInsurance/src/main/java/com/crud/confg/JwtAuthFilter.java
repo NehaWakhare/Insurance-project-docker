@@ -1,5 +1,6 @@
 package com.crud.confg;
 
+import io.jsonwebtoken.Claims;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -43,10 +44,19 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
         if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             if (jwtUtil.validateToken(token, email)) {
-                // extract roles from JWT if needed
-                String role = "ROLE_USER"; // You can extract from claims if dynamic
 
-                UserDetails userDetails = new User(email, "", Collections.singleton(() -> role));
+         //       String role = "ROLE_USER"; // You can extract from claims if dynamic
+                Claims claims = jwtUtil.getAllClaims(token);
+                String role = claims.get("role", String.class);
+
+         //       UserDetails userDetails = new User(
+          //           email, "", Collections.singleton(() -> role));
+
+                UserDetails userDetails = new User(
+                        email,
+                        "",
+                        Collections.singleton(new SimpleGrantedAuthority(role))
+                );
 
                 UsernamePasswordAuthenticationToken authToken =
                         new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());

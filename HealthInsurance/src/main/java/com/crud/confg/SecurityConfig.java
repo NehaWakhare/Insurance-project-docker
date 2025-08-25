@@ -53,19 +53,20 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
             .authorizeHttpRequests(auth -> auth
                     .requestMatchers(
-                            "/api/v1/save", "/api/auth/verify-otp", "/api/auth/login").permitAll()
-//
-//                    // USER only
-//                    .requestMatchers("/user/**").hasRole("USER")
-//
-//                    // ADMIN only
-//                    .requestMatchers("/admin/**").hasRole("ADMIN")
-//
-//                    // SUPER_ADMIN only
-//                    .requestMatchers("/superadmin/**").hasRole("SUPER_ADMIN")
-//
-//                    // Any other request must be authenticated
+                            "/api/v1/save",
+                            "/api/auth/verify-otp",
+                            "/api/auth/login",
+
+                            "/api/admin/register",
+                            "/api/admin/login",
+                            "/api/admin/approve/**",
+                            "/api/admin/reject/**",
+                            "/api/admin/verify-otp",
+                            "/api/admin/pending",
+                            "/api/admin/all"
+                    ).permitAll()
                     .anyRequest().authenticated()
+
 
 
             )

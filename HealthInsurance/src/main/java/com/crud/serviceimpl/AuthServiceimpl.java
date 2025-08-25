@@ -50,7 +50,7 @@ public class AuthServiceimpl implements AuthService {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        // ✅ Check expiry
+
         if (user.getOtpGeneratedAt() == null ||
                 user.getOtpGeneratedAt().plusMinutes(5).isBefore(LocalDateTime.now())) {
             throw new RuntimeException("OTP expired");

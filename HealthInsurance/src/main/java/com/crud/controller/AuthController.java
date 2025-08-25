@@ -37,7 +37,7 @@ public class AuthController {
 
 
 
-                String token = jwtUtil.generateToken(dto.getEmail());
+                String token = jwtUtil.generateToken(dto.getEmail(), user.getRole().name());
                 return ResponseEntity.ok(Map.of(
                         "message", "Login successful ✅",
                         "userId", user.getUserId(),
