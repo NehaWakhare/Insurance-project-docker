@@ -65,6 +65,7 @@ public class SecurityConfig {
                             "/api/admin/pending",
                             "/api/admin/all"
                     ).permitAll()
+                    .requestMatchers("/api/admin/**").hasRole("SUPER_ADMIN")
                     .anyRequest().authenticated()
 
 

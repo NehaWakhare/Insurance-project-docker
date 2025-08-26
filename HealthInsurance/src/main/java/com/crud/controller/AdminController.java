@@ -3,11 +3,13 @@ package com.crud.controller;
 import com.crud.confg.JwtUtil;
 import com.crud.entity.Admin;
 import com.crud.enums.AdminStatus;
+import com.crud.enums.Role;
 import com.crud.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -24,6 +26,9 @@ public class AdminController {
 
     @Autowired
     private JwtUtil jwtUtil;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     // DTO for login
     public static class LoginRequest {
@@ -117,8 +122,17 @@ public class AdminController {
             return ResponseEntity.badRequest().body("Admin not approved by SuperAdmin");
 
         // Check password
-        if (!admin.getPassword().equals(request.getPassword())) {
+        if (!passwordEncoder.matches(request.getPassword(), admin.getPassword())) {
             return ResponseEntity.badRequest().body("Invalid password");
+        }
+
+        //  If SUPER_ADMIN, skip OTP and return JWT directly
+        if (admin.getRole() == Role.SUPER_ADMIN) {
+            String token = jwtUtil.generateToken(admin.getEmail(), admin.getRole().name());
+            return ResponseEntity.ok(Map.of(
+                    "message", "SUPER_ADMIN login successful",
+                    "token", token
+            ));
         }
 
         // Generate OTP
@@ -146,10 +160,10 @@ public class AdminController {
 
         Admin admin = optionalAdmin.get();
 
-        // Check password
-        if (!admin.getPassword().equals(request.getPassword())) {
+        if (!passwordEncoder.matches(request.getPassword(), admin.getPassword())) {
             return ResponseEntity.badRequest().body("Invalid password");
         }
+
 
         // Check OTP
         if (!request.getOtp().equals(admin.getOtp())) {
@@ -157,10 +171,9 @@ public class AdminController {
         }
 
         // Generate JWT
-        String token = jwtUtil.generateToken(admin.getEmail(), admin.getRole());
+        String token = jwtUtil.generateToken(admin.getEmail(), admin.getRole().name());
 
         // Clear OTP after successful login
-//        admin.setOtp(null);
         adminService.save(admin);
 
         Map<String, Object> response = new HashMap<>();

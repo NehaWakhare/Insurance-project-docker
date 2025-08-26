@@ -45,12 +45,10 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             if (jwtUtil.validateToken(token, email)) {
 
-         //       String role = "ROLE_USER"; // You can extract from claims if dynamic
+
                 Claims claims = jwtUtil.getAllClaims(token);
                 String role = claims.get("role", String.class);
 
-         //       UserDetails userDetails = new User(
-          //           email, "", Collections.singleton(() -> role));
 
                 UserDetails userDetails = new User(
                         email,

@@ -1,6 +1,7 @@
 package com.crud.entity;
 
 import com.crud.enums.AdminStatus;
+import com.crud.enums.Role;
 import jakarta.persistence.*;
 
 @Entity
@@ -17,7 +18,8 @@ public class Admin {
 
     private String password;
 
-    private String role = "ADMIN";  // default role
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     @Enumerated(EnumType.STRING)
     private AdminStatus status = AdminStatus.PENDING;
@@ -37,8 +39,13 @@ public class Admin {
     public String getPassword() { return password; }
     public void setPassword(String password) { this.password = password; }
 
-    public String getRole() { return role; }
-    public void setRole(String role) { this.role = role; }
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
 
     public AdminStatus getStatus() { return status; }
     public void setStatus(AdminStatus status) { this.status = status; }

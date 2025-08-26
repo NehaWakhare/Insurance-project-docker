@@ -2,8 +2,11 @@ package com.crud.serviceimpl;
 
 import com.crud.entity.Admin;
 import com.crud.enums.AdminStatus;
+import com.crud.enums.Role;
 import com.crud.repository.AdminRepository;
 import com.crud.service.AdminService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,15 +15,19 @@ import java.util.Optional;
 @Service
 public class AdminServiceImpl implements AdminService {
 
-    private final AdminRepository adminRepository;
+    @Autowired
+    private AdminRepository adminRepository;
 
-    public AdminServiceImpl(AdminRepository adminRepository) {
-        this.adminRepository = adminRepository;
-    }
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+
 
     @Override
     public Admin registerAdmin(Admin admin) {
         admin.setStatus(AdminStatus.PENDING);
+        admin.setPassword(passwordEncoder.encode(admin.getPassword()));
+        admin.setRole(Role.ADMIN);
         return adminRepository.save(admin);
     }
 

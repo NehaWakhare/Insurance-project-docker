@@ -17,10 +17,10 @@ public class JwtUtil {
     public String generateToken(String email, String role) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("role", "ROLE_" + role);
-     //   claims.put("role", "ROLE_USER");
 
         return Jwts.builder()
                 .setClaims(claims)
+           //   .claim("role", role)
                 .setSubject(email)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 2)) // 2 hour
