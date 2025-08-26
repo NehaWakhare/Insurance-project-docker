@@ -1,3 +1,4 @@
+// src/context/AuthContext.js
 import { createContext, useState } from "react";
 
 export const AuthContext = createContext();
@@ -8,15 +9,20 @@ export const AuthProvider = ({ children }) => {
     return storedUser ? JSON.parse(storedUser) : null;
   });
 
-  
-  const loginUser = (userData) => {
+  const loginUser = (data) => {
+    // Build a clean user object
+    const userData = {
+      userId: data.userId,
+      userName: data.userName,
+      role: data.role,
+      token: data.token,
+    };
+
+    // Save in localStorage and state
     localStorage.setItem("authData", JSON.stringify(userData));
     setUser(userData);
 
-    console.log("User Logged In:");
-    console.log("Username:", userData.userName);
-    console.log("Role:", userData.role);
-    console.log("Token:", userData.token);
+    console.log("User Logged In:", userData);
   };
 
   const logoutUser = () => {

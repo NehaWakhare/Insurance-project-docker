@@ -1,5 +1,5 @@
 
-import React, { useContext,useState } from 'react';
+import React, { useContext, useState } from 'react';
 import './Auth.css';
 import { register, login, verifyOtp } from '../../services/auth';
 import { useNavigate } from 'react-router-dom';
@@ -7,9 +7,9 @@ import { AuthContext } from "../../context/AuthContext";
 
 export default function AuthPage() {
   const navigate = useNavigate();
-   const { loginUser } = useContext(AuthContext);
-  const [isLogin, setIsLogin] = useState(true); // Toggle between login and register
-  const [step, setStep] = useState(1); // For OTP verification step
+  const { loginUser } = useContext(AuthContext);
+  const [isLogin, setIsLogin] = useState(true);
+  const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
     userName: '',
     email: '',
@@ -18,7 +18,7 @@ export default function AuthPage() {
   });
   const [message, setMessage] = useState('');
 
-  // Handle input changes
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -27,7 +27,7 @@ export default function AuthPage() {
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
-      await register(formData.userName,formData.email,formData.password);
+      await register(formData.userName, formData.email, formData.password);
       setMessage("Registration successful! Please login.");
       setIsLogin(true);
       setFormData({ ...formData, password: '' });
@@ -36,26 +36,35 @@ export default function AuthPage() {
     }
   };
 
-  // Login -> send OTP
+  // Login (Send OTP)
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
       await login(formData.email, formData.password);
       setMessage("OTP sent to your email.");
-      setStep(2); // move to OTP step
+      setStep(2);
     } catch (err) {
       setMessage(err.response?.data?.message || "Login failed");
     }
   };
 
-  // Verify OTP
+  // Verify OTP & Save User
   const handleVerifyOtp = async (e) => {
     e.preventDefault();
     try {
-      const data = await verifyOtp(formData.email, formData.otp);
-        console.log("Verify OTP response:", data); 
-        loginUser(data);
-        setMessage("Login successful!");
+      const res = await verifyOtp(formData.email, formData.otp);
+      console.log("Verify OTP Response:", res);
+
+      
+      const userData = {
+        userId: res?.userId,
+        userName: res?.userName,
+        role: res?.role,
+        token: res?.token
+      };
+
+      loginUser(userData);
+      setMessage("Login successful!");
       navigate("/"); 
     } catch (err) {
       setMessage(err.response?.data?.message || "Invalid OTP");

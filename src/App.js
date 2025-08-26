@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-route
 import AddPolicy from './pages/AddPolicy';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
-import AuthPage from './pages/login/AuthPage';
+import AuthPage from './pages/UserLogin/AuthPage';
 import AdminDashboard from './pages/AdminDashboard';
 import Support from './pages/Support';
 import AvailablePolicies from './pages/AvailablePolicies';

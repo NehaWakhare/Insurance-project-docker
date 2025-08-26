@@ -1,29 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './Navbar.css';
 import logo from '../assets/logo.png';
+import { AuthContext } from '../context/AuthContext';
 
 export default function Navbar() {
-  const [showExploreDropdown, setShowExploreDropdown] = useState(false);
-  const [userRole, setUserRole] = useState(sessionStorage.getItem('userRole'));
-
+  const { user, logoutUser } = useContext(AuthContext);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const handleStorageChange = () => {
-      setUserRole(sessionStorage.getItem('userRole'));
-    };
-
-    window.addEventListener("storage", handleStorageChange);
-    return () => {
-      window.removeEventListener("storage", handleStorageChange);
-    };
-  }, []);
+  const [showExplore, setShowExplore] = useState(false);
 
   const handleLogout = () => {
-    sessionStorage.clear();
-    setUserRole(null); 
-    navigate('/login');
+    logoutUser();
+    navigate('/auth');
+  };
+
+  const toggleExplore = () => {
+    setShowExplore((prev) => !prev);
   };
 
   return (
@@ -35,18 +27,14 @@ export default function Navbar() {
       <div className="nav-links">
         <Link to="/" className="nav-link">Home</Link>
 
-        {userRole === 'USER' && (
+        {user?.role === 'USER' && (
           <>
             <Link to="/dashboard/profile" className="nav-link">Dashboard</Link>
-
+            
             {/* Explore Dropdown */}
-            <div
-              className="dropdown"
-              onMouseEnter={() => setShowExploreDropdown(true)}
-              onMouseLeave={() => setShowExploreDropdown(false)}
-            >
-              <span className="nav-link">Explore</span>
-              {showExploreDropdown && (
+            <div className="dropdown">
+              <span className="nav-link" onClick={toggleExplore}>Explore ▼</span>
+              {showExplore && (
                 <div className="dropdown-menu">
                   <a href="/#hospitals" className="dropdown-item">Hospitals</a>
                   <a href="/#teleconsult" className="dropdown-item">Teleconsultation</a>
@@ -61,14 +49,14 @@ export default function Navbar() {
           </>
         )}
 
-        {userRole === 'ADMIN' && (
+        {user?.role === 'ADMIN' && (
           <>
             <Link to="/admin/dashboard" className="nav-link">Admin Dashboard</Link>
             <span className="nav-link logout" onClick={handleLogout}>Logout</span>
           </>
         )}
 
-        {!userRole && <Link to="/auth" className="nav-link">Login</Link>}
+        {!user && <Link to="/auth" className="nav-link">Login</Link>}
         <Link to="/support" className="nav-link contact">24*7 Contact</Link>
       </div>
     </nav>

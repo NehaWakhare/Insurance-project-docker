@@ -1,5 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
-import Sidebar from '../components/Sidebar'; 
+import AdminSidebar from '../components/AdminSidebar'; 
 import AdminProfile from './AdminProfile';
 import AddPolicy from './AddPolicy';
 import ViewPolicies from './ViewPolicies';
@@ -9,7 +9,7 @@ import './AdminDashboard.css';
 export default function AdminDashboard() {
   return (
     <div className="admin-dashboard">
-      <Sidebar />
+      <AdminSidebar />
       <div className="dashboard-content">
         <Routes>
           {/* Default dashboard landing */}
