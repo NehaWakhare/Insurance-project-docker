@@ -15,19 +15,19 @@ public class AppointmentController {
     @Autowired
     private AppointmentService appointmentService;
 
-    // ✅ Book a new appointment (date + time)
+    //  Book a new appointment (date + time)
     @PostMapping("/book")
     public Appointment bookAppointment(@RequestBody AppointmentRequest request) {
         return appointmentService.bookAppointment(request);
     }
 
-    // ✅ Get all appointments for a doctor
+    //  Get all appointments for a doctor
     @GetMapping("/doctor/{doctorId}")
     public List<Appointment> getAppointmentsByDoctor(@PathVariable Long doctorId) {
         return appointmentService.getAppointmentsByDoctorId(doctorId);
     }
 
-    // ✅ Get all appointments for a user
+    //  Get all appointments for a user
     @GetMapping("/user/{userProfileId}")
     public List<Appointment> getAppointmentsByUser(@PathVariable Long userProfileId) {
         return appointmentService.getAppointmentsByUserProfileId(userProfileId);

@@ -40,11 +40,6 @@ public class DoctorController {
         return doctorService.getDoctorById(id);
     }
 
-//    @GetMapping
-//    public List<Doctor> getAllDoctors() {
-//        return doctorService.getAllDoctors();
-//    }
-
     @PutMapping("/{id}")
     public Doctor updateDoctor(@PathVariable Long id, @RequestBody Doctor doctor) {
         return doctorService.updateDoctor(id, doctor);
