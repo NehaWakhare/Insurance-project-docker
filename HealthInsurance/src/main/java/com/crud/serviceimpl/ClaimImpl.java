@@ -22,10 +22,13 @@ public class ClaimImpl implements ClaimService {
     @Override
     public Claim addClaim(Claim claim) {
         Long userId = claim.getUser().getUserId();
-        userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
-
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        claim.setUser(user);
         return claimRepo.save(claim);
+
     }
+    
 
     @Override
     public List<Claim> getClaimsByUserId(Long userId) {
@@ -34,3 +37,4 @@ public class ClaimImpl implements ClaimService {
 
 
 }
+
