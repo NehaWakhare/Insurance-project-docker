@@ -14,9 +14,7 @@ import UserDashboard from './pages/UserDashboard';
 import Footer from './components/Footer'; 
 import Claims from './pages/Claims';
 import { AuthProvider } from './context/AuthContext';
-
-import SuperAdminLogin from './pages/SuperAdmin/SuperAdminLogin';
-import SuperAdminDashboard from './pages/SuperAdmin/SuperAdminDashboard';
+import AdminRegister from './pages/Admin/AdminRegister';
 
 function App() {
   const location = useLocation();
@@ -53,10 +51,9 @@ function App() {
         <Route path="/admin/users" element={<AdminUsers />} />
         <Route path="/support" element={<Support />} />
         <Route path="/claims" element={<Claims />} />
-        
-        {/* SuperAdmin routes */}
-        <Route path="/superadmin/login" element={<SuperAdminLogin />} />
-        <Route path="/superadmin/dashboard/*" element={<SuperAdminDashboard />} />
+
+           <Route path="/Admin/AdminRegister" element={<AdminRegister />} />
+
       </Routes>
       
       {!shouldHideFooter && <Footer />}

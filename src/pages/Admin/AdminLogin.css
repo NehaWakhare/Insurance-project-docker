@@ -1,0 +1,54 @@
+.auth-page {
+  background-image: url('../../assets/AdminLogin.png'); 
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.auth-form {
+  background: rgba(255, 255, 255, 0.85);
+  padding: 40px;
+  border-radius: 12px;
+  max-width: 400px;
+  width: 100%;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+  text-align: center;
+}
+
+.auth-form h2 {
+  margin-bottom: 24px;
+  font-size: 28px;
+  color: #333;
+}
+
+.auth-form input {
+  width: 100%;
+  padding: 10px 12px;
+  margin-bottom: 16px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.auth-form button {
+  width: 100%;
+  padding: 12px;
+  background-color: #1976d2;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.auth-form button:hover {
+  background-color: #115293;
+}
+
+.auth-message {
+  margin-top: 12px;
+  color: #1976d2;
+}
