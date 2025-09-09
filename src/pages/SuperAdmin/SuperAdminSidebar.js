@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { 
   LayoutDashboard, 
   Users, 
@@ -11,16 +11,24 @@ import {
 } from "lucide-react"; 
 
 export default function SuperAdminSidebar() {
+  const navigate = useNavigate();
+
   const menuItems = [
     { name: "Dashboard", path: "/superadmin/dashboard", icon: <LayoutDashboard size={18} /> },
     { name: "Users", path: "/superadmin/dashboard/users", icon: <Users size={18} /> },
-    { name: "Admins", path: "/superadmin/dashboard/admins", icon: <Shield size={18} /> },
     { name: "Doctors", path: "/superadmin/dashboard/doctors", icon: <Stethoscope size={18} /> },
     { name: "Policies", path: "/superadmin/dashboard/policies", icon: <FileText size={18} /> },
     { name: "Claims", path: "/superadmin/dashboard/claims", icon: <FileText size={18} /> },
     { name: "Approvals", path: "/superadmin/dashboard/approvals", icon: <CheckCircle size={18} /> },
-    { name: "Logout", path: "/superadmin/logout", icon: <LogOut size={18} /> },
+    { name: "Admin List", path: "/superadmin/dashboard/admins", icon: <Users size={18} /> },
+
   ];
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("role");
+    navigate("/superadmin/login");
+  };
 
   return (
     <div style={styles.sidebar}>
@@ -40,6 +48,15 @@ export default function SuperAdminSidebar() {
             {item.name}
           </NavLink>
         ))}
+        <button
+          onClick={handleLogout}
+          style={styles.logoutBtn}
+          onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#2563eb")}
+          onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "transparent")}
+        >
+          <span style={styles.icon}><LogOut size={18} /></span>
+          Logout
+        </button>
       </nav>
     </div>
   );
@@ -53,7 +70,6 @@ const styles = {
     padding: "20px 10px",
     display: "flex",
     flexDirection: "column",
-    minHeight: "100vh",
   },
   logo: {
     fontSize: "20px",
@@ -75,6 +91,21 @@ const styles = {
     textDecoration: "none",
     fontSize: "15px",
     transition: "0.3s",
+    color: "#333",
+  },
+  logoutBtn: {
+    display: "flex",
+    alignItems: "center",
+    padding: "10px 15px",
+    borderRadius: "8px",
+    textDecoration: "none",
+    fontSize: "15px",
+    cursor: "pointer",
+    backgroundColor: "transparent",
+    border: "none",
+    color: "#333",
+    transition: "0.3s",
+    textAlign: "left",
   },
   icon: {
     marginRight: "10px",

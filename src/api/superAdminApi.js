@@ -1,10 +1,8 @@
-// src/api/superAdminApi.js
+const API_BASE_URL = "http://localhost:8089/api"; //  Base URL for backend
 
-const API_BASE_URL = " http://localhost:8089/api/admin/login"; // your backend base URL
-
-// 🔹 Super Admin login API
+// Super Admin login
 export async function superAdminLogin(email, password) {
-  const response = await fetch("http://localhost:8089/api/admin/login", {
+  const response = await fetch(`${API_BASE_URL}/admin/login`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email, password }),
@@ -14,21 +12,57 @@ export async function superAdminLogin(email, password) {
     throw new Error("Invalid super admin credentials");
   }
 
-  return response.json(); // returns { token, role }
+  return response.json(); // token, role
 }
 
-// 🔹 Example: Get all pending approvals (optional for later use)
-export async function getPendingApprovals() {
-  const token = localStorage.getItem("token");
-  const response = await fetch(`${API_BASE_URL}/superadmin/approvals`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
+// Get all admins
+export async function fetchAllAdmins() {
+  const response = await fetch(`${API_BASE_URL}/admin/all`, {
+    method: "GET",
   });
 
   if (!response.ok) {
-    throw new Error("Failed to fetch approvals");
+    throw new Error("Failed to fetch admin list");
   }
 
   return response.json();
+}
+
+// Get pending admins
+export async function fetchPendingAdmins() {
+  const response = await fetch(`${API_BASE_URL}/admin/pending`, {
+    method: "GET",
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch pending admins");
+  }
+
+  return response.json();
+}
+
+// Approve admin
+export async function approveAdmin(id) {
+  const response = await fetch(`${API_BASE_URL}/admin/approve/${id}`, {
+    method: "PUT",
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to approve admin");
+  }
+
+  return response.text();
+}
+
+// Reject admin
+export async function rejectAdmin(id) {
+  const response = await fetch(`${API_BASE_URL}/admin/reject/${id}`, {
+    method: "PUT",
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to reject admin");
+  }
+
+  return response.text();
 }

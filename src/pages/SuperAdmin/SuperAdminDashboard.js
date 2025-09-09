@@ -1,61 +1,40 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import SuperAdminSidebar from "./SuperAdminSidebar";
-import SuperAdminNavbar from "./SuperAdminNavbar";
-
-
-// Example placeholder pages (you can replace with your real pages)
-function DashboardHome() {
-  return <h2>📊 Super Admin Dashboard Overview</h2>;
-}
-function UsersPage() {
-  return <h2>👥 Manage Users</h2>;
-}
-function AdminsPage() {
-  return <h2>🛡 Manage Admins</h2>;
-}
-function DoctorsPage() {
-  return <h2>⚕ Manage Doctors</h2>;
-}
-function PoliciesPage() {
-  return <h2>📄 Manage Policies</h2>;
-}
-function ClaimsPage() {
-  return <h2>💰 Manage Claims</h2>;
-}
-function ApprovalsPage() {
-  return <h2>✅ Approvals</h2>;
-}
-function LogoutPage() {
-  return <h2>🚪 You have been logged out</h2>;
-}
-
+import AdminApproval from "./AdminApproval"; 
+import AdminList from "./AdminList"; 
 export default function SuperAdminDashboard() {
   return (
-    <div style={{ display: "flex", height: "100vh" }}>
+    <div style={styles.layout}>
       {/* Sidebar */}
       <SuperAdminSidebar />
 
-      {/* Main Area */}
-      <div style={{ flex: 1, display: "flex", flexDirection: "column" }}>
-        
-        {/* Navbar */}
-        <SuperAdminNavbar />
-
-        {/* Page Content */}
-        <div style={{ flex: 1, padding: "20px", backgroundColor: "#f9fafb" }}>
-          <Routes>
-            <Route path="/dashboard" element={<DashboardHome />} />
-            <Route path="/dashboard/users" element={<UsersPage />} />
-            <Route path="/dashboard/admins" element={<AdminsPage />} />
-            <Route path="/dashboard/doctors" element={<DoctorsPage />} />
-            <Route path="/dashboard/policies" element={<PoliciesPage />} />
-            <Route path="/dashboard/claims" element={<ClaimsPage />} />
-            <Route path="/dashboard/approvals" element={<ApprovalsPage />} />
-            <Route path="/dashboard/logout" element={<LogoutPage />} />
-          </Routes>
-        </div>
+      {/* Main Content */}
+      <div style={styles.content}>
+        <Routes>
+          <Route path="/" element={<h2>Welcome, Super Admin!</h2>} />
+          <Route path="users" element={<h2>Manage Users (Coming Soon)</h2>} />
+          <Route path="doctors" element={<h2>Manage Doctors (Coming Soon)</h2>} />
+          <Route path="policies" element={<h2>Manage Policies (Coming Soon)</h2>} />
+          <Route path="claims" element={<h2>Manage Claims (Coming Soon)</h2>} />
+          <Route path="approvals" element={<AdminApproval />} />
+           <Route path="admins" element={<AdminList />} />
+          <Route path="logout" element={<h2>Logout Page (Coming Soon)</h2>} />
+          <Route path="/superadmin/dashboard/admin-list" element={<AdminList />} />
+        </Routes>
       </div>
     </div>
   );
 }
+
+const styles = {
+  layout: {
+    display: "flex",
+    minHeight: "100vh",
+  },
+  content: {
+    flex: 1,
+    padding: "20px",
+    background: "#f4f6f8",
+  },
+};
