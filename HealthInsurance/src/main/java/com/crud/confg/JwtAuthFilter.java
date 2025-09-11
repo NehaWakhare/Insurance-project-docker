@@ -35,19 +35,24 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             token = authHeader.substring(7);
         }
 
-        if (token != null && jwtUtil.validateToken(token)) {
-            //  No claims anymore, so just set a dummy user
-            UserDetails userDetails = new User(
-                    "dummyUser",
-                    "",
-                    Collections.singleton(new SimpleGrantedAuthority("ROLE_USER"))
-            );
+        if (token != null) {
+            //  Extract email mapped to this token
+            String email = jwtUtil.extractEmail(token);
 
-            UsernamePasswordAuthenticationToken authToken =
-                    new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-            authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+            if (email != null && jwtUtil.validateToken(token, email)) {
+                //  Assign ROLE_USER (or you can map from DB later)
+                UserDetails userDetails = new User(
+                        email,
+                        "",
+                        Collections.singleton(new SimpleGrantedAuthority("ROLE_USER"))
+                );
 
-            SecurityContextHolder.getContext().setAuthentication(authToken);
+                UsernamePasswordAuthenticationToken authToken =
+                        new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+                authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+
+                SecurityContextHolder.getContext().setAuthentication(authToken);
+            }
         }
 
         filterChain.doFilter(request, response);

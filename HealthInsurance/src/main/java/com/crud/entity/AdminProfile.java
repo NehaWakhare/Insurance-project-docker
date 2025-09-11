@@ -18,7 +18,6 @@ public class AdminProfile {
 
     // Extra Info
     private LocalDate dateOfBirth;
-
     private String companyName;
     private String companyType;
     private String PanNumber;
@@ -28,9 +27,6 @@ public class AdminProfile {
     private String country;
     private String pinCode;
     private String gstNumber;
-
-
-
 
     // Mapping back to Admin
     @OneToOne
