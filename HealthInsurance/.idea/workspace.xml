@@ -5,49 +5,91 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1ed3426d-9ef3-4dbe-b4d0-f095b501458a" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/crud/repository/PolicyRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/crud/repository/PolicyRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/crud/controller/AdminController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/crud/repository/PolicyRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/crud/repository/PolicyRepository.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/crud/controller/AdminPolicyController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/crud/dto/AdminResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/crud/dto/PolicyPlanRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/crud/dto/PolicyPlanResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/crud/dto/UserPolicyResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/crud/dto/AdminResponse.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/crud/dto/PolicyPlanRequest.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/crud/dto/PolicyPlanResponse$AdminResponse.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/crud/dto/PolicyPlanResponse.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/crud/dto/UserPolicyResponse.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/crud/repository/PolicyPlanRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/crud/controller/AdminpolicyController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/crud/controller/ClaimController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/crud/controller/ClaimController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/crud/controller/UserPolicyController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/crud/controller/UserPolicyController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/crud/entity/Admin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/crud/entity/Admin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/crud/entity/AdminProfile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/crud/entity/AdminProfile.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/crud/entity/PolicyPlan.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/crud/entity/PolicyPlan.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/crud/entity/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/crud/entity/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/crud/entity/UserPolicy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/crud/entity/UserPolicy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/crud/entity/UserProfile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/crud/entity/UserProfile.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/crud/repository/PolicyRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/crud/repository/PolicyPlanRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/crud/service/PolicyPlanservice.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/crud/service/PolicyPlanservice.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/crud/serviceimpl/PolicyPlanImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/crud/serviceimpl/PolicyPlanImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/crud/serviceimpl/UserPolicyImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/crud/serviceimpl/UserPolicyImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/crud/controller/AdminpolicyController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/crud/controller/AdminpolicyController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/crud/controller/ClaimController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/crud/controller/ClaimController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/crud/controller/UserPolicyController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/crud/controller/UserPolicyController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/crud/entity/Admin.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/crud/entity/Admin.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/crud/entity/AdminProfile.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/crud/entity/AdminProfile.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/crud/entity/PolicyPlan.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/crud/entity/PolicyPlan.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/crud/entity/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/crud/entity/User.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/crud/entity/UserPolicy$UserPolicyBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/crud/entity/UserPolicy.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/crud/entity/UserPolicy.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/crud/entity/UserProfile.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/crud/entity/UserProfile.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/crud/repository/PolicyRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/crud/service/PolicyPlanservice.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/crud/service/PolicyPlanservice.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/crud/serviceimpl/PolicyPlanImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/crud/serviceimpl/PolicyPlanImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/crud/serviceimpl/UserPolicyImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/crud/serviceimpl/UserPolicyImpl.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "samiksha9911"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;samiksha9911&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/Suyog-Ghadage/InsuranceProject.git",
-    "accountId": "c05cac84-d14d-473e-b6be-4b6cf2cde8a4"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Suyog-Ghadage/InsuranceProject.git&quot;,
+    &quot;accountId&quot;: &quot;67f81788-7749-49c5-96a5-260f8b9eb68e&quot;
   }
-}]]></component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 7
-}]]></component>
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
   <component name="ProjectId" id="30UwOceSgs902O09Vq9Nl1QCKfH" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.CrudOperationApplication.executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "BackEnd",
-    "last_opened_file_path": "D:/InsuranceProject/HealthInsurance"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.CrudOperationApplication.executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;BackEnd&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/HealthInsuranceProject/JwtInsurancecopy (1)/JwtInsuranceIMP/HealthInsurance&quot;
   }
-}]]></component>
+}</component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="1ed3426d-9ef3-4dbe-b4d0-f095b501458a" name="Changes" comment="" />

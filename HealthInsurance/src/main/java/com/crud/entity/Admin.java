@@ -5,9 +5,13 @@ import com.crud.enums.Role;
 import jakarta.persistence.*;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "admins")
 public class Admin {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -32,13 +36,17 @@ public class Admin {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String otp; // temporary OTP for login
 
-
-    // ✅ One-to-One Mapping with AdminProfile
+    //  One-to-One Mapping with AdminProfile
     @OneToOne(mappedBy = "admin", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private AdminProfile profile;
 
+    //  One-to-Many Mapping with PolicyPlan
+    @OneToMany(mappedBy = "admin", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PolicyPlan> policyPlans = new ArrayList<>();
 
-    // Getters and Setters
+
+    // ================= Getters & Setters =================
+
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -62,4 +70,15 @@ public class Admin {
 
     public String getOtp() { return otp; }
     public void setOtp(String otp) { this.otp = otp; }
+
+    public AdminProfile getProfile() { return profile; }
+    public void setProfile(AdminProfile profile) {
+        this.profile = profile;
+        if (profile != null) {
+            profile.setAdmin(this); // ✅ Ensure both sides linked
+        }
+    }
+
+    public List<PolicyPlan> getPolicyPlans() { return policyPlans; }
+    public void setPolicyPlans(List<PolicyPlan> policyPlans) { this.policyPlans = policyPlans; }
 }

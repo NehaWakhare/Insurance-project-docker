@@ -31,8 +31,6 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Role role;     // SUPER_ADMIN, ADMIN, USER
 
-
-
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     @JsonInclude(JsonInclude.Include.NON_EMPTY)

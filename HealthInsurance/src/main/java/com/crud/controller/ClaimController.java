@@ -22,7 +22,6 @@ public class ClaimController {
                 return ResponseEntity.ok(savedClaim);
     }
 
-
     @GetMapping("/user/{userId}")
     public ResponseEntity<List<Claim>> getClaimsByUserId(@PathVariable Long userId) {
         List<Claim> claims = claimService.getClaimsByUserId(userId);

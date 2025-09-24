@@ -20,7 +20,7 @@ public class AdminProfile {
     private LocalDate dateOfBirth;
     private String companyName;
     private String companyType;
-    private String PanNumber;
+    private String panNumber;
     private String headOfficeAddress;
     private String city;
     private String state;
@@ -28,31 +28,22 @@ public class AdminProfile {
     private String pinCode;
     private String gstNumber;
 
-    // Mapping back to Admin
+    //  Mapping back to Admin
     @OneToOne
     @JoinColumn(name = "admin_id", referencedColumnName = "id")
     private Admin admin;
 
     public AdminProfile() {}
 
+    // ================= Getters & Setters =================
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
-    public String getGstNumber() {
-        return gstNumber;
-    }
+    public String getGstNumber() { return gstNumber; }
+    public void setGstNumber(String gstNumber) { this.gstNumber = gstNumber; }
 
-    public void setGstNumber(String gstNumber) {
-        this.gstNumber = gstNumber;
-    }
-
-    public String getPanNumber() {
-        return PanNumber;
-    }
-
-    public void setPanNumber(String panNumber) {
-        PanNumber = panNumber;
-    }
+    public String getPanNumber() { return panNumber; }
+    public void setPanNumber(String panNumber) { this.panNumber = panNumber; }
 
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
@@ -89,4 +80,7 @@ public class AdminProfile {
 
     public String getPinCode() { return pinCode; }
     public void setPinCode(String pinCode) { this.pinCode = pinCode; }
+
+    public Admin getAdmin() { return admin; }
+    public void setAdmin(Admin admin) { this.admin = admin; }
 }

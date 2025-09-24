@@ -2,47 +2,41 @@ package com.crud.serviceimpl;
 
 import com.crud.dto.PurchaseRequest;
 import com.crud.entity.PolicyPlan;
-import com.crud.entity.User;
 import com.crud.entity.UserPolicy;
-import com.crud.repository.PolicyRepository;
+import com.crud.repository.PolicyPlanRepository;
 import com.crud.repository.UserPolicyRepository;
 import com.crud.service.UserPolicyService;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserPolicyImpl implements UserPolicyService {
 
     @Autowired
-    private PolicyRepository planRepository;
+    private PolicyPlanRepository policyPlanRepository;
 
     @Autowired
     private UserPolicyRepository userPolicyRepository;
 
     @Override
     public UserPolicy purchasePolicy(PurchaseRequest request) {
-        PolicyPlan plan = planRepository.findById(request.getPolicyId())
+        PolicyPlan plan = policyPlanRepository.findById(request.getPolicyId())
                 .orElseThrow(() -> new RuntimeException("Policy Plan not found"));
 
-        UserPolicy userPolicy = UserPolicy.builder()
-                .userId(request.getUserId())
-                .policyPlan(plan)
-                .startDate(LocalDate.now())
-                .endDate(LocalDate.now().plusYears(plan.getDurationInYears()))
-                .policyStatus("ACTIVE")
-                .nominee(request.getNominee())
-                .nomineeRelation(request.getNomineeRelation())
-                .build();
+        // Create UserPolicy manually without builder
+        UserPolicy userPolicy = new UserPolicy();
+        userPolicy.setUserId(request.getUserId());
+        userPolicy.setPolicyPlan(plan);
+        userPolicy.setStartDate(LocalDate.now());
+        userPolicy.setEndDate(LocalDate.now().plusYears(plan.getDurationInYears()));
+        userPolicy.setPolicyStatus("ACTIVE");
+        userPolicy.setNominee(request.getNominee());
+        userPolicy.setNomineeRelation(request.getNomineeRelation());
 
-              return userPolicyRepository.save(userPolicy);
-
-
-
+        return userPolicyRepository.save(userPolicy);
     }
 
     @Override
@@ -55,6 +49,4 @@ public class UserPolicyImpl implements UserPolicyService {
     public List<UserPolicy> getAllPoliciesByUserId(Long userId) {
         return userPolicyRepository.findAllByUserId(userId);
     }
-
-
 }

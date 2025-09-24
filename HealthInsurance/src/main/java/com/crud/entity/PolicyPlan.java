@@ -3,66 +3,42 @@ package com.crud.entity;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "policy_plans")
 public class PolicyPlan {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long policyId;
+    private Long id;
 
-    private String planName;
-    private Double coverageAmount;
+    private String policyName;
+    private String policyType;
+    private Double coverage;
     private Double premium;
-    private Integer durationInYears; // used to calculate endDate
+    private Integer durationInYears;
 
-    public PolicyPlan(Long policyId, String planName, Double coverageAmount, Double premium, Integer durationInYears) {
-        this.policyId = policyId;
-        this.planName = planName;
-        this.coverageAmount = coverageAmount;
-        this.premium = premium;
-        this.durationInYears = durationInYears;
-    }
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "admin_id")
+    private Admin admin;
 
-    public PolicyPlan(){
+    // ===== Getters & Setters =====
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    }
+    public String getPolicyName() { return policyName; }
+    public void setPolicyName(String policyName) { this.policyName = policyName; }
 
-    public Long getPolicyId() {
-        return policyId;
-    }
+    public String getPolicyType() { return policyType; }
+    public void setPolicyType(String policyType) { this.policyType = policyType; }
 
-    public void setPolicyId(Long policyId) {
-        this.policyId = policyId;
-    }
+    public Double getCoverage() { return coverage; }
+    public void setCoverage(Double coverage) { this.coverage = coverage; }
 
-    public String getPlanName() {
-        return planName;
-    }
+    public Double getPremium() { return premium; }
+    public void setPremium(Double premium) { this.premium = premium; }
 
-    public void setPlanName(String planName) {
-        this.planName = planName;
-    }
+    public Integer getDurationInYears() { return durationInYears; }
+    public void setDurationInYears(Integer durationInYears) { this.durationInYears = durationInYears; }
 
-    public Double getCoverageAmount() {
-        return coverageAmount;
-    }
-
-    public void setCoverageAmount(Double coverageAmount) {
-        this.coverageAmount = coverageAmount;
-    }
-
-    public Double getPremium() {
-        return premium;
-    }
-
-    public void setPremium(Double premium) {
-        this.premium = premium;
-    }
-
-    public Integer getDurationInYears() {
-        return durationInYears;
-    }
-
-    public void setDurationInYears(Integer durationInYears) {
-        this.durationInYears = durationInYears;
-    }
+    public Admin getAdmin() { return admin; }
+    public void setAdmin(Admin admin) { this.admin = admin; }
 }
