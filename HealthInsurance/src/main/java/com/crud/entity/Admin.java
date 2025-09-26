@@ -2,6 +2,7 @@ package com.crud.entity;
 
 import com.crud.enums.AdminStatus;
 import com.crud.enums.Role;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -38,6 +39,7 @@ public class Admin {
 
     //  One-to-One Mapping with AdminProfile
     @OneToOne(mappedBy = "admin", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @JsonManagedReference
     private AdminProfile profile;
 
     //  One-to-Many Mapping with PolicyPlan

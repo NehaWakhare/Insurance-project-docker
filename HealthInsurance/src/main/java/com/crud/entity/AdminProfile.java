@@ -1,5 +1,6 @@
 package com.crud.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 
@@ -31,6 +32,7 @@ public class AdminProfile {
     //  Mapping back to Admin
     @OneToOne
     @JoinColumn(name = "admin_id", referencedColumnName = "id")
+    @JsonBackReference
     private Admin admin;
 
     public AdminProfile() {}

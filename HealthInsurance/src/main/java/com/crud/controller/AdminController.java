@@ -164,6 +164,8 @@ public class AdminController {
         response.put("token", token);
         response.put("email", admin.getEmail());
         response.put("role", admin.getRole());
+        response.put("id", admin.getId());            // ✅ add admin id
+        response.put("username", admin.getUsername());
 
         return ResponseEntity.ok(response);
     }

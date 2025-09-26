@@ -1,7 +1,9 @@
 package com.crud.serviceimpl;
 
+import com.crud.entity.Admin;
 import com.crud.entity.AdminProfile;
 import com.crud.repository.AdminProfileRepository;
+import com.crud.repository.AdminRepository;
 import com.crud.service.AdminProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,9 +16,20 @@ public class AdminProfileServiceImpl implements AdminProfileService {
     @Autowired
     private AdminProfileRepository adminRepository;
 
+    @Autowired
+    private AdminRepository adminService; // for fetching full Admin object
+
     @Override
-    public AdminProfile createAdmin(AdminProfile admin) {
-        return adminRepository.save(admin);
+    public AdminProfile createAdmin(AdminProfile adminProfile) {
+        // If admin object with id is provided, fetch full Admin from DB
+        if (adminProfile.getAdmin() != null && adminProfile.getAdmin().getId() != null) {
+            Long adminId = adminProfile.getAdmin().getId();
+            Admin fullAdmin = adminService.findById(adminId)
+                    .orElseThrow(() -> new RuntimeException("Admin not found with id " + adminId));
+            adminProfile.setAdmin(fullAdmin); // set the full admin object
+            fullAdmin.setProfile(adminProfile); // ensure both sides are linked
+        }
+        return adminRepository.save(adminProfile);
     }
 
     @Override
@@ -27,30 +40,38 @@ public class AdminProfileServiceImpl implements AdminProfileService {
     @Override
     public AdminProfile getAdminById(Long id) {
         return adminRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Admin not found with id " + id));
+                .orElseThrow(() -> new RuntimeException("AdminProfile not found with id " + id));
     }
 
     @Override
     public AdminProfile updateAdmin(Long id, AdminProfile adminDetails) {
-        AdminProfile admin = getAdminById(id);
-        admin.setName(adminDetails.getName());
-        admin.setEmail(adminDetails.getEmail());
-        admin.setPassword(adminDetails.getPassword());
-        admin.setPhoneNumber(adminDetails.getPhoneNumber());
-        admin.setDateOfBirth(adminDetails.getDateOfBirth());
-        admin.setCompanyName(adminDetails.getCompanyName());
-        admin.setCompanyType(adminDetails.getCompanyType());
+        AdminProfile adminProfile = getAdminById(id);
 
-        // ✅ Update GST and PAN separately
-        admin.setGstNumber(adminDetails.getGstNumber());
-        admin.setPanNumber(adminDetails.getPanNumber());
+        adminProfile.setName(adminDetails.getName());
+        adminProfile.setEmail(adminDetails.getEmail());
+        adminProfile.setPassword(adminDetails.getPassword());
+        adminProfile.setPhoneNumber(adminDetails.getPhoneNumber());
+        adminProfile.setDateOfBirth(adminDetails.getDateOfBirth());
+        adminProfile.setCompanyName(adminDetails.getCompanyName());
+        adminProfile.setCompanyType(adminDetails.getCompanyType());
+        adminProfile.setGstNumber(adminDetails.getGstNumber());
+        adminProfile.setPanNumber(adminDetails.getPanNumber());
+        adminProfile.setHeadOfficeAddress(adminDetails.getHeadOfficeAddress());
+        adminProfile.setCity(adminDetails.getCity());
+        adminProfile.setState(adminDetails.getState());
+        adminProfile.setCountry(adminDetails.getCountry());
+        adminProfile.setPinCode(adminDetails.getPinCode());
 
-        admin.setHeadOfficeAddress(adminDetails.getHeadOfficeAddress());
-        admin.setCity(adminDetails.getCity());
-        admin.setState(adminDetails.getState());
-        admin.setCountry(adminDetails.getCountry());
-        admin.setPinCode(adminDetails.getPinCode());
-        return adminRepository.save(admin);
+        // Handle Admin object if provided
+        if (adminDetails.getAdmin() != null && adminDetails.getAdmin().getId() != null) {
+            Long adminId = adminDetails.getAdmin().getId();
+            Admin fullAdmin = adminService.findById(adminId)
+                    .orElseThrow(() -> new RuntimeException("Admin not found with id " + adminId));
+            adminProfile.setAdmin(fullAdmin);
+            fullAdmin.setProfile(adminProfile); // ensure bidirectional mapping
+        }
+
+        return adminRepository.save(adminProfile);
     }
 
     @Override
