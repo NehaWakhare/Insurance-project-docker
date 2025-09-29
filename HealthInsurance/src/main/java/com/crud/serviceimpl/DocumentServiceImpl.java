@@ -6,11 +6,17 @@ import com.crud.repository.DocumentRepository;
 import com.crud.repository.UserRepository;
 import com.crud.service.DocumentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.Files;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -45,6 +51,7 @@ public class DocumentServiceImpl implements DocumentService {
             Document document = new Document();
             document.setUser(user);
             document.setDocumentName(documentName);
+            document.setOriginalFileName(file.getOriginalFilename()); // save real name
             document.setUploadedAt(LocalDateTime.now());
             document.setFilePath(fullPath);
 
@@ -88,6 +95,7 @@ public class DocumentServiceImpl implements DocumentService {
                 file.transferTo(new File(fullPath));
 
                 existingDoc.setFilePath(fullPath);
+                existingDoc.setOriginalFileName(file.getOriginalFilename());
                 existingDoc.setUploadedAt(LocalDateTime.now());
             }
 
@@ -108,5 +116,28 @@ public class DocumentServiceImpl implements DocumentService {
         }
 
         documentRepository.delete(existingDoc);
+    }
+
+    @Override
+    public Resource loadFileAsResource(Long documentId) {
+        Document doc = getDocumentById(documentId);
+
+        try {
+            Path filePath = Paths.get(doc.getFilePath()).toAbsolutePath().normalize();
+            Path uploadBase = Paths.get(uploadDir).toAbsolutePath().normalize();
+
+            if (!filePath.startsWith(uploadBase)) {
+                throw new RuntimeException("Invalid file path");
+            }
+
+            Resource resource = new UrlResource(filePath.toUri());
+            if (resource.exists() && resource.isReadable()) {
+                return resource;
+            } else {
+                throw new RuntimeException("File not found or not readable: " + doc.getFilePath());
+            }
+        } catch (MalformedURLException ex) {
+            throw new RuntimeException("File not found: " + doc.getFilePath(), ex);
+        }
     }
 }

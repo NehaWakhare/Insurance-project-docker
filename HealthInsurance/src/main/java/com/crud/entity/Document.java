@@ -14,6 +14,8 @@ public class Document {
 
     private String documentName;
 
+    private String originalFileName; // NEW: keeps real filename
+
     private LocalDateTime uploadedAt;
 
     @Column(name = "file_path")
@@ -40,6 +42,14 @@ public class Document {
 
     public void setDocumentName(String documentName) {
         this.documentName = documentName;
+    }
+
+    public String getOriginalFileName() {
+        return originalFileName;
+    }
+
+    public void setOriginalFileName(String originalFileName) {
+        this.originalFileName = originalFileName;
     }
 
     public LocalDateTime getUploadedAt() {

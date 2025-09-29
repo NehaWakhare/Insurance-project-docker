@@ -3,11 +3,19 @@ package com.crud.controller;
 import com.crud.entity.Document;
 import com.crud.service.DocumentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 @RestController
@@ -48,6 +56,75 @@ public class DocumentController {
             return ResponseEntity.ok(document);
         } catch (Exception e) {
             return new ResponseEntity<>("Document not found", HttpStatus.NOT_FOUND);
+        }
+    }
+
+    // ----------------- View Document in Browser -----------------
+    @GetMapping("/view/{id}")
+    public ResponseEntity<Resource> viewDocument(@PathVariable Long id) {
+        try {
+            Document document = documentService.getDocumentById(id);
+            Path filePath = Paths.get(document.getFilePath()).normalize();
+
+            Resource resource = new UrlResource(filePath.toUri());
+            if (!resource.exists()) {
+                return ResponseEntity.notFound().build();
+            }
+
+            // Detect file type
+            String contentType;
+            try {
+                contentType = Files.probeContentType(filePath);
+            } catch (IOException e) {
+                contentType = "application/octet-stream";
+            }
+
+            if (contentType == null) {
+                contentType = "application/octet-stream";
+            }
+
+            return ResponseEntity.ok()
+                    .contentType(MediaType.parseMediaType(contentType))
+                    .header(HttpHeaders.CONTENT_DISPOSITION,
+                            "inline; filename=\"" + filePath.getFileName().toString() + "\"")
+                    .body(resource);
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    // ----------------- Download Document -----------------
+    @GetMapping("/download/{id}")
+    public ResponseEntity<Resource> downloadDocument(@PathVariable Long id) {
+        try {
+            Document document = documentService.getDocumentById(id);
+            Path filePath = Paths.get(document.getFilePath()).normalize();
+
+            Resource resource = new UrlResource(filePath.toUri());
+            if (!resource.exists()) {
+                return ResponseEntity.notFound().build();
+            }
+
+            String contentType;
+            try {
+                contentType = Files.probeContentType(filePath);
+            } catch (IOException e) {
+                contentType = "application/octet-stream";
+            }
+
+            if (contentType == null) {
+                contentType = "application/octet-stream";
+            }
+
+            return ResponseEntity.ok()
+                    .contentType(MediaType.parseMediaType(contentType))
+                    .header(HttpHeaders.CONTENT_DISPOSITION,
+                            "attachment; filename=\"" + filePath.getFileName().toString() + "\"")
+                    .body(resource);
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 

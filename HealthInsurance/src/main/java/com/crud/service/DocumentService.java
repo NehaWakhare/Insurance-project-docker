@@ -1,6 +1,7 @@
 package com.crud.service;
 
 import com.crud.entity.Document;
+import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -11,4 +12,7 @@ public interface DocumentService {
     Document getDocumentById(Long id);
     Document updateDocument(Long id, MultipartFile file, String documentName);
     void deleteDocument(Long id);
+
+    // NEW: download support
+    Resource loadFileAsResource(Long id);
 }

@@ -62,7 +62,9 @@ public class SecurityConfig {
                         .requestMatchers(
                                 "/api/v1/save",
                                 "/api/auth/verify-otp",
-                                "/api/auth/login"
+                                "/api/auth/login",
+                                "/api/documents/view/{id}",
+                                "/api/documents/download/{id}"
                         ).permitAll()
 
                         //  Secure COMPLETE User Profile (all CRUD)
