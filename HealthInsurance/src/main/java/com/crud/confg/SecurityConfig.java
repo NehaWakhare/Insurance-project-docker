@@ -64,7 +64,9 @@ public class SecurityConfig {
                                 "/api/auth/verify-otp",
                                 "/api/auth/login",
                                 "/api/documents/view/{id}",
-                                "/api/documents/download/{id}"
+                                "/api/documents/download/{id}",
+                                "/api/claims/documents/view/{claimDocumentId}",
+                                "/api/claims/documents/download/{claimDocumentId}"
                         ).permitAll()
 
                         //  Secure COMPLETE User Profile (all CRUD)

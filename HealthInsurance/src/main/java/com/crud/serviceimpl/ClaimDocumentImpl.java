@@ -1,6 +1,5 @@
 package com.crud.serviceimpl;
 
-
 import com.crud.entity.Claim;
 import com.crud.entity.ClaimDocument;
 import com.crud.repository.ClaimDocumentRepository;
@@ -14,6 +13,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -22,6 +22,9 @@ public class ClaimDocumentImpl implements ClaimDocumentService {
 
     private final ClaimRepository claimRepository;
     private final ClaimDocumentRepository claimDocumentRepository;
+
+    // Absolute path to store uploads
+    private final String uploadDir = System.getProperty("user.home") + "/uploads/";
 
     public ClaimDocumentImpl(ClaimRepository claimRepository, ClaimDocumentRepository claimDocumentRepository) {
         this.claimRepository = claimRepository;
@@ -33,20 +36,52 @@ public class ClaimDocumentImpl implements ClaimDocumentService {
         Claim claim = claimRepository.findById(claimId)
                 .orElseThrow(() -> new RuntimeException("Claim not found"));
 
-        String uploadDir = "uploads/";
+        // Ensure upload directory exists
+        Path dirPath = Paths.get(uploadDir);
+        Files.createDirectories(dirPath);
+
         String fileName = UUID.randomUUID() + "_" + file.getOriginalFilename();
-        Path path = Paths.get(uploadDir + fileName);
-        Files.createDirectories(path.getParent());
-        Files.write(path, file.getBytes());
+        Path filePath = dirPath.resolve(fileName);
+        Files.write(filePath, file.getBytes());
 
         ClaimDocument doc = new ClaimDocument();
         doc.setDocumentName(file.getOriginalFilename());
         doc.setDocumentType(documentType);
-        doc.setFilePath(path.toString());
+        doc.setFilePath(filePath.toString());
         doc.setUploadedDate(LocalDate.now());
         doc.setClaim(claim);
 
-        return  claimDocumentRepository.save(doc);
+        return claimDocumentRepository.save(doc);
+    }
+
+    @Override
+    public List<ClaimDocument> uploadMultipleClaimDocuments(Long claimId, MultipartFile[] files, String[] documentTypes) throws IOException {
+        Claim claim = claimRepository.findById(claimId)
+                .orElseThrow(() -> new RuntimeException("Claim not found"));
+
+        Path dirPath = Paths.get(uploadDir);
+        Files.createDirectories(dirPath);
+
+        List<ClaimDocument> documents = new ArrayList<>();
+        for (int i = 0; i < files.length; i++) {
+            MultipartFile file = files[i];
+            String documentType = (documentTypes.length > i) ? documentTypes[i] : null;
+
+            String fileName = UUID.randomUUID() + "_" + file.getOriginalFilename();
+            Path filePath = dirPath.resolve(fileName);
+            Files.write(filePath, file.getBytes());
+
+            ClaimDocument doc = new ClaimDocument();
+            doc.setDocumentName(file.getOriginalFilename());
+            doc.setDocumentType(documentType);
+            doc.setFilePath(filePath.toString());
+            doc.setUploadedDate(LocalDate.now());
+            doc.setClaim(claim);
+
+            documents.add(claimDocumentRepository.save(doc));
+        }
+
+        return documents;
     }
 
     @Override
@@ -54,4 +89,26 @@ public class ClaimDocumentImpl implements ClaimDocumentService {
         return claimDocumentRepository.findByClaim_ClaimId(claimId);
     }
 
+    @Override
+    public ClaimDocument getClaimDocumentById(Long claimDocumentId) {
+        return claimDocumentRepository.findById(claimDocumentId)
+                .orElseThrow(() -> new RuntimeException("Document not found with ID: " + claimDocumentId));
+    }
+
+    @Override
+    public void deleteClaimDocumentById(Long claimDocumentId) {
+        ClaimDocument document = claimDocumentRepository.findById(claimDocumentId)
+                .orElseThrow(() -> new RuntimeException("Document not found with ID: " + claimDocumentId));
+
+        // Delete file from disk
+        Path filePath = Paths.get(document.getFilePath());
+        try {
+            Files.deleteIfExists(filePath);
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to delete file from disk", e);
+        }
+
+        // Delete from database
+        claimDocumentRepository.delete(document);
+    }
 }
