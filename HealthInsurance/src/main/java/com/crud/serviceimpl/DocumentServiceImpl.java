@@ -68,15 +68,15 @@ public class DocumentServiceImpl implements DocumentService {
     }
 
     @Override
-    public Document getDocumentById(Long id) {
-        return documentRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Document not found with ID: " + id));
+    public Document getDocumentById(Long documentId) {
+        return documentRepository.findById(documentId)
+                .orElseThrow(() -> new RuntimeException("Document not found with ID: " + documentId));
     }
 
     @Override
-    public Document updateDocument(Long id, MultipartFile file, String documentName) {
+    public Document updateDocument(Long documentId, MultipartFile file, String documentName) {
         try {
-            Document existingDoc = getDocumentById(id);
+            Document existingDoc = getDocumentById(documentId);
 
             if (documentName != null && !documentName.isEmpty()) {
                 existingDoc.setDocumentName(documentName);
@@ -102,8 +102,8 @@ public class DocumentServiceImpl implements DocumentService {
     }
 
     @Override
-    public void deleteDocument(Long id) {
-        Document existingDoc = getDocumentById(id);
+    public void deleteDocument(Long documentId) {
+        Document existingDoc = getDocumentById(documentId);
 
         File file = new File(existingDoc.getFilePath());
         if (file.exists()) file.delete();

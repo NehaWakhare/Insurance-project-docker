@@ -19,7 +19,7 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
     // Get all appointments by user profile
     List<Appointment> findByUserProfile(UserProfile userProfile);
 
-    // ✅ NEW: Check if a time slot is already booked for a doctor on a date+time
+    //  NEW: Check if a time slot is already booked for a doctor on a date+time
     boolean existsByDoctorAndAppointmentDateAndAppointmentTime(
             Doctor doctor,
             LocalDate appointmentDate,

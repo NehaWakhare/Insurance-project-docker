@@ -1,4 +1,5 @@
-package com.crud.service.impl;
+
+package com.crud.serviceimpl;
 
 import com.crud.dto.AppointmentRequest;
 import com.crud.entity.Appointment;
@@ -34,7 +35,7 @@ public class AppointmentServiceImpl implements AppointmentService {
         UserProfile userProfile = userProfileRepository.findById(request.getUserProfileId())
                 .orElseThrow(() -> new RuntimeException("User Profile not found"));
 
-        // ✅ Check if doctor is already booked at this date + time
+        // Check if the doctor is already booked at this date + time
         boolean exists = appointmentRepository.existsByDoctorAndAppointmentDateAndAppointmentTime(
                 doctor,
                 request.getAppointmentDate(),
@@ -49,7 +50,7 @@ public class AppointmentServiceImpl implements AppointmentService {
         appointment.setDoctor(doctor);
         appointment.setUserProfile(userProfile);
         appointment.setAppointmentDate(request.getAppointmentDate());
-        appointment.setAppointmentTime(request.getAppointmentTime()); // 🕒 Set time
+        appointment.setAppointmentTime(request.getAppointmentTime());
         appointment.setStatus("Scheduled");
 
         return appointmentRepository.save(appointment);
@@ -70,4 +71,11 @@ public class AppointmentServiceImpl implements AppointmentService {
 
         return appointmentRepository.findByUserProfile(userProfile);
     }
+
+    //  New method to get all appointments
+    @Override
+    public List<Appointment> getAllAppointments() {
+        return appointmentRepository.findAll();
+    }
 }
+ 

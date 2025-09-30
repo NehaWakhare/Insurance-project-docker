@@ -47,11 +47,11 @@ public class DocumentController {
         return ResponseEntity.ok(documents);
     }
 
-    // Get by id
-    @GetMapping("/{id}")
-    public ResponseEntity<?> getDocumentById(@PathVariable Long id) {
+    // Get by documentId
+    @GetMapping("/{documentId}")
+    public ResponseEntity<?> getDocumentById(@PathVariable Long documentId) {
         try {
-            Document document = documentService.getDocumentById(id);
+            Document document = documentService.getDocumentById(documentId);
             return ResponseEntity.ok(document);
         } catch (Exception e) {
             return new ResponseEntity<>("Document not found", HttpStatus.NOT_FOUND);
@@ -59,12 +59,12 @@ public class DocumentController {
     }
 
     // View in browser
-    @GetMapping("/view/{id}")
-    public ResponseEntity<Resource> viewDocument(@PathVariable Long id) {
+    @GetMapping("/view/{documentId}")
+    public ResponseEntity<Resource> viewDocument(@PathVariable Long documentId) {
         try {
-            Document document = documentService.getDocumentById(id);
+            Document document = documentService.getDocumentById(documentId);
             Path filePath = Paths.get(document.getFilePath()).normalize();
-            Resource resource = documentService.loadFileAsResource(id);
+            Resource resource = documentService.loadFileAsResource(documentId);
 
             String contentType;
             try {
@@ -84,12 +84,12 @@ public class DocumentController {
     }
 
     // Download
-    @GetMapping("/download/{id}")
-    public ResponseEntity<Resource> downloadDocument(@PathVariable Long id) {
+    @GetMapping("/download/{documentId}")
+    public ResponseEntity<Resource> downloadDocument(@PathVariable Long documentId) {
         try {
-            Document document = documentService.getDocumentById(id);
+            Document document = documentService.getDocumentById(documentId);
             Path filePath = Paths.get(document.getFilePath()).normalize();
-            Resource resource = documentService.loadFileAsResource(id);
+            Resource resource = documentService.loadFileAsResource(documentId);
 
             String contentType;
             try {
@@ -109,14 +109,14 @@ public class DocumentController {
     }
 
     // Update
-    @PutMapping("/{id}")
+    @PutMapping("/{documentId}")
     public ResponseEntity<?> updateDocument(
-            @PathVariable Long id,
+            @PathVariable Long documentId,
             @RequestParam(value = "file", required = false) MultipartFile file,
             @RequestParam(value = "documentName", required = false) String documentName
     ) {
         try {
-            Document updated = documentService.updateDocument(id, file, documentName);
+            Document updated = documentService.updateDocument(documentId, file, documentName);
             return ResponseEntity.ok(updated);
         } catch (Exception e) {
             return new ResponseEntity<>("Failed to update document: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -124,10 +124,10 @@ public class DocumentController {
     }
 
     // Delete
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteDocument(@PathVariable Long id) {
+    @DeleteMapping("/{documentId}")
+    public ResponseEntity<?> deleteDocument(@PathVariable Long documentId) {
         try {
-            documentService.deleteDocument(id);
+            documentService.deleteDocument(documentId);
             return ResponseEntity.ok("Document deleted successfully");
         } catch (Exception e) {
             return new ResponseEntity<>("Failed to delete document: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);

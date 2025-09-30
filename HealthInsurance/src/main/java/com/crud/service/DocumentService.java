@@ -9,10 +9,10 @@ import java.util.List;
 public interface DocumentService {
     Document storeFile(MultipartFile file, Long userId, String documentName);
     List<Document> getAllDocuments();
-    Document getDocumentById(Long id);
-    Document updateDocument(Long id, MultipartFile file, String documentName);
-    void deleteDocument(Long id);
+    Document getDocumentById(Long documentId);
+    Document updateDocument(Long documentId, MultipartFile file, String documentName);
+    void deleteDocument(Long documentId);
 
-    // download support
-    Resource loadFileAsResource(Long id);
+    // download/view support
+    Resource loadFileAsResource(Long documentId);
 }

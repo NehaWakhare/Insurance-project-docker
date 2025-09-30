@@ -32,4 +32,10 @@ public class AppointmentController {
     public List<Appointment> getAppointmentsByUser(@PathVariable Long userProfileId) {
         return appointmentService.getAppointmentsByUserProfileId(userProfileId);
     }
+    // Get all appointments (for Super Admin)
+    @GetMapping("/all")
+    public List<Appointment> getAllAppointments() {
+        return appointmentService.getAllAppointments();
+    }
+
 }

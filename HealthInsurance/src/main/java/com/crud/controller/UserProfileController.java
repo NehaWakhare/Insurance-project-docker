@@ -16,6 +16,13 @@ public class UserProfileController {
     @Autowired
     private UserProfileService userProfileService;
 
+
+    // Super Admin: Get all user profiles
+    @GetMapping("/all")
+    public List<UserProfile> getAllProfilesForSuperAdmin() {
+        return userProfileService.getAllUserProfiles();
+    }
+
     @PostMapping("/save/{userId}")
     public UserProfile createUserProfile(@PathVariable Long userId, @RequestBody UserProfile userProfile) {
         return userProfileService.createProfileWithUserId(userId, userProfile);
