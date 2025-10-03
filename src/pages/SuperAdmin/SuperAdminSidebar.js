@@ -20,7 +20,7 @@ export default function SuperAdminSidebar() {
     { name: "Doctors", path: "/superadmin/dashboard/doctors", icon: <Stethoscope size={18} /> },
     { name: "Policies", path: "/superadmin/dashboard/policies", icon: <FileText size={18} /> },
     { name: "Claims", path: "/superadmin/dashboard/claims", icon: <FileText size={18} /> },
-    { name: "Appointments", path: "/superadmin/dashboard/Appointments", icon: <FileText size={18} /> },
+ 
     // ✅ Unified Admin menu
     { name: "Admins", path: "/superadmin/dashboard/admins", icon: <ShieldCheck size={18} /> },
   ];

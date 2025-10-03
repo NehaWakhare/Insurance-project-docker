@@ -1,21 +1,34 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import { getAuthHeaders } from "../../../api/superAdminApi"; // make sure this path is correct
 
 export default function AdminList() {
   const [admins, setAdmins] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [openMenu, setOpenMenu] = useState(null); // track which username menu is open
+  const [openMenu, setOpenMenu] = useState(null);
   const navigate = useNavigate();
+  const dropdownRef = useRef(null);
 
+  // ✅ Fetch admins
   const fetchAdmins = async () => {
     try {
       setLoading(true);
-      const res = await fetch("http://localhost:8089/api/admin/all");
-      if (!res.ok) throw new Error("Failed to fetch admins");
+      setError("");
+
+      const res = await fetch("http://localhost:8089/api/admin/all", {
+        headers: getAuthHeaders(),
+      });
+
+      if (!res.ok) throw new Error(`Failed to fetch admins: ${res.status}`);
+
+      // ✅ Directly parse JSON (no manual JSON.parse)
       const data = await res.json();
+      console.log("Admins response:", data);
+
       setAdmins(data);
     } catch (err) {
+      console.error("Error fetching admins:", err);
       setError(err.message);
     } finally {
       setLoading(false);
@@ -24,6 +37,22 @@ export default function AdminList() {
 
   useEffect(() => {
     fetchAdmins();
+  }, []);
+
+  // ✅ Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target)
+      ) {
+        setOpenMenu(null);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
   }, []);
 
   const handleMenuToggle = (adminId) => {
@@ -36,14 +65,16 @@ export default function AdminList() {
     } else if (type === "policies") {
       navigate(`/superadmin/dashboard/admins/${adminId}/policies`);
     }
-    setOpenMenu(null); // close menu after navigation
+    setOpenMenu(null);
   };
+
   if (loading) return <p>Loading admins...</p>;
   if (error) return <p style={{ color: "red" }}>{error}</p>;
 
   return (
     <div style={styles.container}>
       <h2>Admin List</h2>
+
       {admins.length === 0 ? (
         <p>No admins found</p>
       ) : (
@@ -61,7 +92,7 @@ export default function AdminList() {
             {admins.map((admin) => (
               <tr key={admin.id}>
                 <td>{admin.id}</td>
-                <td style={{ position: "relative" }}>
+                <td style={{ position: "relative" }} ref={dropdownRef}>
                   <span
                     style={styles.clickable}
                     onClick={() => handleMenuToggle(admin.id)}
@@ -86,7 +117,7 @@ export default function AdminList() {
                   )}
                 </td>
                 <td>{admin.email}</td>
-                <td>{admin.gstNumber}</td>
+                <td>{admin.gstNumber || "N/A"}</td>
                 <td>{admin.status}</td>
               </tr>
             ))}
@@ -96,7 +127,7 @@ export default function AdminList() {
     </div>
   );
 }
-           
+
 const styles = {
   container: {
     padding: "20px",
@@ -129,6 +160,6 @@ const styles = {
     padding: "8px 12px",
     cursor: "pointer",
     whiteSpace: "nowrap",
+    transition: "background 0.2s ease",
   },
 };
-  

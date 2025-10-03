@@ -1,9 +1,9 @@
-// src/api/SuperAdminApi.js
+// src/api/superAdminApi.js
 
 const API_BASE_URL = "http://localhost:8089/api"; // Base URL for backend
 
-// Helper to include token in headers if available
-function getAuthHeaders() {
+// ---------------- HELPER ----------------
+export function getAuthHeaders() {
   const token = localStorage.getItem("token");
   return token
     ? { "Content-Type": "application/json", Authorization: `Bearer ${token}` }
@@ -84,6 +84,3 @@ export async function rejectAdmin(id) {
 
   return response.text();
 }
-
-// ---------------- PLACEHOLDER FOR FUTURE ----------------
-// (We’ll add Users, Policies, Claims, Hospitals APIs here later)

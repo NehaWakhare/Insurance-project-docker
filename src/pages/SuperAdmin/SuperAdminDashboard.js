@@ -2,11 +2,13 @@ import React, { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import SuperAdminProfile from "./SuperAdminProfile";
 import SuperAdminSidebar from "./SuperAdminSidebar";
-import SuperAdminAdmins from "./Admins/SuperAdminAdmins";  // ✅ FIXED
+import SuperAdminAdmins from "./Admins/SuperAdminAdmins";
 import {
   fetchAllAdmins,
   fetchPendingAdmins,
 } from "../../api/superAdminApi";
+import SuperAdminDoctors from "./Doctors/SuperAdminDoctors";
+import DoctorDetails from "./Doctors/DoctorDetails";
 
 export default function SuperAdminDashboard() {
   const [stats, setStats] = useState({
@@ -34,7 +36,7 @@ export default function SuperAdminDashboard() {
         setLoading(false);
       }
     };
-            
+
     fetchStats();
   }, []);
 
@@ -54,7 +56,7 @@ export default function SuperAdminDashboard() {
             Logout
           </button>
         </div>
-         
+
         <div style={styles.content}>
           <Routes>
             <Route
@@ -89,11 +91,14 @@ export default function SuperAdminDashboard() {
             />
             <Route path="profile" element={<SuperAdminProfile />} />
             <Route path="users" element={<h2>Manage Users (Coming Soon)</h2>} />
-            <Route path="doctors" element={<h2>Manage Doctors (Coming Soon)</h2>} />
             <Route path="policies" element={<h2>Manage Policies (Coming Soon)</h2>} />
             <Route path="claims" element={<h2>Manage Claims (Coming Soon)</h2>} />
 
-            {/* ✅ One unified Admins page with tabs */}
+            {/* ✅ Doctors */}
+            <Route path="doctors" element={<SuperAdminDoctors />} />
+            <Route path="doctors/:id" element={<DoctorDetails />} />
+
+            {/* ✅ Admins */}
             <Route path="admins" element={<SuperAdminAdmins />} />
 
             <Route path="logout" element={<h2>Logout Page (Coming Soon)</h2>} />
@@ -104,17 +109,9 @@ export default function SuperAdminDashboard() {
   );
 }
 
-
 const styles = {
-  layout: {
-    display: "flex",
-    minHeight: "100vh",
-  },
-  main: {
-    flex: 1,
-    display: "flex",
-    flexDirection: "column",
-  },
+  layout: { display: "flex", minHeight: "100vh" },
+  main: { flex: 1, display: "flex", flexDirection: "column" },
   topbar: {
     background: "#007bff",
     color: "#fff",
@@ -131,11 +128,7 @@ const styles = {
     borderRadius: "5px",
     cursor: "pointer",
   },
-  content: {
-    flex: 1,
-    padding: "20px",
-    background: "#f4f6f8",
-  },
+  content: { flex: 1, padding: "20px", background: "#f4f6f8" },
   cardGrid: {
     display: "grid",
     gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
