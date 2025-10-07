@@ -66,7 +66,8 @@ public class SecurityConfig {
                                 "/api/documents/view/{id}",
                                 "/api/documents/download/{id}",
                                 "/api/claims/documents/view/{claimDocumentId}",
-                                "/api/claims/documents/download/{claimDocumentId}"
+                                "/api/claims/documents/download/{claimDocumentId}",
+                                "/admin/policy-plans/all"
                         ).permitAll()
 
                         //  Secure COMPLETE User Profile (all CRUD)

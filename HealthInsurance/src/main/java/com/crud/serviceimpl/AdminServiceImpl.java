@@ -1,15 +1,18 @@
 package com.crud.serviceimpl;
 
 import com.crud.entity.Admin;
+import com.crud.entity.UserPolicy;
 import com.crud.enums.AdminStatus;
 import com.crud.enums.Role;
 import com.crud.repository.AdminRepository;
 import com.crud.service.AdminService;
+import com.crud.service.UserPolicyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,6 +24,9 @@ public class AdminServiceImpl implements AdminService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private UserPolicyService userPolicyService;
 
     @Override
     public Admin registerAdmin(Admin admin) {
@@ -71,4 +77,36 @@ public class AdminServiceImpl implements AdminService {
     public Admin save(Admin admin) {
         return adminRepository.save(admin);
     }
+
+    @Override
+    public UserPolicy activatePolicy(Long policyId) {
+        UserPolicy policy = userPolicyService.getPolicyById(policyId);
+        policy.setPolicyStatus("ACTIVE");
+        return userPolicyService.updatePolicy(policyId, policy);
+    }
+
+    @Override
+    public UserPolicy rejectPolicy(Long policyId) {
+        UserPolicy policy = userPolicyService.getPolicyById(policyId);
+        policy.setPolicyStatus("REJECTED");
+        return userPolicyService.updatePolicy(policyId, policy);
+    }
+
+    @Override
+    public UserPolicy updateNomineeDetails(Long policyId, String nominee, String nomineeRelation) {
+        return userPolicyService.updateNomineeDetails(policyId, nominee, nomineeRelation);
+    }
+
+    @Override
+    public void expireExpiredPolicies() {
+        List<UserPolicy> activePolicies = userPolicyService.getAllPolicies();
+        for (UserPolicy policy : activePolicies) {
+            if (policy.getEndDate().isBefore(LocalDate.now()) &&
+                    "ACTIVE".equalsIgnoreCase(policy.getPolicyStatus())) {
+                policy.setPolicyStatus("INACTIVE");
+                userPolicyService.updatePolicy(policy.getId(), policy);
+            }
+        }
+    }
 }
+

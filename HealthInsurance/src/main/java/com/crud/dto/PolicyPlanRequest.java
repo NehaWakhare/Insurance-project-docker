@@ -1,6 +1,7 @@
 package com.crud.dto;
 
 public class PolicyPlanRequest {
+
     private String policyName;
     private String policyType;
     private Double coverage;

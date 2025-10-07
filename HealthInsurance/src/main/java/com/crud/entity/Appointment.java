@@ -30,7 +30,7 @@ public class Appointment {
     @JoinColumn(name = "user_profile_id", nullable = false)
     private UserProfile userProfile;
 
-    // Constructors
+
     public Appointment() {}
 
     public Appointment(LocalDate appointmentDate, LocalTime appointmentTime, String status, Doctor doctor, UserProfile userProfile) {
@@ -41,7 +41,7 @@ public class Appointment {
         this.userProfile = userProfile;
     }
 
-    // Getters and Setters
+
     public Long getAppointmentId() {
         return appointmentId;
     }

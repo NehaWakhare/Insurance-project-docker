@@ -13,4 +13,8 @@ public interface PolicyPlanservice {
     List<PolicyPlan> getPlansByAdmin(Long adminId);
     List<PolicyPlan> getAllPlans();
     PolicyPlan getPlanById(Long planId);
+
+    PolicyPlan save(PolicyPlan plan);
+
+
 }

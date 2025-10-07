@@ -1,8 +1,6 @@
 package com.crud;
 
-
 import com.crud.entity.Admin;
-import com.crud.entity.User;
 import com.crud.enums.Role;
 import com.crud.repository.AdminRepository;
 import org.springframework.beans.factory.annotation.Autowired;

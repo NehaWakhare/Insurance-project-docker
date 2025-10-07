@@ -15,6 +15,11 @@ public interface UserPolicyService {
     List<UserPolicy> getAllPolicies();
     UserPolicy updatePolicy(Long policyId, UserPolicy updatedPolicy);
     void deletePolicy(Long policyId);
+    UserPolicy getPolicyById(Long policyId);
+    UserPolicy updateNomineeDetails(Long policyId, String nominee, String nomineeRelation);
+
+
+
 }
 
 

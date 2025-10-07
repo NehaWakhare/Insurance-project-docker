@@ -43,7 +43,6 @@ public class UserProfile {
 //    @OneToOne(mappedBy = "userProfile", cascade = CascadeType.ALL)
 //    private Doctor doctor;
 
-    // Getters and Setters
 
     public Long getId() { return id; }
 

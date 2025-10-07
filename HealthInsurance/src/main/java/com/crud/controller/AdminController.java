@@ -1,18 +1,23 @@
 package com.crud.controller;
 
 import com.crud.confg.JwtUtil;
+import com.crud.dto.UserPolicyResponse;
 import com.crud.entity.Admin;
+import com.crud.entity.UserPolicy;
 import com.crud.enums.AdminStatus;
 import com.crud.enums.Role;
 import com.crud.service.AdminService;
+import com.crud.service.UserPolicyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.*;
 
 @RestController
@@ -30,6 +35,9 @@ public class AdminController {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private UserPolicyService userPolicyService;
 
     // DTO for login
     public static class LoginRequest {
@@ -93,6 +101,78 @@ public class AdminController {
     public ResponseEntity<?> rejectAdmin(@PathVariable Long id) {
         return ResponseEntity.ok(adminService.updateStatus(id, AdminStatus.REJECTED));
     }
+
+    @PutMapping("/update-nominee/{policyId}")
+    public ResponseEntity<UserPolicyResponse> updateNomineeByAdmin(
+            @PathVariable Long policyId,
+            @RequestBody Map<String, String> nomineeUpdate) {
+
+        String nominee = nomineeUpdate.get("nominee");
+        String nomineeRelation = nomineeUpdate.get("nomineeRelation");
+
+        UserPolicy updatedPolicy = userPolicyService.updateNomineeDetails(policyId, nominee, nomineeRelation);
+
+        UserPolicyResponse response = new UserPolicyResponse(
+                updatedPolicy.getId(),
+                updatedPolicy.getUserId(),
+                updatedPolicy.getPolicyStatus(),
+                updatedPolicy.getStartDate(),
+                updatedPolicy.getEndDate(),
+                updatedPolicy.getNominee(),
+                updatedPolicy.getNomineeRelation()
+        );
+
+        return ResponseEntity.ok(response);
+    }
+
+    // Activate user policy by admin
+    @PutMapping("/activate-policy/{policyId}")
+    public ResponseEntity<UserPolicyResponse> activatePolicy(@PathVariable Long policyId) {
+        UserPolicy policy = userPolicyService.getPolicyById(policyId);
+        policy.setPolicyStatus("ACTIVE");
+        UserPolicy updated = userPolicyService.updatePolicy(policyId, policy);
+
+        UserPolicyResponse response = new UserPolicyResponse(
+                updated.getId(),
+                updated.getUserId(),
+                updated.getPolicyStatus(),
+                updated.getStartDate(),
+                updated.getEndDate(),
+                updated.getNominee(),
+                updated.getNomineeRelation()
+        );
+
+        return ResponseEntity.ok(response);
+    }
+
+
+    @PutMapping("/reject-policy/{policyId}")
+    public ResponseEntity<UserPolicyResponse> rejectPolicy(@PathVariable Long policyId) {
+        UserPolicy policy = userPolicyService.getPolicyById(policyId);
+        policy.setPolicyStatus("REJECTED");
+        UserPolicy updated = userPolicyService.updatePolicy(policyId, policy);
+
+        UserPolicyResponse response = new UserPolicyResponse(
+                updated.getId(),
+                updated.getUserId(),
+                updated.getPolicyStatus(),
+                updated.getStartDate(),
+                updated.getEndDate(),
+                updated.getNominee(),
+                updated.getNomineeRelation()
+        );
+
+        return ResponseEntity.ok(response);
+    }
+
+    @Scheduled(cron = "0 0 0 * * ?") // every day at midnight
+    public void expirePolicies() {
+        adminService.expireExpiredPolicies();
+    }
+
+
+
+
 
     // Login (send OTP) -> requires email + password
     @PostMapping("/login")
@@ -164,7 +244,7 @@ public class AdminController {
         response.put("token", token);
         response.put("email", admin.getEmail());
         response.put("role", admin.getRole());
-        response.put("id", admin.getId());            // ✅ add admin id
+        response.put("id", admin.getId());
         response.put("username", admin.getUsername());
 
         return ResponseEntity.ok(response);

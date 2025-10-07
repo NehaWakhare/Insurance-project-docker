@@ -1,6 +1,7 @@
 package com.crud.service;
 
 import com.crud.entity.Admin;
+import com.crud.entity.UserPolicy;
 import com.crud.enums.AdminStatus;
 
 import java.util.List;
@@ -14,4 +15,12 @@ public interface AdminService {
     Admin updateStatus(Long adminId, AdminStatus status); // for approval/rejection
     Admin save(Admin admin);
     Optional<Admin> findByGstNumber(String gstNumber);
-}
+
+    UserPolicy activatePolicy(Long policyId);
+    UserPolicy rejectPolicy(Long policyId);
+    UserPolicy updateNomineeDetails(Long policyId, String nominee, String nomineeRelation);
+    void expireExpiredPolicies();
+
+    }
+
+

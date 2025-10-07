@@ -19,7 +19,7 @@ public class ClaimDocument {
     @JoinColumn(name = "claim_id", nullable = false)
     private Claim claim;
 
-    // Getters and Setters
+
     public Long getClaimDocumentId() {
         return claimDocumentId;
     }

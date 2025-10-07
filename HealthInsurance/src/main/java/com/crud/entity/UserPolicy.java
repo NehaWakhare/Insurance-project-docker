@@ -1,5 +1,6 @@
 package com.crud.entity;
 
+import com.crud.enums.PolicyStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -27,9 +28,12 @@ public class UserPolicy {
 
     private LocalDate startDate;
     private LocalDate endDate;
-    private String policyStatus;
     private String nominee;
     private String nomineeRelation;
+
+    private String policyStatus;
+
+
 
 
 }

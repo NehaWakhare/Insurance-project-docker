@@ -31,13 +31,14 @@ public class UserPolicyImpl implements UserPolicyService {
                 .policyPlan(plan)
                 .startDate(LocalDate.now())
                 .endDate(LocalDate.now().plusYears(plan.getDurationInYears()))
-                .policyStatus("ACTIVE")
+                .policyStatus("PENDING") //  Initially pending
                 .nominee(request.getNominee())
                 .nomineeRelation(request.getNomineeRelation())
                 .build();
 
         return userPolicyRepository.save(userPolicy);
     }
+
 
     @Override
     public UserPolicy getPolicyByUserId(Long userId) {
@@ -72,6 +73,28 @@ public class UserPolicyImpl implements UserPolicyService {
 
         return userPolicyRepository.save(policy);
     }
+
+    @Override
+    public UserPolicy getPolicyById(Long policyId) {
+        return userPolicyRepository.findById(policyId)
+                .orElseThrow(() -> new RuntimeException("Policy not found with id " + policyId));
+    }
+
+    @Override
+    public UserPolicy updateNomineeDetails(Long policyId, String nominee, String nomineeRelation) {
+            UserPolicy policy = userPolicyRepository.findById(policyId)
+                    .orElseThrow(() -> new RuntimeException("Policy not found with id " + policyId));
+
+            if (nominee != null && !nominee.isEmpty()) {
+                policy.setNominee(nominee);
+            }
+            if (nomineeRelation != null && !nomineeRelation.isEmpty()) {
+                policy.setNomineeRelation(nomineeRelation);
+            }
+
+            return userPolicyRepository.save(policy);
+        }
+
 
     @Override
     public void deletePolicy(Long policyId) {

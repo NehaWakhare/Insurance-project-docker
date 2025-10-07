@@ -73,6 +73,8 @@ public class PolicyPlanImpl implements PolicyPlanservice {
         return policyPlanRepository.findByAdmin(admin);
     }
 
+
+
     @Override
     public List<PolicyPlan> getAllPlans() {
         return policyPlanRepository.findAll();
@@ -82,5 +84,10 @@ public class PolicyPlanImpl implements PolicyPlanservice {
     public PolicyPlan getPlanById(Long planId) {
         return policyPlanRepository.findById(planId)
                 .orElseThrow(() -> new RuntimeException("Policy not found"));
+    }
+
+    @Override
+    public PolicyPlan save(PolicyPlan plan) {
+        return policyPlanRepository.save(plan);
     }
 }

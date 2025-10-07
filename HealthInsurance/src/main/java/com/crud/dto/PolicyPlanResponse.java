@@ -2,6 +2,8 @@ package com.crud.dto;
 
 import com.crud.entity.PolicyPlan;
 
+
+
 public class PolicyPlanResponse {
     private Long id;
     private String policyName;
@@ -11,6 +13,8 @@ public class PolicyPlanResponse {
     private Integer durationInYears;
     private AdminResponse admin;
 
+
+
     // Constructor to map from PolicyPlan entity
     public PolicyPlanResponse(PolicyPlan plan) {
         this.id = plan.getId();
@@ -19,6 +23,8 @@ public class PolicyPlanResponse {
         this.coverage = plan.getCoverage();
         this.premium = plan.getPremium();
         this.durationInYears = plan.getDurationInYears();
+
+
         if (plan.getAdmin() != null) {
             this.admin = new AdminResponse(plan.getAdmin().getId(),
                     plan.getAdmin().getUsername(),
@@ -52,4 +58,6 @@ public class PolicyPlanResponse {
     public Double getPremium() { return premium; }
     public Integer getDurationInYears() { return durationInYears; }
     public AdminResponse getAdmin() { return admin; }
+
+
 }
