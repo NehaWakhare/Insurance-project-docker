@@ -33,7 +33,4 @@ public class UserPolicy {
 
     private String policyStatus;
 
-
-
-
 }

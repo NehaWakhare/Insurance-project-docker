@@ -28,6 +28,8 @@ public class AdminProfile {
     private String country;
     private String pinCode;
     private String gstNumber;
+    private String correspondenceAddress;
+    private String permanentAddress;
 
     //  Mapping back to Admin
     @OneToOne
@@ -37,6 +39,21 @@ public class AdminProfile {
 
     public AdminProfile() {}
 
+    public String getCorrespondenceAddress() {
+        return correspondenceAddress;
+    }
+
+    public void setCorrespondenceAddress(String correspondenceAddress) {
+        this.correspondenceAddress = correspondenceAddress;
+    }
+
+    public String getPermanentAddress() {
+        return permanentAddress;
+    }
+
+    public void setPermanentAddress(String permanentAddress) {
+        this.permanentAddress = permanentAddress;
+    }
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }

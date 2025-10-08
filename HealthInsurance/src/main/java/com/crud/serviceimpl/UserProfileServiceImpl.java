@@ -40,22 +40,19 @@ public class UserProfileServiceImpl implements UserProfileService {
         UserProfile existingProfile = userProfileRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User profile not found with ID: " + id));
 
-        // Update fields
+        // Update only existing fields in the entity
         existingProfile.setName(updatedProfile.getName());
-       existingProfile.setEmail(updatedProfile.getEmail());
+        existingProfile.setEmail(updatedProfile.getEmail());
         existingProfile.setPassword(updatedProfile.getPassword());
         existingProfile.setPhone(updatedProfile.getPhone());
-        existingProfile.setAddress(updatedProfile.getAddress());
         existingProfile.setDob(updatedProfile.getDob());
         existingProfile.setGender(updatedProfile.getGender());
+        existingProfile.setCorrespondenceAddress(updatedProfile.getCorrespondenceAddress());
+        existingProfile.setPermanentAddress(updatedProfile.getPermanentAddress());
         existingProfile.setMaritalStatus(updatedProfile.getMaritalStatus());
         existingProfile.setOccupation(updatedProfile.getOccupation());
-        existingProfile.setNomineeName(updatedProfile.getNomineeName());
-        existingProfile.setNomineeRelation(updatedProfile.getNomineeRelation());
         existingProfile.setBloodGroup(updatedProfile.getBloodGroup());
         existingProfile.setEmergencyContact(updatedProfile.getEmergencyContact());
-        existingProfile.setPolicy(updatedProfile.getPolicy());
-        existingProfile.setPolicyType(updatedProfile.getPolicyType());
         existingProfile.setAadhaarNumber(updatedProfile.getAadhaarNumber());
 
         return userProfileRepository.save(existingProfile);
@@ -69,16 +66,15 @@ public class UserProfileServiceImpl implements UserProfileService {
     @Override
     public UserProfile getProfileByUserId(Long userId) {
         return userProfileRepository.findByUser_UserId(userId)
-                .orElse(null); // or throw exception if preferred
+                .orElse(null); // or throw exception if needed
     }
 
     @Override
     public UserProfile createProfileWithUserId(Long userId, UserProfile profile) {
         return userRepository.findById(userId).map(user -> {
             profile.setUser(user);
-            user.setUserProfile(profile); // Optional for bidirectional mapping
+            user.setUserProfile(profile); // maintain bidirectional mapping if needed
             return userProfileRepository.save(profile);
         }).orElseThrow(() -> new RuntimeException("User not found with ID: " + userId));
     }
-
 }

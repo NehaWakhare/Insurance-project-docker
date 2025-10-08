@@ -1,6 +1,5 @@
 package com.crud.controller;
 
-
 import com.crud.entity.UserProfile;
 import com.crud.service.UserProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +21,7 @@ public class UserProfileController {
     public List<UserProfile> getAllProfilesForSuperAdmin() {
         return userProfileService.getAllUserProfiles();
     }
+
 
     @PostMapping("/save/{userId}")
     public UserProfile createUserProfile(@PathVariable Long userId, @RequestBody UserProfile userProfile) {

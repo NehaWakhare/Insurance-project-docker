@@ -14,32 +14,34 @@ import java.util.List;
 public class AdminProfileServiceImpl implements AdminProfileService {
 
     @Autowired
-    private AdminProfileRepository adminRepository;
+    private AdminProfileRepository adminProfileRepository;
 
     @Autowired
-    private AdminRepository adminService; // for fetching full Admin object
+    private AdminRepository adminRepository;
 
     @Override
     public AdminProfile createAdmin(AdminProfile adminProfile) {
-        // If admin object with id is provided, fetch full Admin from DB
+        // Fetch full Admin object if admin ID is provided
         if (adminProfile.getAdmin() != null && adminProfile.getAdmin().getId() != null) {
             Long adminId = adminProfile.getAdmin().getId();
-            Admin fullAdmin = adminService.findById(adminId)
+            Admin fullAdmin = adminRepository.findById(adminId)
                     .orElseThrow(() -> new RuntimeException("Admin not found with id " + adminId));
-            adminProfile.setAdmin(fullAdmin); // set the full admin object
-            fullAdmin.setProfile(adminProfile); // ensure both sides are linked
+
+            adminProfile.setAdmin(fullAdmin);
+            fullAdmin.setProfile(adminProfile);
         }
-        return adminRepository.save(adminProfile);
+
+        return adminProfileRepository.save(adminProfile);
     }
 
     @Override
     public List<AdminProfile> getAllAdmins() {
-        return adminRepository.findAll();
+        return adminProfileRepository.findAll();
     }
 
     @Override
     public AdminProfile getAdminById(Long id) {
-        return adminRepository.findById(id)
+        return adminProfileRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("AdminProfile not found with id " + id));
     }
 
@@ -61,21 +63,26 @@ public class AdminProfileServiceImpl implements AdminProfileService {
         adminProfile.setState(adminDetails.getState());
         adminProfile.setCountry(adminDetails.getCountry());
         adminProfile.setPinCode(adminDetails.getPinCode());
+        adminProfile.setCorrespondenceAddress(adminDetails.getCorrespondenceAddress());
+        adminProfile.setPermanentAddress(adminDetails.getPermanentAddress());
 
-        // Handle Admin object if provided
+        // Update linked Admin if provided
         if (adminDetails.getAdmin() != null && adminDetails.getAdmin().getId() != null) {
             Long adminId = adminDetails.getAdmin().getId();
-            Admin fullAdmin = adminService.findById(adminId)
+            Admin fullAdmin = adminRepository.findById(adminId)
                     .orElseThrow(() -> new RuntimeException("Admin not found with id " + adminId));
             adminProfile.setAdmin(fullAdmin);
-            fullAdmin.setProfile(adminProfile); // ensure bidirectional mapping
+            fullAdmin.setProfile(adminProfile);
         }
 
-        return adminRepository.save(adminProfile);
+        return adminProfileRepository.save(adminProfile);
     }
 
     @Override
     public void deleteAdmin(Long id) {
-        adminRepository.deleteById(id);
+        if (!adminProfileRepository.existsById(id)) {
+            throw new RuntimeException("AdminProfile not found with id " + id);
+        }
+        adminProfileRepository.deleteById(id);
     }
 }
