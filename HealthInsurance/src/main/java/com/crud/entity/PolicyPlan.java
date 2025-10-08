@@ -6,9 +6,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@AllArgsConstructor
 @Data
+@AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "policy_plan")
 public class PolicyPlan {
 
     @Id
@@ -21,12 +22,10 @@ public class PolicyPlan {
     private Double premium;
     private Integer durationInYears;
 
-    private String imageUrl; // store path or URL to the image
-
+    @Column(name = "image_url")
+    private String imageUrl; // file path of uploaded image
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "admin_id")
     private Admin admin;
-
-
 }

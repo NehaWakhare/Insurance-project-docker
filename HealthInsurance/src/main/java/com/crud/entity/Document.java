@@ -10,7 +10,7 @@ public class Document {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long documentId;  // ✅ correct field name
+    private Long documentId;  //  correct field name
 
     private String documentName;
     private String originalFileName;
