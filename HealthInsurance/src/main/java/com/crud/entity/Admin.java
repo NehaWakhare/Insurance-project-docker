@@ -3,6 +3,7 @@ package com.crud.entity;
 import com.crud.enums.AdminStatus;
 import com.crud.enums.Role;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -12,6 +13,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "admins")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Admin {
 
     @Id
