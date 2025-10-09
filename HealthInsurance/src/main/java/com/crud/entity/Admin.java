@@ -87,3 +87,4 @@ public class Admin {
     public List<PolicyPlan> getPolicyPlans() { return policyPlans; }
     public void setPolicyPlans(List<PolicyPlan> policyPlans) { this.policyPlans = policyPlans; }
 }
+
