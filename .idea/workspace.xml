@@ -4,13 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="845bf92b-1c85-440b-bed8-5bacfa7b65cd" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/entity/Admin.java" beforeDir="false" afterPath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/entity/Admin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/entity/PolicyPlan.java" beforeDir="false" afterPath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/entity/PolicyPlan.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/entity/Admin.class" beforeDir="false" afterPath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/entity/Admin.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/entity/PolicyPlan.class" beforeDir="false" afterPath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/entity/PolicyPlan.class" afterDir="false" />
-    </list>
+    <list default="true" id="845bf92b-1c85-440b-bed8-5bacfa7b65cd" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
