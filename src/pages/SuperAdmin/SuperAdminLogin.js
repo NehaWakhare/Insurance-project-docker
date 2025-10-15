@@ -34,7 +34,7 @@ function SuperAdminLogin() {
 
   // 👇 Navigate to Home Dashboard on cross click
   const handleClose = () => {
-    navigate("/auth"); // Change "/home" to your home route
+    navigate("/"); // Change "/home" to your home route
   };
 
   return (

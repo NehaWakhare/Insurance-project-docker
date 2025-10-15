@@ -14,12 +14,9 @@ export default function SuperAdminFAQs() {
   const [faqs, setFaqs] = useState([]);
   const [open, setOpen] = useState(false);
   const [editId, setEditId] = useState(null);
-  const [faqData, setFaqData] = useState({
-    question: "",
-    answer: "",
-  });
+  const [faqData, setFaqData] = useState({ question: "", answer: "" });
 
-  // ✅ Fetch all FAQs
+  // Fetch all FAQs
   const fetchFAQs = async () => {
     try {
       const res = await axios.get("http://localhost:8089/faq/all");
@@ -29,11 +26,9 @@ export default function SuperAdminFAQs() {
     }
   };
 
-  useEffect(() => {
-    fetchFAQs();
-  }, []);
+  useEffect(() => { fetchFAQs(); }, []);
 
-  // ✅ Handle Add / Update FAQ
+  // Add / Update FAQ
   const handleSave = async () => {
     try {
       if (editId) {
@@ -53,14 +48,12 @@ export default function SuperAdminFAQs() {
     }
   };
 
-  // ✅ Handle Edit
   const handleEdit = (faq) => {
     setFaqData({ question: faq.question, answer: faq.answer });
     setEditId(faq.id);
     setOpen(true);
   };
 
-  // ✅ Handle Delete
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this FAQ?")) {
       try {
@@ -76,8 +69,8 @@ export default function SuperAdminFAQs() {
   return (
     <div style={{ display: "flex", minHeight: "100vh", backgroundColor: "#f5f7fa" }}>
       <SuperAdminSidebar />
-
       <div style={{ flex: 1, display: "flex", flexDirection: "column" }}>
+        {/* ✅ Navbar with Profile + Logout */}
         <SuperAdminNavbar />
 
         <div style={{ padding: "20px 40px" }}>
@@ -86,17 +79,13 @@ export default function SuperAdminFAQs() {
           <Button
             variant="contained"
             color="primary"
-            onClick={() => {
-              setFaqData({ question: "", answer: "" });
-              setEditId(null);
-              setOpen(true);
-            }}
+            onClick={() => { setFaqData({ question: "", answer: "" }); setEditId(null); setOpen(true); }}
             style={{ marginBottom: "20px" }}
           >
             Add FAQ
           </Button>
 
-          {/* ✅ FAQ Table */}
+          {/* FAQs Table */}
           <TableContainer component={Paper}>
             <Table>
               <TableHead style={{ backgroundColor: "#4cafef" }}>
@@ -108,34 +97,26 @@ export default function SuperAdminFAQs() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {faqs.length > 0 ? (
-                  faqs.map((faq) => (
-                    <TableRow key={faq.id} hover>
-                      <TableCell>{faq.id}</TableCell>
-                      <TableCell>{faq.question}</TableCell>
-                      <TableCell>{faq.answer}</TableCell>
-                      <TableCell align="center">
-                        <IconButton color="primary" onClick={() => handleEdit(faq)}>
-                          <Edit />
-                        </IconButton>
-                        <IconButton color="error" onClick={() => handleDelete(faq.id)}>
-                          <Delete />
-                        </IconButton>
-                      </TableCell>
-                    </TableRow>
-                  ))
-                ) : (
-                  <TableRow>
-                    <TableCell colSpan={4} align="center">
-                      No FAQs Found
+                {faqs.length > 0 ? faqs.map((faq) => (
+                  <TableRow key={faq.id} hover>
+                    <TableCell>{faq.id}</TableCell>
+                    <TableCell>{faq.question}</TableCell>
+                    <TableCell>{faq.answer}</TableCell>
+                    <TableCell align="center">
+                      <IconButton color="primary" onClick={() => handleEdit(faq)}><Edit /></IconButton>
+                      <IconButton color="error" onClick={() => handleDelete(faq.id)}><Delete /></IconButton>
                     </TableCell>
+                  </TableRow>
+                )) : (
+                  <TableRow>
+                    <TableCell colSpan={4} align="center">No FAQs Found</TableCell>
                   </TableRow>
                 )}
               </TableBody>
             </Table>
           </TableContainer>
 
-          {/* ✅ Add/Edit FAQ Modal */}
+          {/* Add/Edit FAQ Dialog */}
           <Dialog open={open} onClose={() => setOpen(false)} fullWidth maxWidth="sm">
             <DialogTitle>{editId ? "Edit FAQ" : "Add New FAQ"}</DialogTitle>
             <DialogContent>

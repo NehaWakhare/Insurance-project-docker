@@ -1,6 +1,6 @@
- import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { getAuthHeaders } from "../../../api/superAdminApi"; // make sure this path is correct
+import { getAuthHeaders } from "../../../api/superAdminApi";
 
 export default function AdminList() {
   const [admins, setAdmins] = useState([]);
@@ -22,10 +22,7 @@ export default function AdminList() {
 
       if (!res.ok) throw new Error(`Failed to fetch admins: ${res.status}`);
 
-      //  Directly parse JSON (no manual JSON.parse)
       const data = await res.json();
-      console.log("Admins response:", data);
-
       setAdmins(data);
     } catch (err) {
       console.error("Error fetching admins:", err);
@@ -42,17 +39,12 @@ export default function AdminList() {
   // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target)
-      ) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setOpenMenu(null);
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   const handleMenuToggle = (adminId) => {
@@ -73,7 +65,7 @@ export default function AdminList() {
 
   return (
     <div style={styles.container}>
-      <h2>Admin List</h2>
+      <h2 style={{ marginBottom: "20px" }}>⚙️ Admin List</h2>
 
       {admins.length === 0 ? (
         <p>No admins found</p>
@@ -81,23 +73,23 @@ export default function AdminList() {
         <table style={styles.table}>
           <thead>
             <tr>
-              <th>ID</th>
-              <th>Username</th>
-              <th>Email</th>
-              <th>GST No</th>
-              <th>Status</th>
+              <th style={styles.th}>ID</th>
+              <th style={styles.th}>Username</th>
+              <th style={styles.th}>Email</th>
+              <th style={styles.th}>GST No</th>
+              <th style={styles.th}>Status</th>
             </tr>
           </thead>
           <tbody>
             {admins.map((admin) => (
-              <tr key={admin.id}>
-                <td>{admin.id}</td>
-                <td style={{ position: "relative" }} ref={dropdownRef}>
+              <tr key={admin.id} style={styles.tr}>
+                <td style={styles.td}>{admin.id}</td>
+                <td style={{ ...styles.td, position: "relative" }} ref={dropdownRef}>
                   <span
                     style={styles.clickable}
                     onClick={() => handleMenuToggle(admin.id)}
                   >
-                    {admin.username}
+                    {admin.username} ⬇️
                   </span>
                   {openMenu === admin.id && (
                     <div style={styles.dropdown}>
@@ -116,9 +108,9 @@ export default function AdminList() {
                     </div>
                   )}
                 </td>
-                <td>{admin.email}</td>
-                <td>{admin.gstNumber || "N/A"}</td>
-                <td>{admin.status}</td>
+                <td style={styles.td}>{admin.email}</td>
+                <td style={styles.td}>{admin.gstNumber || "N/A"}</td>
+                <td style={styles.td}>{admin.status}</td>
               </tr>
             ))}
           </tbody>
@@ -133,12 +125,27 @@ const styles = {
     padding: "20px",
     background: "#fff",
     borderRadius: "10px",
-    boxShadow: "0 2px 5px rgba(0,0,0,0.1)",
+    boxShadow: "0 4px 10px rgba(0,0,0,0.1)",
   },
   table: {
     width: "100%",
     borderCollapse: "collapse",
-    marginTop: "20px",
+    marginTop: "10px",
+  },
+  th: {
+    padding: "12px",
+    background: "#2563eb",
+    color: "#fff",
+    textAlign: "left",
+    borderBottom: "1px solid #ddd",
+  },
+  td: {
+    padding: "12px",
+    borderBottom: "1px solid #eee",
+    verticalAlign: "middle",
+  },
+  tr: {
+    transition: "background 0.2s",
   },
   clickable: {
     color: "#2563eb",
@@ -147,19 +154,19 @@ const styles = {
   },
   dropdown: {
     position: "absolute",
-    top: "100%",
+    top: "120%",
     left: 0,
     background: "#fff",
     border: "1px solid #ddd",
     borderRadius: "6px",
-    boxShadow: "0 2px 5px rgba(0,0,0,0.15)",
+    boxShadow: "0 2px 8px rgba(0,0,0,0.15)",
     zIndex: 10,
-    marginTop: "5px",
+    minWidth: "160px",
   },
   dropdownItem: {
-    padding: "8px 12px",
+    padding: "10px 15px",
     cursor: "pointer",
     whiteSpace: "nowrap",
-    transition: "background 0.2s ease",
+    transition: "background 0.2s",
   },
 };

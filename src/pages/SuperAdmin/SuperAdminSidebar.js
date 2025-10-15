@@ -1,13 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import logo from '../../assets/logo.png';
-import { 
-  LayoutDashboard, 
-  Users, 
-  FileText, 
-  Stethoscope, 
-  ShieldCheck
-} from "lucide-react";
+import { LayoutDashboard, Users, FileText, Stethoscope, ShieldCheck } from "lucide-react";
 
 export default function SuperAdminSidebar() {
   const menuItems = [
@@ -22,12 +16,10 @@ export default function SuperAdminSidebar() {
 
   return (
     <div style={styles.sidebar}>
-      {/* Logo Section */}
-      <div className="logo-section" style={{ textAlign: "center", marginBottom: "30px" }}>
-        <img src={logo} alt="QST Health Insurance" className="logo" style={{ width: "180px", objectFit: "contain" }} />
+      <div className="logo-section" style={{ textAlign: "center", marginBottom: "40px" }}>
+        <img src={logo} alt="QST Health Insurance" style={{ width: "160px", objectFit: "contain" }} />
       </div>
       
-      {/* Navigation */}
       <nav style={styles.nav}>
         {menuItems.map((item, index) => (
           <NavLink
@@ -53,7 +45,7 @@ const styles = {
     width: "240px",
     backgroundColor: "#fff",
     borderRight: "1px solid #ddd",
-    padding: "20px 10px",
+    padding: "25px 15px",
     display: "flex",
     flexDirection: "column",
     minHeight: "100vh",
@@ -61,7 +53,7 @@ const styles = {
   nav: {
     display: "flex",
     flexDirection: "column",
-    gap: "10px",
+    gap: "12px",
   },
   link: {
     display: "flex",

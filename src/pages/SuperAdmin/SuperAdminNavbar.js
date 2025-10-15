@@ -6,7 +6,6 @@ export default function SuperAdminNavbar() {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    // Clear token and role if used
     localStorage.removeItem("token");
     localStorage.removeItem("role");
     navigate("/superadmin/login");
@@ -45,8 +44,8 @@ const styles = {
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
-    padding: "0 20px",
-    boxShadow: "0 2px 5px rgba(0,0,0,0.1)",
+    padding: "0 25px",
+    boxShadow: "0 2px 6px rgba(0,0,0,0.15)",
     position: "sticky",
     top: 0,
     zIndex: 100,
@@ -56,7 +55,7 @@ const styles = {
     alignItems: "center",
   },
   logo: {
-    fontSize: "18px",
+    fontSize: "20px",
     fontWeight: "bold",
   },
   right: {
@@ -67,23 +66,25 @@ const styles = {
   profileBtn: {
     display: "flex",
     alignItems: "center",
-    backgroundColor: "#10b981", // green for profile
+    backgroundColor: "#10b981", // green
     color: "#fff",
     border: "none",
-    padding: "6px 12px",
+    padding: "6px 14px",
     borderRadius: "6px",
     cursor: "pointer",
     fontSize: "14px",
+    transition: "0.3s",
   },
   logoutBtn: {
     display: "flex",
     alignItems: "center",
-    backgroundColor: "#ef4444", // red for logout
+    backgroundColor: "#ef4444", // red
     color: "#fff",
     border: "none",
-    padding: "6px 12px",
+    padding: "6px 14px",
     borderRadius: "6px",
     cursor: "pointer",
     fontSize: "14px",
+    transition: "0.3s",
   },
 };
