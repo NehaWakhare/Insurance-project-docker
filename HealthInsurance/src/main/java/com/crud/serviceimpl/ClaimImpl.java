@@ -30,10 +30,10 @@ public class ClaimImpl implements ClaimService {
         return claimRepo.save(claim);
 
     }
-    
 
     @Override
     public List<Claim> getClaimsByUserId(Long userId) {
+
         return claimRepo.findByUserUserId(userId);
     }
 

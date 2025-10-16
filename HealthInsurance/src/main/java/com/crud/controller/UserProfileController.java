@@ -10,7 +10,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/user-profiles")
-@CrossOrigin(value = "http://localhost:3000")
+
 public class UserProfileController {
     @Autowired
     private UserProfileService userProfileService;
@@ -33,10 +33,7 @@ public class UserProfileController {
         return userProfileService.getProfileByUserId(userId);
     }
 
-    @GetMapping
-    public List<UserProfile> getAllUserProfiles() {
-        return userProfileService.getAllUserProfiles();
-    }
+
 
     @PutMapping("/{id}")
     public UserProfile updateUserProfile(@PathVariable Long id, @RequestBody UserProfile updatedProfile) {

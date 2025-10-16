@@ -11,6 +11,10 @@ public interface UserPolicyRepository extends JpaRepository<UserPolicy, Long> {
     Optional<UserPolicy> findByUserId(Long userId);
     List<UserPolicy> findAllByUserId(Long userId);
 
+    List<UserPolicy> findByPolicyPlanId(Long policyPlanId);
+
+
+
 
 
 }

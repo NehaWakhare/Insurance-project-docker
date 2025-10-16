@@ -36,8 +36,6 @@ public class UserPolicyController {
                 userPolicy.getNominee(),
                 userPolicy.getNomineeRelation()
         );
-
-
         return ResponseEntity.ok(response);
     }
 
@@ -59,7 +57,6 @@ public class UserPolicyController {
 
         return ResponseEntity.ok(policies);
     }
-
 
     @GetMapping("/all")
     public ResponseEntity<List<UserPolicyResponse>> getAllPolicies() {
@@ -101,10 +98,12 @@ public class UserPolicyController {
         return ResponseEntity.ok(response);
     }
 
-
     @DeleteMapping("/delete/{policyId}")
     public ResponseEntity<String> deletePolicy(@PathVariable Long policyId) {
         userPolicyService.deletePolicy(policyId);
         return ResponseEntity.ok("Policy with ID " + policyId + " deleted successfully.");
     }
+
+
+
 }

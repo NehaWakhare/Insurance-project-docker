@@ -1,5 +1,6 @@
 package com.crud.service;
 
+import com.crud.dto.PolicyPlanWithBuyersResponse;
 import com.crud.entity.Admin;
 import com.crud.entity.UserPolicy;
 import com.crud.enums.AdminStatus;
@@ -20,6 +21,7 @@ public interface AdminService {
     UserPolicy rejectPolicy(Long policyId);
     UserPolicy updateNomineeDetails(Long policyId, String nominee, String nomineeRelation);
     void expireExpiredPolicies();
+
 
     }
 

@@ -42,4 +42,6 @@ public class AdminProfileController {
         adminService.deleteAdmin(id);
         return "Admin deleted with id " + id;
     }
+
+
 }

@@ -1,10 +1,16 @@
 package com.crud.serviceimpl;
 
 import com.crud.dto.PolicyPlanRequest;
+import com.crud.dto.PolicyPlanWithBuyersResponse;
+import com.crud.dto.UserDetailsResponse;
 import com.crud.entity.Admin;
 import com.crud.entity.PolicyPlan;
+import com.crud.entity.UserPolicy;
+import com.crud.entity.UserProfile;
 import com.crud.repository.AdminRepository;
 import com.crud.repository.PolicyPlanRepository;
+import com.crud.repository.UserPolicyRepository;
+import com.crud.repository.UserProfileRepository;
 import com.crud.service.PolicyPlanservice;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +21,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class PolicyPlanImpl implements PolicyPlanservice {
@@ -24,6 +31,13 @@ public class PolicyPlanImpl implements PolicyPlanservice {
 
     @Autowired
     private AdminRepository adminRepository;
+
+    @Autowired
+    private UserPolicyRepository userPolicyRepository;
+
+    @Autowired
+    private UserProfileRepository userProfileRepository;
+
 
     private final String uploadDir = System.getProperty("user.home") + "/policy_uploads/";
 
@@ -66,10 +80,10 @@ public class PolicyPlanImpl implements PolicyPlanservice {
         PolicyPlan existing = policyPlanRepository.findById(planId)
                 .orElseThrow(() -> new RuntimeException("Policy not found"));
 
-        if (!existing.getAdmin().getId().equals(adminId)) {
+       /* if (!existing.getAdmin().getId().equals(adminId)) {
             throw new RuntimeException("Cannot delete another admin's policy");
         }
-
+*/
         policyPlanRepository.delete(existing);
     }
 
@@ -97,7 +111,6 @@ public class PolicyPlanImpl implements PolicyPlanservice {
     }
 
     // -------------------- FILE UPLOAD METHODS --------------------
-
     @Override
     public PolicyPlan storePolicyWithImage(MultipartFile file, Long adminId, String policyJson) throws Exception {
         ObjectMapper mapper = new ObjectMapper();
@@ -146,5 +159,35 @@ public class PolicyPlanImpl implements PolicyPlanservice {
         }
 
         return plan;
+    }
+
+    @Override
+    public PolicyPlanWithBuyersResponse getPolicyPlanWithBuyers(Long planId) {
+         PolicyPlan plan = policyPlanRepository.findById(planId)
+                .orElseThrow(() -> new RuntimeException("Policy plan not found"));
+
+        List<UserPolicy> userPolicies = userPolicyRepository.findByPolicyPlanId(planId);
+
+        List<UserDetailsResponse> buyers = userPolicies.stream()
+                .map(up -> {
+                    UserProfile user = userProfileRepository.findById(up.getUserId())
+                            .orElseThrow(() -> new RuntimeException("User not found"));
+                    return new UserDetailsResponse(
+                            user.getId(),
+                            user.getName(),
+                            user.getEmail()
+                    );
+                })
+                .collect(Collectors.toList());
+
+        return new PolicyPlanWithBuyersResponse(
+                plan.getId(),
+                plan.getPolicyName(),
+                plan.getPolicyType(),
+                plan.getCoverage(),
+                plan.getPremium(),
+                plan.getDurationInYears(),
+                buyers
+        );
     }
 }

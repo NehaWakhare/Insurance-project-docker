@@ -1,7 +1,10 @@
 package com.crud.controller;
 
+import com.crud.dto.PolicyPlanWithBuyersResponse;
+import com.crud.dto.UserPolicyResponse;
 import com.crud.entity.PolicyPlan;
 import com.crud.service.PolicyPlanservice;
+import com.crud.service.UserPolicyService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -22,22 +25,23 @@ import java.util.List;
 public class AdminPolicyController {
 
     @Autowired
-    private PolicyPlanservice service;
+    private PolicyPlanservice policyPlanservice;
+
 
     private final ObjectMapper mapper = new ObjectMapper();
 
-    // -------------------- CREATE --------------------
+
     @PostMapping("/{adminId}/policy-plans")
     public ResponseEntity<PolicyPlan> createPolicy(
             @PathVariable Long adminId,
             @RequestParam("policy") String policyJson,
             @RequestParam(value = "image", required = false) MultipartFile file
     ) throws Exception {
-        PolicyPlan plan = service.storePolicyWithImage(file, adminId, policyJson);
+        PolicyPlan plan = policyPlanservice.storePolicyWithImage(file, adminId, policyJson);
         return ResponseEntity.ok(plan);
     }
 
-    // -------------------- UPDATE --------------------
+
     @PutMapping("/{adminId}/policy-plans/{planId}")
     public ResponseEntity<PolicyPlan> updatePolicy(
             @PathVariable Long adminId,
@@ -45,38 +49,38 @@ public class AdminPolicyController {
             @RequestParam("policy") String policyJson,
             @RequestParam(value = "image", required = false) MultipartFile file
     ) throws Exception {
-        PolicyPlan plan = service.updatePolicyWithImage(planId, file, policyJson, adminId);
+        PolicyPlan plan = policyPlanservice.updatePolicyWithImage(planId, file, policyJson, adminId);
         return ResponseEntity.ok(plan);
     }
 
-    // -------------------- DELETE --------------------
+
     @DeleteMapping("/{adminId}/policy-plans/{planId}")
     public ResponseEntity<String> deletePolicy(
             @PathVariable Long adminId,
             @PathVariable Long planId
     ) {
-        service.deletePlan(planId, adminId);
+        policyPlanservice.deletePlan(planId, adminId);
         return ResponseEntity.ok("Policy deleted successfully");
     }
 
-    // -------------------- GET ALL --------------------
+
     @GetMapping("/policy-plans/all")
     public ResponseEntity<List<PolicyPlan>> getAllPolicies() {
-        List<PolicyPlan> plans = service.getAllPlans();
+        List<PolicyPlan> plans = policyPlanservice.getAllPlans();
         return ResponseEntity.ok(plans);
     }
 
-    // -------------------- GET BY ADMIN --------------------
+
     @GetMapping("/{adminId}/policy-plans")
     public ResponseEntity<List<PolicyPlan>> getPoliciesByAdmin(@PathVariable Long adminId) {
-        List<PolicyPlan> plans = service.getPlansByAdmin(adminId);
+        List<PolicyPlan> plans = policyPlanservice.getPlansByAdmin(adminId);
         return ResponseEntity.ok(plans);
     }
 
     // -------------------- VIEW IMAGE --------------------
     @GetMapping("/policy-plans/view-image/{planId}")
     public ResponseEntity<Resource> viewPolicyImage(@PathVariable Long planId) throws IOException {
-        PolicyPlan plan = service.getPlanById(planId);
+        PolicyPlan plan = policyPlanservice.getPlanById(planId);
         String imagePath = plan.getImageUrl();
         if (imagePath == null || imagePath.isEmpty()) return ResponseEntity.notFound().build();
 
@@ -91,10 +95,10 @@ public class AdminPolicyController {
                 .body(resource);
     }
 
-    // -------------------- DOWNLOAD IMAGE --------------------
-    @GetMapping("/policy-plans/download-image/{planId}")
+
+  /*  @GetMapping("/policy-plans/download-image/{planId}")
     public ResponseEntity<Resource> downloadPolicyImage(@PathVariable Long planId) throws IOException {
-        PolicyPlan plan = service.getPlanById(planId);
+        PolicyPlan plan = policyPlanservice.getPlanById(planId);
         String imagePath = plan.getImageUrl();
         if (imagePath == null || imagePath.isEmpty()) return ResponseEntity.notFound().build();
 
@@ -107,5 +111,13 @@ public class AdminPolicyController {
                 .contentType(MediaType.parseMediaType(contentType))
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + filePath.getFileName() + "\"")
                 .body(resource);
+    }*/
+
+    // Admin views their policy plan with all buyers
+    @GetMapping("/{planId}")
+    public ResponseEntity<PolicyPlanWithBuyersResponse> getPolicyPlanWithBuyers(@PathVariable Long planId) {
+        return ResponseEntity.ok(policyPlanservice.getPolicyPlanWithBuyers(planId));
     }
 }
+
+

@@ -165,13 +165,6 @@ public class AdminController {
         return ResponseEntity.ok(response);
     }
 
-    @Scheduled(cron = "0 0 0 * * ?") // every day at midnight
-    public void expirePolicies() {
-        adminService.expireExpiredPolicies();
-    }
-
-
-
 
 
     // Login (send OTP) -> requires email + password
