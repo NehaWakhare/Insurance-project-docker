@@ -9,18 +9,12 @@ import java.util.List;
 @Repository
 public interface DoctorRepository extends JpaRepository<Doctor, Long> {
 
-    // Get doctor by exact name (case-sensitive)
-    Doctor findByDoctorName(String doctorName);
+    // 1 Find doctors by Hospital city and status
+    List<Doctor> findByHospitalCityAndStatus(String city, String status);
 
-    // Optional: Case-insensitive search
-    List<Doctor> findByDoctorNameIgnoreCaseContaining(String doctorName);
+    //  Find all independent/self doctors (hospital is null)
+    List<Doctor> findByHospitalIsNull();
 
-    // Get doctors by status (e.g., "Available", "On Leave")
-    List<Doctor> findByStatus(String status);
-
-    // Get doctors by location
-    List<Doctor> findByLocation(String location);
-
-    // Optional: Combine filters
-    List<Doctor> findByLocationAndStatus(String location, String status);
+    // Optional: Find doctors under a hospital by status
+    List<Doctor> findByHospitalIdAndStatus(Long hospitalId, String status);
 }

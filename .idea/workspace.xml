@@ -5,30 +5,41 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="845bf92b-1c85-440b-bed8-5bacfa7b65cd" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/controller/HospitalController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/entity/Hospital.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/repository/HospitalRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/service/EmailService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/service/HospitalService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/serviceimpl/EmailServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/serviceimpl/HospitalServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/controller/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/controller/AdminController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/controller/AdminPolicyController.java" beforeDir="false" afterPath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/controller/AdminPolicyController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/controller/AdminProfileController.java" beforeDir="false" afterPath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/controller/AdminProfileController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/controller/UserPolicyController.java" beforeDir="false" afterPath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/controller/UserPolicyController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/controller/UserProfileController.java" beforeDir="false" afterPath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/controller/UserProfileController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/entity/PolicyPlan.java" beforeDir="false" afterPath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/entity/PolicyPlan.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/entity/UserPolicy.java" beforeDir="false" afterPath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/entity/UserPolicy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/repository/AdminRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/repository/AdminRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/repository/PolicyPlanRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/repository/PolicyPlanRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/repository/UserPolicyRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/repository/UserPolicyRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/service/AdminService.java" beforeDir="false" afterPath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/service/AdminService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/service/PolicyPlanservice.java" beforeDir="false" afterPath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/service/PolicyPlanservice.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/service/UserPolicyService.java" beforeDir="false" afterPath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/service/UserPolicyService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/serviceimpl/ClaimImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/serviceimpl/ClaimImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/serviceimpl/PolicyPlanImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/serviceimpl/PolicyPlanImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/controller/AdminController.class" beforeDir="false" afterPath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/controller/AdminController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/controller/AppointmentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/controller/AppointmentController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/controller/DoctorController.java" beforeDir="false" afterPath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/controller/DoctorController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/dto/AppointmentRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/dto/AppointmentRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/dto/DoctorRequestDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/dto/DoctorRequestDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/entity/Appointment.java" beforeDir="false" afterPath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/entity/Appointment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/entity/Doctor.java" beforeDir="false" afterPath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/entity/Doctor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/repository/AppointmentRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/repository/AppointmentRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/repository/DoctorRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/repository/DoctorRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/service/AppointmentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/service/AppointmentService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/service/DoctorService.java" beforeDir="false" afterPath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/service/DoctorService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/serviceimpl/AppointmentServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/serviceimpl/AppointmentServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/serviceimpl/DoctorServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/serviceimpl/DoctorServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/HealthInsurance/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/HealthInsurance/target/classes/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/controller/AdminPolicyController.class" beforeDir="false" afterPath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/controller/AdminPolicyController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/controller/UserPolicyController.class" beforeDir="false" afterPath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/controller/UserPolicyController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/controller/UserProfileController.class" beforeDir="false" afterPath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/controller/UserProfileController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/controller/AppointmentController.class" beforeDir="false" afterPath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/controller/AppointmentController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/controller/DoctorController.class" beforeDir="false" afterPath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/controller/DoctorController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/dto/AppointmentRequest.class" beforeDir="false" afterPath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/dto/AppointmentRequest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/dto/DoctorRequestDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/dto/DoctorRequestDTO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/entity/Appointment.class" beforeDir="false" afterPath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/entity/Appointment.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/entity/Doctor.class" beforeDir="false" afterPath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/entity/Doctor.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/entity/PolicyPlan.class" beforeDir="false" afterPath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/entity/PolicyPlan.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/repository/UserPolicyRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/repository/UserPolicyRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/service/PolicyPlanservice.class" beforeDir="false" afterPath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/service/PolicyPlanservice.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/serviceimpl/PolicyPlanImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/serviceimpl/PolicyPlanImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/repository/AppointmentRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/repository/AppointmentRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/repository/DoctorRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/repository/DoctorRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/service/DoctorService.class" beforeDir="false" afterPath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/service/DoctorService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/serviceimpl/AppointmentServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/serviceimpl/AppointmentServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/serviceimpl/DoctorServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/serviceimpl/DoctorServiceImpl.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,12 +64,12 @@
     &quot;assignee&quot;: &quot;samiksha9911&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/Suyog-Ghadage/InsuranceProject.git&quot;,
-    &quot;accountId&quot;: &quot;c05cac84-d14d-473e-b6be-4b6cf2cde8a4&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/Suyog-Ghadage/InsuranceProject.git",
+    "accountId": "67f81788-7749-49c5-96a5-260f8b9eb68e"
   }
-}</component>
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 5
 }</component>

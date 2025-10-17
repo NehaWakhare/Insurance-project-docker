@@ -1,4 +1,3 @@
-
 package com.crud.serviceimpl;
 
 import com.crud.dto.AppointmentRequest;
@@ -9,6 +8,7 @@ import com.crud.repository.AppointmentRepository;
 import com.crud.repository.DoctorRepository;
 import com.crud.repository.UserProfileRepository;
 import com.crud.service.AppointmentService;
+import com.crud.service.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +26,9 @@ public class AppointmentServiceImpl implements AppointmentService {
     @Autowired
     private UserProfileRepository userProfileRepository;
 
+    @Autowired
+    private EmailService emailService;
+
     @Override
     public Appointment bookAppointment(AppointmentRequest request) {
 
@@ -35,32 +38,46 @@ public class AppointmentServiceImpl implements AppointmentService {
         UserProfile userProfile = userProfileRepository.findById(request.getUserProfileId())
                 .orElseThrow(() -> new RuntimeException("User Profile not found"));
 
-        // Check if the doctor is already booked at this date + time
-        boolean exists = appointmentRepository.existsByDoctorAndAppointmentDateAndAppointmentTime(
+        boolean exists = appointmentRepository.existsByDoctorAndAppointmentDate(
                 doctor,
-                request.getAppointmentDate(),
-                request.getAppointmentTime()
+                request.getAppointmentDate()
         );
 
         if (exists) {
-            throw new RuntimeException("This time slot is already booked for the doctor.");
+            throw new RuntimeException("This date is already booked for the doctor.");
         }
 
         Appointment appointment = new Appointment();
         appointment.setDoctor(doctor);
         appointment.setUserProfile(userProfile);
         appointment.setAppointmentDate(request.getAppointmentDate());
-        appointment.setAppointmentTime(request.getAppointmentTime());
         appointment.setStatus("Scheduled");
+        appointment.setAge(request.getAge());
+        appointment.setGender(request.getGender());
+        appointment.setWeight(request.getWeight());
+        appointment.setReason(request.getReason());
 
-        return appointmentRepository.save(appointment);
+        Appointment savedAppointment = appointmentRepository.save(appointment);
+
+        //  Send email to doctor
+        String subject = "New Appointment Booking Alert";
+        String body = "Hello " + doctor.getDoctorName() + ",\n\n" +
+                "A new appointment has been booked by the user:\n\n" +
+                "Name: " + userProfile.getName() + "\n" +
+                "Email: " + userProfile.getEmail() + "\n" +
+                "Phone: " + (userProfile.getPhone() != null ? userProfile.getPhone() : "N/A") + "\n" +
+                "Appointment Date: " + request.getAppointmentDate() + "\n\n" +
+                "Regards,\nClinic Management System";
+
+        emailService.sendEmail(doctor.getEmail(), subject, body);
+
+        return savedAppointment;
     }
 
     @Override
     public List<Appointment> getAppointmentsByDoctorId(Long doctorId) {
         Doctor doctor = doctorRepository.findById(doctorId)
                 .orElseThrow(() -> new RuntimeException("Doctor not found"));
-
         return appointmentRepository.findByDoctor(doctor);
     }
 
@@ -68,14 +85,11 @@ public class AppointmentServiceImpl implements AppointmentService {
     public List<Appointment> getAppointmentsByUserProfileId(Long userProfileId) {
         UserProfile userProfile = userProfileRepository.findById(userProfileId)
                 .orElseThrow(() -> new RuntimeException("User Profile not found"));
-
         return appointmentRepository.findByUserProfile(userProfile);
     }
 
-    //  New method to get all appointments
     @Override
     public List<Appointment> getAllAppointments() {
         return appointmentRepository.findAll();
     }
 }
- 

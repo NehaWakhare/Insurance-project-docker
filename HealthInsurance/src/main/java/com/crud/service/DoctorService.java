@@ -2,25 +2,23 @@ package com.crud.service;
 
 import com.crud.dto.DoctorRequestDTO;
 import com.crud.entity.Doctor;
+
 import java.util.List;
 
 public interface DoctorService {
+    Doctor createDoctorWithHospital(Long hospitalId, Doctor doctor);
+    Doctor saveSelfDoctor(Doctor doctor);
 
-    // Save doctor using DTO
-    Doctor saveDoctor(DoctorRequestDTO dto);
+    List<Doctor> getDoctorsByHospital(Long hospitalId);
+    List<Doctor> getSelfDoctors();
 
-    // Save doctor directly via entity
-    Doctor saveDoctor(Doctor doctor);
-
-    // Get doctor by ID
     Doctor getDoctorById(Long id);
 
-    // Get all doctors
+    Doctor updateDoctorWithHospital(Long hospitalId, Long doctorId, Doctor doctor);
+    Doctor updateSelfDoctor(Long doctorId, Doctor doctor);
+
     List<Doctor> getAllDoctors();
 
-    // Update doctor
-    Doctor updateDoctor(Long id, Doctor updatedDoctor);
-
-    // Delete doctor by ID
     void deleteDoctor(Long id);
+    Doctor saveDoctor(DoctorRequestDTO dto);
 }
