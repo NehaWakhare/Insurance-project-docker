@@ -1,12 +1,9 @@
 package com.crud.entity;
 
-import com.crud.enums.AdminStatus;
 import com.crud.enums.Role;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,33 +22,25 @@ public class Admin {
     @Column(unique = true, nullable = false)
     private String email;
 
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private String password;
+    private String panNumber;
+
+    private String mobileNumber;
 
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @Column(unique = true, nullable = true)
-    private String gstNumber;
+    @JsonIgnore
+    private String otp; // OTP for login
 
-    @Enumerated(EnumType.STRING)
-    private AdminStatus status = AdminStatus.PENDING;
-
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private String otp; // temporary OTP for login
-
-    //  One-to-One Mapping with AdminProfile
     @OneToOne(mappedBy = "admin", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JsonIgnore
-    @JsonManagedReference
     private AdminProfile profile;
 
-    //  One-to-Many Mapping with PolicyPlan
     @OneToMany(mappedBy = "admin", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<PolicyPlan> policyPlans = new ArrayList<>();
 
-
+    // Getters and Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -61,17 +50,14 @@ public class Admin {
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
 
-    public String getPassword() { return password; }
-    public void setPassword(String password) { this.password = password; }
+    public String getPanNumber() { return panNumber; }
+    public void setPanNumber(String panNumber) { this.panNumber = panNumber; }
+
+    public String getMobileNumber() { return mobileNumber; }
+    public void setMobileNumber(String mobileNumber) { this.mobileNumber = mobileNumber; }
 
     public Role getRole() { return role; }
     public void setRole(Role role) { this.role = role; }
-
-    public String getGstNumber() { return gstNumber; }
-    public void setGstNumber(String gstNumber) { this.gstNumber = gstNumber; }
-
-    public AdminStatus getStatus() { return status; }
-    public void setStatus(AdminStatus status) { this.status = status; }
 
     public String getOtp() { return otp; }
     public void setOtp(String otp) { this.otp = otp; }
@@ -79,12 +65,9 @@ public class Admin {
     public AdminProfile getProfile() { return profile; }
     public void setProfile(AdminProfile profile) {
         this.profile = profile;
-        if (profile != null) {
-            profile.setAdmin(this);
-        }
+        if (profile != null) profile.setAdmin(this);
     }
 
     public List<PolicyPlan> getPolicyPlans() { return policyPlans; }
     public void setPolicyPlans(List<PolicyPlan> policyPlans) { this.policyPlans = policyPlans; }
 }
-

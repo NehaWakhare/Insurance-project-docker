@@ -4,8 +4,6 @@ import com.crud.confg.JwtUtil;
 import com.crud.dto.UserPolicyResponse;
 import com.crud.entity.Admin;
 import com.crud.entity.UserPolicy;
-import com.crud.enums.AdminStatus;
-import com.crud.enums.Role;
 import com.crud.service.AdminService;
 import com.crud.service.UserPolicyService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.util.*;
 
 @RestController
@@ -34,74 +30,147 @@ public class AdminController {
     private JwtUtil jwtUtil;
 
     @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    @Autowired
     private UserPolicyService userPolicyService;
 
-    // DTO for login
+    // DTO for login (email only)
     public static class LoginRequest {
         private String email;
-        private String password;
-
         public String getEmail() { return email; }
         public void setEmail(String email) { this.email = email; }
-
-        public String getPassword() { return password; }
-        public void setPassword(String password) { this.password = password; }
     }
 
     // DTO for OTP verification
     public static class VerifyOtpRequest {
         private String email;
-        private String password;
         private String otp;
 
         public String getEmail() { return email; }
         public void setEmail(String email) { this.email = email; }
 
-        public String getPassword() { return password; }
-        public void setPassword(String password) { this.password = password; }
-
         public String getOtp() { return otp; }
         public void setOtp(String otp) { this.otp = otp; }
     }
 
-    // Register
+    // Register Admin (Super Admin)
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody Admin admin) {
         try {
             Admin saved = adminService.registerAdmin(admin);
+
+            // Send email
+            SimpleMailMessage message = new SimpleMailMessage();
+            message.setTo(admin.getEmail());
+            message.setSubject("Congratulations! Your registration has been successfully completed, and you’ve been added as an Admin on our platform.");
+            message.setText("You can now log in using your registered email address by clicking the link below:\n\n"
+                    + "Email: " + admin.getEmail() + "\n"
+                    + "Login URL: http://your-app-url/login  Login Here"); // Replace with actual login URL
+            mailSender.send(message);
+
             return ResponseEntity.status(HttpStatus.CREATED).body(saved);
         } catch (RuntimeException ex) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
         }
     }
 
-    // Get all admins
+    // Login - generate OTP
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody LoginRequest request) {
+        Optional<Admin> optionalAdmin = adminService.findByEmail(request.getEmail());
+        if (optionalAdmin.isEmpty())
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Admin not found");
+
+        Admin admin = optionalAdmin.get();
+
+        // Generate OTP
+        String otp = String.format("%06d", new Random().nextInt(1_000_000));
+        admin.setOtp(otp);
+        adminService.save(admin);
+
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(admin.getEmail());
+        message.setSubject("Your Login OTP");
+        message.setText("Your OTP is: " + otp);
+        mailSender.send(message);
+
+        return ResponseEntity.ok("OTP sent to email");
+    }
+
+    // Verify OTP + JWT
+    @PostMapping("/verify-otp")
+    public ResponseEntity<?> verifyOtp(@RequestBody VerifyOtpRequest request) {
+        Optional<Admin> optionalAdmin = adminService.findByEmail(request.getEmail());
+        if (optionalAdmin.isEmpty())
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Admin not found");
+
+        Admin admin = optionalAdmin.get();
+
+        if (admin.getOtp() == null || request.getOtp() == null || !request.getOtp().equals(admin.getOtp())) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid OTP");
+        }
+
+        // Clear OTP after login
+        admin.setOtp(null);
+        adminService.save(admin);
+
+        String token = jwtUtil.generateToken(admin.getEmail(), admin.getRole().name());
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("token", token);
+        response.put("email", admin.getEmail());
+        response.put("role", admin.getRole());
+        response.put("id", admin.getId());
+        response.put("username", admin.getUsername());
+
+        return ResponseEntity.ok(response);
+    }
+
+    // ------------------- Other Admin APIs -------------------
+
+    // Get all Admins
     @GetMapping("/all")
     public ResponseEntity<List<Admin>> getAllAdmins() {
         return ResponseEntity.ok(adminService.getAllAdmins());
     }
 
-    // Get pending admins
-    @GetMapping("/pending")
-    public ResponseEntity<List<Admin>> getPendingAdmins() {
-        return ResponseEntity.ok(adminService.getAdminsByStatus(AdminStatus.PENDING));
+    // ------------------- NEW API -------------------
+    // Get Admin by ID
+    @GetMapping("/{adminId}")
+    public ResponseEntity<?> getAdminById(@PathVariable Long adminId) {
+        Optional<Admin> optionalAdmin = adminService.findById(adminId);
+        if (optionalAdmin.isEmpty())
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Admin not found");
+        return ResponseEntity.ok(optionalAdmin.get());
     }
 
-    // Approve Admin
-    @PutMapping("/approve/{id}")
-    public ResponseEntity<?> approveAdmin(@PathVariable Long id) {
-        return ResponseEntity.ok(adminService.updateStatus(id, AdminStatus.APPROVED));
+    // Update Admin
+    @PutMapping("/update/{id}")
+    public ResponseEntity<?> updateAdmin(@PathVariable Long id, @RequestBody Admin updatedAdmin) {
+        Optional<Admin> optionalAdmin = adminService.findById(id);
+        if (optionalAdmin.isEmpty())
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Admin not found");
+
+        Admin existingAdmin = optionalAdmin.get();
+        existingAdmin.setUsername(updatedAdmin.getUsername());
+        existingAdmin.setEmail(updatedAdmin.getEmail());
+        existingAdmin.setPanNumber(updatedAdmin.getPanNumber());
+        existingAdmin.setMobileNumber(updatedAdmin.getMobileNumber());
+        existingAdmin.setRole(updatedAdmin.getRole());
+
+        Admin savedAdmin = adminService.save(existingAdmin);
+        return ResponseEntity.ok(savedAdmin);
     }
 
-    // Reject Admin
-    @PutMapping("/reject/{id}")
-    public ResponseEntity<?> rejectAdmin(@PathVariable Long id) {
-        return ResponseEntity.ok(adminService.updateStatus(id, AdminStatus.REJECTED));
+    // Delete Admin
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deleteAdmin(@PathVariable Long id) {
+        Optional<Admin> optionalAdmin = adminService.findById(id);
+        if (optionalAdmin.isEmpty())
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Admin not found");
+        adminService.deleteById(id);
+        return ResponseEntity.ok("Admin deleted successfully");
     }
 
+    // Update nominee by Admin
     @PutMapping("/update-nominee/{policyId}")
     public ResponseEntity<UserPolicyResponse> updateNomineeByAdmin(
             @PathVariable Long policyId,
@@ -125,12 +194,10 @@ public class AdminController {
         return ResponseEntity.ok(response);
     }
 
-    // Activate user policy by admin
+    // Activate user policy
     @PutMapping("/activate-policy/{policyId}")
     public ResponseEntity<UserPolicyResponse> activatePolicy(@PathVariable Long policyId) {
-        UserPolicy policy = userPolicyService.getPolicyById(policyId);
-        policy.setPolicyStatus("ACTIVE");
-        UserPolicy updated = userPolicyService.updatePolicy(policyId, policy);
+        UserPolicy updated = adminService.activatePolicy(policyId);
 
         UserPolicyResponse response = new UserPolicyResponse(
                 updated.getId(),
@@ -145,12 +212,10 @@ public class AdminController {
         return ResponseEntity.ok(response);
     }
 
-
+    // Reject user policy
     @PutMapping("/reject-policy/{policyId}")
     public ResponseEntity<UserPolicyResponse> rejectPolicy(@PathVariable Long policyId) {
-        UserPolicy policy = userPolicyService.getPolicyById(policyId);
-        policy.setPolicyStatus("REJECTED");
-        UserPolicy updated = userPolicyService.updatePolicy(policyId, policy);
+        UserPolicy updated = adminService.rejectPolicy(policyId);
 
         UserPolicyResponse response = new UserPolicyResponse(
                 updated.getId(),
@@ -165,81 +230,9 @@ public class AdminController {
         return ResponseEntity.ok(response);
     }
 
-
-
-    // Login (send OTP) -> requires email + password
-    @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginRequest request) {
-        Optional<Admin> optionalAdmin = adminService.findByEmail(request.getEmail());
-
-        if (optionalAdmin.isEmpty())
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Admin not found");
-
-        Admin admin = optionalAdmin.get();
-
-        if (admin.getStatus() != AdminStatus.APPROVED)
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Admin not approved by SuperAdmin");
-
-        // Check password
-        if (!passwordEncoder.matches(request.getPassword(), admin.getPassword())) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid password");
-        }
-
-        // If SUPER_ADMIN, skip OTP and return JWT directly
-        if (admin.getRole() == Role.SUPER_ADMIN) {
-            String token = jwtUtil.generateToken(admin.getEmail(), admin.getRole().name());
-            return ResponseEntity.ok(Map.of(
-                    "message", "SUPER_ADMIN login successful",
-                    "token", token
-            ));
-        }
-
-        // Generate OTP (6 digits)
-        String otp = String.format("%06d", new Random().nextInt(1_000_000));
-        admin.setOtp(otp);
-        adminService.save(admin);
-
-        // Send OTP email
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo(admin.getEmail());
-        message.setSubject("Your OTP Code");
-        message.setText("Your OTP is: " + otp);
-        mailSender.send(message);
-
-        return ResponseEntity.ok("OTP sent to email");
-    }
-
-    // Verify OTP + JWT Token -> requires email + password + otp
-    @PostMapping("/verify-otp")
-    public ResponseEntity<?> verifyOtp(@RequestBody VerifyOtpRequest request) {
-        Optional<Admin> optionalAdmin = adminService.findByEmail(request.getEmail());
-
-        if (optionalAdmin.isEmpty())
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Admin not found");
-
-        Admin admin = optionalAdmin.get();
-
-        if (!passwordEncoder.matches(request.getPassword(), admin.getPassword())) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid password");
-        }
-
-        // Null-safe OTP check
-        if (admin.getOtp() == null || request.getOtp() == null || !request.getOtp().equals(admin.getOtp())) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid OTP");
-        }
-
-        // Generate JWT
-        String token = jwtUtil.generateToken(admin.getEmail(), admin.getRole().name());
-
-
-
-        Map<String, Object> response = new HashMap<>();
-        response.put("token", token);
-        response.put("email", admin.getEmail());
-        response.put("role", admin.getRole());
-        response.put("id", admin.getId());
-        response.put("username", admin.getUsername());
-
-        return ResponseEntity.ok(response);
+    // Scheduled task: expire policies daily at midnight
+    @Scheduled(cron = "0 0 0 * * ?")
+    public void expirePolicies() {
+        adminService.expireExpiredPolicies();
     }
 }

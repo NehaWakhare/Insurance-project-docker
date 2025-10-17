@@ -2,19 +2,17 @@ package com.crud.serviceimpl;
 
 import com.crud.entity.Admin;
 import com.crud.entity.UserPolicy;
-import com.crud.enums.AdminStatus;
-import com.crud.enums.Role;
 import com.crud.repository.AdminRepository;
 import com.crud.service.AdminService;
 import com.crud.service.UserPolicyService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 @Service
 public class AdminServiceImpl implements AdminService {
@@ -23,24 +21,18 @@ public class AdminServiceImpl implements AdminService {
     private AdminRepository adminRepository;
 
     @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    @Autowired
     private UserPolicyService userPolicyService;
 
     @Override
     public Admin registerAdmin(Admin admin) {
-        // basic uniqueness checks
         if (adminRepository.findByEmail(admin.getEmail()).isPresent()) {
             throw new RuntimeException("Email already registered");
         }
-        if (admin.getGstNumber() != null && adminRepository.findByGstNumber(admin.getGstNumber()).isPresent()) {
-            throw new RuntimeException("GST number already registered");
+        if (admin.getPanNumber() != null && adminRepository.findByPanNumber(admin.getPanNumber()).isPresent()) {
+            throw new RuntimeException("PAN number already registered");
         }
 
-        admin.setStatus(AdminStatus.PENDING);
-        admin.setPassword(passwordEncoder.encode(admin.getPassword()));
-        admin.setRole(Role.ADMIN);
+        admin.setRole(com.crud.enums.Role.ADMIN);
         return adminRepository.save(admin);
     }
 
@@ -55,30 +47,22 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public List<Admin> getAdminsByStatus(AdminStatus status) {
-        return adminRepository.findByStatus(status);
-    }
-
-    @Override
-    @Transactional
-    public Admin updateStatus(Long adminId, AdminStatus status) {
-        Admin admin = adminRepository.findById(adminId)
-                .orElseThrow(() -> new RuntimeException("Admin not found"));
-        admin.setStatus(status);
-        return adminRepository.save(admin);
-    }
-
-    @Override
-    public Optional<Admin> findByGstNumber(String gstNumber) {
-        return adminRepository.findByGstNumber(gstNumber);
-    }
-
-    @Override
     public Admin save(Admin admin) {
         return adminRepository.save(admin);
     }
 
     @Override
+    public Optional<Admin> findById(Long id) {
+        return adminRepository.findById(id);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        adminRepository.deleteById(id);
+    }
+
+    @Override
+    @Transactional
     public UserPolicy activatePolicy(Long policyId) {
         UserPolicy policy = userPolicyService.getPolicyById(policyId);
         policy.setPolicyStatus("ACTIVE");
@@ -86,6 +70,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
+    @Transactional
     public UserPolicy rejectPolicy(Long policyId) {
         UserPolicy policy = userPolicyService.getPolicyById(policyId);
         policy.setPolicyStatus("REJECTED");
@@ -109,4 +94,3 @@ public class AdminServiceImpl implements AdminService {
         }
     }
 }
-

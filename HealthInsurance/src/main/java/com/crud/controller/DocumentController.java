@@ -5,7 +5,6 @@ import com.crud.service.DocumentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +23,6 @@ public class DocumentController {
     @Autowired
     private DocumentService documentService;
 
-    // Upload
     @PostMapping("/upload")
     public ResponseEntity<?> uploadDocument(
             @RequestParam("file") MultipartFile file,
@@ -33,28 +31,23 @@ public class DocumentController {
     ) {
         try {
             Document saved = documentService.storeFile(file, userId, documentName);
-            return new ResponseEntity<>(saved, HttpStatus.CREATED);
+            return ResponseEntity.status(201).body(saved);
         } catch (Exception e) {
-            e.printStackTrace();
-            return new ResponseEntity<>("Failed to upload document: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+            return ResponseEntity.status(500).body("Failed to upload document: " + e.getMessage());
         }
     }
 
-    // Get all
     @GetMapping
     public ResponseEntity<List<Document>> getAllDocuments() {
-        List<Document> documents = documentService.getAllDocuments();
-        return ResponseEntity.ok(documents);
+        return ResponseEntity.ok(documentService.getAllDocuments());
     }
 
-    // Get by documentId
     @GetMapping("/{documentId}")
     public ResponseEntity<?> getDocumentById(@PathVariable Long documentId) {
         try {
-            Document document = documentService.getDocumentById(documentId);
-            return ResponseEntity.ok(document);
+            return ResponseEntity.ok(documentService.getDocumentById(documentId));
         } catch (Exception e) {
-            return new ResponseEntity<>("Document not found", HttpStatus.NOT_FOUND);
+            return ResponseEntity.status(404).body("Document not found");
         }
     }
 
@@ -62,75 +55,73 @@ public class DocumentController {
     @GetMapping("/view/{documentId}")
     public ResponseEntity<Resource> viewDocument(@PathVariable Long documentId) {
         try {
-            Document document = documentService.getDocumentById(documentId);
-            Path filePath = Paths.get(document.getFilePath()).normalize();
+            Document doc = documentService.getDocumentById(documentId);
             Resource resource = documentService.loadFileAsResource(documentId);
 
-            String contentType;
-            try {
-                contentType = Files.probeContentType(filePath);
-            } catch (IOException e) {
-                contentType = "application/octet-stream";
-            }
+            Path filePath = Paths.get(doc.getFilePath()).normalize();
+            String contentType = Files.probeContentType(filePath);
+            if (contentType == null) contentType = "application/octet-stream";
+
+            String filename = java.net.URLEncoder.encode(doc.getOriginalFileName(),
+                    java.nio.charset.StandardCharsets.UTF_8).replaceAll("\\+", "%20");
 
             return ResponseEntity.ok()
                     .contentType(MediaType.parseMediaType(contentType))
-                    .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + document.getOriginalFileName() + "\"")
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename*=UTF-8''" + filename)
                     .body(resource);
 
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            return ResponseEntity.status(500).body(null);
         }
     }
 
-    // Download
+    // Download document
     @GetMapping("/download/{documentId}")
     public ResponseEntity<Resource> downloadDocument(@PathVariable Long documentId) {
         try {
-            Document document = documentService.getDocumentById(documentId);
-            Path filePath = Paths.get(document.getFilePath()).normalize();
+            Document doc = documentService.getDocumentById(documentId);
             Resource resource = documentService.loadFileAsResource(documentId);
 
-            String contentType;
-            try {
-                contentType = Files.probeContentType(filePath);
-            } catch (IOException e) {
-                contentType = "application/octet-stream";
-            }
+            Path filePath = Paths.get(doc.getFilePath()).normalize();
+            String contentType = Files.probeContentType(filePath);
+            if (contentType == null) contentType = "application/octet-stream";
+
+            String filename = java.net.URLEncoder.encode(doc.getOriginalFileName(),
+                    java.nio.charset.StandardCharsets.UTF_8).replaceAll("\\+", "%20");
 
             return ResponseEntity.ok()
                     .contentType(MediaType.parseMediaType(contentType))
-                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + document.getOriginalFileName() + "\"")
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename*=UTF-8''" + filename)
                     .body(resource);
 
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            return ResponseEntity.status(500).body(null);
         }
     }
 
-    // Update
-    @PutMapping("/{documentId}")
+    @PutMapping(value = "/{documentId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> updateDocument(
             @PathVariable Long documentId,
             @RequestParam(value = "file", required = false) MultipartFile file,
             @RequestParam(value = "documentName", required = false) String documentName
     ) {
+        if ((file == null || file.isEmpty()) && (documentName == null || documentName.isEmpty())) {
+            return ResponseEntity.badRequest().body("Provide a file or document name to update.");
+        }
         try {
-            Document updated = documentService.updateDocument(documentId, file, documentName);
-            return ResponseEntity.ok(updated);
+            return ResponseEntity.ok(documentService.updateDocument(documentId, file, documentName));
         } catch (Exception e) {
-            return new ResponseEntity<>("Failed to update document: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+            return ResponseEntity.status(500).body("Failed to update document: " + e.getMessage());
         }
     }
 
-    // Delete
     @DeleteMapping("/{documentId}")
     public ResponseEntity<?> deleteDocument(@PathVariable Long documentId) {
         try {
             documentService.deleteDocument(documentId);
             return ResponseEntity.ok("Document deleted successfully");
         } catch (Exception e) {
-            return new ResponseEntity<>("Failed to delete document: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+            return ResponseEntity.status(500).body("Failed to delete document: " + e.getMessage());
         }
     }
 }
