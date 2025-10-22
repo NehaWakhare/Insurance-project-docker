@@ -1,16 +1,10 @@
 package com.crud.entity;
 
 import com.crud.enums.Role;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "admins")
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Admin {
 
     @Id
@@ -18,29 +12,21 @@ public class Admin {
     private Long id;
 
     private String username;
-
-    @Column(unique = true, nullable = false)
     private String email;
-
     private String panNumber;
-
     private String mobileNumber;
 
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @JsonIgnore
-    private String otp; // OTP for login
+    // OTP for login
+    private String otp;
 
-    @OneToOne(mappedBy = "admin", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    @JsonIgnore
+    // Bidirectional One-to-One mapping with AdminProfile
+    @OneToOne(mappedBy = "admin", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private AdminProfile profile;
 
-    @OneToMany(mappedBy = "admin", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore
-    private List<PolicyPlan> policyPlans = new ArrayList<>();
-
-    // Getters and Setters
+    // Getters & Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -63,11 +49,5 @@ public class Admin {
     public void setOtp(String otp) { this.otp = otp; }
 
     public AdminProfile getProfile() { return profile; }
-    public void setProfile(AdminProfile profile) {
-        this.profile = profile;
-        if (profile != null) profile.setAdmin(this);
-    }
-
-    public List<PolicyPlan> getPolicyPlans() { return policyPlans; }
-    public void setPolicyPlans(List<PolicyPlan> policyPlans) { this.policyPlans = policyPlans; }
+    public void setProfile(AdminProfile profile) { this.profile = profile; }
 }

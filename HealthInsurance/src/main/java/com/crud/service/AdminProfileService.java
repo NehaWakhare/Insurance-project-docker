@@ -4,7 +4,7 @@ import com.crud.entity.AdminProfile;
 import java.util.List;
 
 public interface AdminProfileService {
-    AdminProfile createAdmin(AdminProfile admin);
+    AdminProfile createAdmin(AdminProfile adminProfile);
     List<AdminProfile> getAllAdmins();
     AdminProfile getAdminById(Long id);
     AdminProfile updateAdmin(Long id, AdminProfile adminDetails);

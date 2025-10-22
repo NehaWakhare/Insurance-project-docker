@@ -21,16 +21,24 @@ public class AdminProfileServiceImpl implements AdminProfileService {
 
     @Override
     public AdminProfile createAdmin(AdminProfile adminProfile) {
-        // Fetch full Admin object if admin ID is provided
-        if (adminProfile.getAdmin() != null && adminProfile.getAdmin().getId() != null) {
-            Long adminId = adminProfile.getAdmin().getId();
-            Admin fullAdmin = adminRepository.findById(adminId)
-                    .orElseThrow(() -> new RuntimeException("Admin not found with id " + adminId));
+        //  Check if Admin exists
+        Admin admin = adminRepository.findByEmail(adminProfile.getEmail()).orElse(null);
 
-            adminProfile.setAdmin(fullAdmin);
-            fullAdmin.setProfile(adminProfile);
+        if (admin == null) {
+            throw new RuntimeException("Admin not found for email: " + adminProfile.getEmail() +
+                    ". Please register admin first before creating profile.");
         }
 
+        // Prevent duplicate profile
+        if (admin.getProfile() != null) {
+            throw new RuntimeException("Admin profile already exists for email: " + admin.getEmail());
+        }
+
+        // Link profile to admin
+        adminProfile.setAdmin(admin);
+        admin.setProfile(adminProfile);
+
+        // Save profile
         return adminProfileRepository.save(adminProfile);
     }
 
@@ -47,35 +55,34 @@ public class AdminProfileServiceImpl implements AdminProfileService {
 
     @Override
     public AdminProfile updateAdmin(Long id, AdminProfile adminDetails) {
-        AdminProfile adminProfile = getAdminById(id);
+        AdminProfile existingProfile = getAdminById(id);
 
-        adminProfile.setName(adminDetails.getName());
-        adminProfile.setEmail(adminDetails.getEmail());
-        adminProfile.setPassword(adminDetails.getPassword());
-        adminProfile.setPhoneNumber(adminDetails.getPhoneNumber());
-        adminProfile.setDateOfBirth(adminDetails.getDateOfBirth());
-        adminProfile.setCompanyName(adminDetails.getCompanyName());
-        adminProfile.setCompanyType(adminDetails.getCompanyType());
-        adminProfile.setGstNumber(adminDetails.getGstNumber());
-        adminProfile.setPanNumber(adminDetails.getPanNumber());
-        adminProfile.setHeadOfficeAddress(adminDetails.getHeadOfficeAddress());
-        adminProfile.setCity(adminDetails.getCity());
-        adminProfile.setState(adminDetails.getState());
-        adminProfile.setCountry(adminDetails.getCountry());
-        adminProfile.setPinCode(adminDetails.getPinCode());
-        adminProfile.setCorrespondenceAddress(adminDetails.getCorrespondenceAddress());
-        adminProfile.setPermanentAddress(adminDetails.getPermanentAddress());
+        existingProfile.setName(adminDetails.getName());
+        existingProfile.setEmail(adminDetails.getEmail());
+        existingProfile.setPassword(adminDetails.getPassword());
+        existingProfile.setPhoneNumber(adminDetails.getPhoneNumber());
+        existingProfile.setDateOfBirth(adminDetails.getDateOfBirth());
+        existingProfile.setCompanyName(adminDetails.getCompanyName());
+        existingProfile.setCompanyType(adminDetails.getCompanyType());
+        existingProfile.setGstNumber(adminDetails.getGstNumber());
+        existingProfile.setPanNumber(adminDetails.getPanNumber());
+        existingProfile.setHeadOfficeAddress(adminDetails.getHeadOfficeAddress());
+        existingProfile.setCity(adminDetails.getCity());
+        existingProfile.setState(adminDetails.getState());
+        existingProfile.setCountry(adminDetails.getCountry());
+        existingProfile.setPinCode(adminDetails.getPinCode());
+        existingProfile.setCorrespondenceAddress(adminDetails.getCorrespondenceAddress());
+        existingProfile.setPermanentAddress(adminDetails.getPermanentAddress());
 
-        // Update linked Admin if provided
-        if (adminDetails.getAdmin() != null && adminDetails.getAdmin().getId() != null) {
-            Long adminId = adminDetails.getAdmin().getId();
-            Admin fullAdmin = adminRepository.findById(adminId)
-                    .orElseThrow(() -> new RuntimeException("Admin not found with id " + adminId));
-            adminProfile.setAdmin(fullAdmin);
-            fullAdmin.setProfile(adminProfile);
+        // Update linked Admin
+        if (existingProfile.getAdmin() != null) {
+            Admin admin = existingProfile.getAdmin();
+            admin.setUsername(existingProfile.getName());
+            admin.setEmail(existingProfile.getEmail());
+            adminRepository.save(admin);
         }
 
-        return adminProfileRepository.save(adminProfile);
+        return adminProfileRepository.save(existingProfile);
     }
 
     @Override

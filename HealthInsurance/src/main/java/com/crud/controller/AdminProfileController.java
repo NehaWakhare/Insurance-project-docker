@@ -14,18 +14,15 @@ public class AdminProfileController {
     @Autowired
     private AdminProfileService adminService;
 
-
     @PostMapping("/save")
     public AdminProfile createAdmin(@RequestBody AdminProfile admin) {
         return adminService.createAdmin(admin);
     }
 
-
     @GetMapping("/all")
     public List<AdminProfile> getAllAdmins() {
         return adminService.getAllAdmins();
     }
-
 
     @GetMapping("/{id}")
     public AdminProfile getAdminById(@PathVariable Long id) {
@@ -42,6 +39,4 @@ public class AdminProfileController {
         adminService.deleteAdmin(id);
         return "Admin deleted with id " + id;
     }
-
-
 }

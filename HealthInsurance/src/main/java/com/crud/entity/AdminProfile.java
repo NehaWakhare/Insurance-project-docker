@@ -1,11 +1,13 @@
 package com.crud.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "admin_profiles")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class AdminProfile {
 
     @Id
@@ -14,10 +16,8 @@ public class AdminProfile {
 
     private String name;
     private String email;
-    private String password;
+    private String password; // only in profile
     private String phoneNumber;
-
-    // Extra Info
     private LocalDate dateOfBirth;
     private String companyName;
     private String companyType;
@@ -31,38 +31,16 @@ public class AdminProfile {
     private String correspondenceAddress;
     private String permanentAddress;
 
-    //  Mapping back to Admin
-    @OneToOne
+    // One-to-One mapping back to Admin
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "admin_id", referencedColumnName = "id")
-    @JsonBackReference
+    @JsonIgnoreProperties("profile")
+    @JsonIgnore
     private Admin admin;
 
-    public AdminProfile() {}
-
-    public String getCorrespondenceAddress() {
-        return correspondenceAddress;
-    }
-
-    public void setCorrespondenceAddress(String correspondenceAddress) {
-        this.correspondenceAddress = correspondenceAddress;
-    }
-
-    public String getPermanentAddress() {
-        return permanentAddress;
-    }
-
-    public void setPermanentAddress(String permanentAddress) {
-        this.permanentAddress = permanentAddress;
-    }
-
+    // Getters & Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
-
-    public String getGstNumber() { return gstNumber; }
-    public void setGstNumber(String gstNumber) { this.gstNumber = gstNumber; }
-
-    public String getPanNumber() { return panNumber; }
-    public void setPanNumber(String panNumber) { this.panNumber = panNumber; }
 
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
@@ -85,6 +63,9 @@ public class AdminProfile {
     public String getCompanyType() { return companyType; }
     public void setCompanyType(String companyType) { this.companyType = companyType; }
 
+    public String getPanNumber() { return panNumber; }
+    public void setPanNumber(String panNumber) { this.panNumber = panNumber; }
+
     public String getHeadOfficeAddress() { return headOfficeAddress; }
     public void setHeadOfficeAddress(String headOfficeAddress) { this.headOfficeAddress = headOfficeAddress; }
 
@@ -99,6 +80,15 @@ public class AdminProfile {
 
     public String getPinCode() { return pinCode; }
     public void setPinCode(String pinCode) { this.pinCode = pinCode; }
+
+    public String getGstNumber() { return gstNumber; }
+    public void setGstNumber(String gstNumber) { this.gstNumber = gstNumber; }
+
+    public String getCorrespondenceAddress() { return correspondenceAddress; }
+    public void setCorrespondenceAddress(String correspondenceAddress) { this.correspondenceAddress = correspondenceAddress; }
+
+    public String getPermanentAddress() { return permanentAddress; }
+    public void setPermanentAddress(String permanentAddress) { this.permanentAddress = permanentAddress; }
 
     public Admin getAdmin() { return admin; }
     public void setAdmin(Admin admin) { this.admin = admin; }
