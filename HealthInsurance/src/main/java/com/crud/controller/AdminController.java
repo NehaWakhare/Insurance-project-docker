@@ -1,9 +1,11 @@
 package com.crud.controller;
 
 import com.crud.confg.JwtUtil;
+import com.crud.dto.PasswordLoginRequest;
 import com.crud.dto.UserPolicyResponse;
 import com.crud.entity.Admin;
 import com.crud.entity.UserPolicy;
+import com.crud.enums.Role;
 import com.crud.service.AdminService;
 import com.crud.service.UserPolicyService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -31,6 +34,9 @@ public class AdminController {
 
     @Autowired
     private UserPolicyService userPolicyService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     // DTO for login (email only)
     public static class LoginRequest {
@@ -72,16 +78,33 @@ public class AdminController {
         }
     }
 
-    // Login - generate OTP
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginRequest request) {
+    public ResponseEntity<?> login(@RequestBody PasswordLoginRequest request) {
         Optional<Admin> optionalAdmin = adminService.findByEmail(request.getEmail());
         if (optionalAdmin.isEmpty())
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Admin not found");
 
         Admin admin = optionalAdmin.get();
 
-        // Generate OTP
+        // If SUPER_ADMIN → check password
+        if (admin.getRole() == Role.SUPER_ADMIN) {
+            if (admin.getPassword() == null || !passwordEncoder.matches(request.getPassword(), admin.getPassword())) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid password");
+            }
+
+            String token = jwtUtil.generateToken(admin.getEmail(), admin.getRole().name());
+
+            Map<String, Object> response = new HashMap<>();
+            response.put("token", token);
+            response.put("email", admin.getEmail());
+            response.put("role", admin.getRole());
+            response.put("id", admin.getId());
+            response.put("username", admin.getUsername());
+
+            return ResponseEntity.ok(response);
+        }
+
+        // ✅ Otherwise (normal admin) → send OTP
         String otp = String.format("%06d", new Random().nextInt(1_000_000));
         admin.setOtp(otp);
         adminService.save(admin);

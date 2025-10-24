@@ -16,7 +16,7 @@ public class Appointment {
     @Column(name = "appointment_date", nullable = false)
     private LocalDate appointmentDate;
 
-    private String status; // Scheduled, Completed, Cancelled
+    private String status;   // Scheduled, Completed, Cancelled
 
     // Patient details
     private Integer age;

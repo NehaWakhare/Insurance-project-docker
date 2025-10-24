@@ -32,6 +32,7 @@ public class DoctorServiceImpl implements DoctorService {
         doctor.setHospital(null); // independent doctor
         return doctorRepository.save(doctor);
     }
+
     @Override
     public Doctor updateSelfDoctor(Long doctorId, Doctor updatedDoctor) {
         Optional<Doctor> existingDoctorOpt = doctorRepository.findById(doctorId);
