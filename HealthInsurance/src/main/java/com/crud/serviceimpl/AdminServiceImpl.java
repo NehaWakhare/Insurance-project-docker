@@ -1,12 +1,15 @@
 package com.crud.serviceimpl;
 
 import com.crud.entity.Admin;
+import com.crud.entity.UserPolicy;
 import com.crud.enums.Role;
 import com.crud.repository.AdminRepository;
 import com.crud.service.AdminService;
+import com.crud.service.UserPolicyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,6 +18,8 @@ public class AdminServiceImpl implements AdminService {
 
     @Autowired
     private AdminRepository adminRepository;
+    @Autowired
+    private UserPolicyService userPolicyService;
 
     @Override
     public Admin registerAdmin(Admin admin) {
@@ -56,20 +61,39 @@ public class AdminServiceImpl implements AdminService {
         return adminRepository.findByRole(role);
     }
 
+
+    @Override
+    public UserPolicy activatePolicy(Long policyId) {
+        UserPolicy policy = userPolicyService.getPolicyById(policyId);
+        policy.setPolicyStatus("ACTIVE");
+        return userPolicyService.updatePolicy(policyId, policy);
+    }
+
+    @Override
+    public UserPolicy rejectPolicy(Long policyId) {
+        UserPolicy policy = userPolicyService.getPolicyById(policyId);
+        policy.setPolicyStatus("REJECTED");
+        return userPolicyService.updatePolicy(policyId, policy);
+    }
+
+    @Override
+    public UserPolicy updateNomineeDetails(Long policyId, String nominee, String nomineeRelation) {
+        return userPolicyService.updateNomineeDetails(policyId, nominee, nomineeRelation);
+    }
+
     @Override
     public void expireExpiredPolicies() {
-        // Implement policy expiration logic
+        List<UserPolicy> activePolicies = userPolicyService.getAllPolicies();
+        for (UserPolicy policy : activePolicies) {
+            if (policy.getEndDate().isBefore(LocalDate.now()) &&
+                    "ACTIVE".equalsIgnoreCase(policy.getPolicyStatus())) {
+                policy.setPolicyStatus("INACTIVE");
+                userPolicyService.updatePolicy(policy.getId(), policy);
+            }
+        }
     }
 
-    @Override
-    public com.crud.entity.UserPolicy activatePolicy(Long policyId) {
-        // Implement activate policy logic
-        return null;
-    }
-
-    @Override
-    public com.crud.entity.UserPolicy rejectPolicy(Long policyId) {
-        // Implement reject policy logic
-        return null;
-    }
 }
+
+
+
