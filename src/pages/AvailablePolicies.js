@@ -44,7 +44,7 @@ const AvailablePolicies = () => {
 
     const purchaseData = {
       userId,
-      policyPlanId: policy.id,
+      policyId: policy.id,
       nominee,
       nomineeRelation,
     };
@@ -61,7 +61,7 @@ const AvailablePolicies = () => {
       .then(() => {
         setSuccessMessage("✅ Successfully purchased! Waiting for admin approval.");
         setTimeout(() => {
-          navigate("/dashboard/mypolicies");
+          navigate("/dashboard/policies");
         }, 1500);
       })
       .catch((err) => {
