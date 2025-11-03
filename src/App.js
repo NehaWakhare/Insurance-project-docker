@@ -10,7 +10,7 @@ import Teleconsultation from "./pages/Teleconsultation";
 import Claims from "./pages/Claims";
 import UserDashboard from "./pages/User/dashboard/UserDashboard";
 import { AuthProvider } from "./context/AuthContext";
-
+import HealthPlans from "./components/HealthPlans";
 // Admin Pages
 
 import AdminLogin from "./pages/Admin/AdminLogin";
@@ -61,6 +61,7 @@ function App() {
         <Route path="/claims" element={<Claims />} />
         <Route path="/hospital-search" element={<HospitalSearch />} />
         <Route path="/teleconsultation" element={<Teleconsultation />} />
+          <Route path="/health-plans" element={<HealthPlans />} />
         <Route
           path="/wellness"
           element={

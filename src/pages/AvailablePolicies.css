@@ -1,78 +1,157 @@
-.policy-details-container {
-  max-width: 900px;
-  margin: 40px auto;
-  padding: 25px;
-  border: 1px solid #ddd;
-  border-radius: 12px;
-  background-color: #fff;
-  font-family: "Inter", sans-serif;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-}
-
-.policy-name {
-  text-align: center;
-  margin-bottom: 25px;
-  color: #1a1a1a;
-}
-
-.policy-content {
+.available-policies-container {
   display: flex;
-  align-items: flex-start;
-  gap: 30px;
-  margin-bottom: 30px;
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
+  min-height: 90vh;
+  background: #f5f7fa;
 }
 
-.image-container {
-  flex: 1;
+.policy-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+  width: 100%;
+}
+
+.policy-card {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  padding: 15px;
+  cursor: pointer;
+  transition: 0.3s;
   text-align: center;
+}
+
+.policy-card:hover {
+  transform: translateY(-5px);
 }
 
 .policy-img {
   width: 100%;
-  max-width: 350px;
-  border-radius: 10px;
-  border: 1px solid #ddd;
+  height: 150px;
   object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 10px;
 }
 
-.policy-info {
-  flex: 1;
+.policy-detail-card {
+  position: relative;
   display: flex;
-  flex-direction: column;
-  gap: 10px;
-  font-size: 16px;
-  color: #333;
-  line-height: 1.6;
+  justify-content: center;
+  align-items: center;
+  background: white;
+  width: 80%;
+  max-width: 900px;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+  animation: fadeIn 0.4s ease-in-out;
 }
 
-.buy-btn, .submit-btn {
-  display: block;
-  margin: 0 auto;
-  padding: 12px 30px;
-  font-size: 16px;
-  background-color: #007bff;
-  color: white;
+.close-btn {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  background: transparent;
   border: none;
-  border-radius: 6px;
+  font-size: 20px;
   cursor: pointer;
-  transition: background 0.3s;
 }
 
-.buy-btn:hover, .submit-btn:hover {
-  background-color: #0056b3;
+.policy-detail-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 30px;
+}
+
+.policy-detail-image img {
+  width: 280px;
+  height: 280px;
+  border-radius: 14px;
+  object-fit: cover;
+  border: 1px solid #ddd;
+}
+
+.policy-detail-text {
+  flex: 1;
+}
+
+.policy-description-section {
+  margin-top: 15px;
+}
+
+.buy-btn {
+  background: #007bff;
+  color: white;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.buy-btn:hover {
+  background: #0056b3;
 }
 
 .nominee-form {
-  max-width: 400px;
-  margin: 20px auto;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
+  margin-top: 15px;
 }
 
 .nominee-form input {
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 6px;
-  font-size: 15px;
+}
+
+.form-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.back-btn, .purchase-btn {
+  padding: 10px 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.back-btn {
+  background: #ccc;
+}
+
+.purchase-btn {
+  background: #28a745;
+  color: white;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+
+.success-banner {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+  padding: 10px 15px;
+  border-radius: 8px;
+  margin: 10px auto;
+  width: 80%;
+  text-align: center;
+  font-weight: 500;
+  animation: fadeInOut 2s ease-in-out;
+}
+
+@keyframes fadeInOut {
+  0% { opacity: 0; transform: translateY(-10px); }
+  20% { opacity: 1; transform: translateY(0); }
+  80% { opacity: 1; }
+  100% { opacity: 0; transform: translateY(-10px); }
 }

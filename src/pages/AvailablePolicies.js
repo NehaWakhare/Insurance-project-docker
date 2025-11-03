@@ -1,109 +1,137 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import axios from "axios";
+import React, { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import "./AvailablePolicies.css";
 
-export default function AvailablePolicies() {
+const AvailablePolicies = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [policy, setPolicy] = useState(null);
-  const [userId, setUserId] = useState(null);
   const [showNomineeForm, setShowNomineeForm] = useState(false);
   const [nominee, setNominee] = useState("");
-  const [relation, setRelation] = useState("");
+  const [nomineeRelation, setNomineeRelation] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
 
   useEffect(() => {
-    const authData = JSON.parse(localStorage.getItem("authData"));
-    if (!authData || !authData.token) {
-      alert("Please login to view policy details.");
-      navigate("/auth", {
-        state: { redirectAfterLogin: `/available-policies/${id}` },
-      });
-      return;
-    }
+    fetch("http://localhost:8089/admin/policy-plans/all")
+      .then((res) => res.json())
+      .then((data) => {
+        const selected = data.find((p) => p.id.toString() === id);
+        setPolicy(selected || null);
+      })
+      .catch((err) => console.error("Error fetching policy:", err));
+  }, [id]);
 
-    setUserId(authData.userId);
-
-    axios
-      .get(`http://localhost:8089/admin/policy-plans/${id}`)
-      .then((res) => setPolicy(res.data))
-      .catch((err) => {
-        console.error("Error fetching policy:", err);
-        alert("Unable to load policy details");
-        navigate("/health-plans");
-      });
-  }, [id, navigate]);
-
-  const handleBuyPolicy = async () => {
-    if (!nominee || !relation) {
-      alert("Please fill nominee details");
-      return;
-    }
-
-    const payload = {
-      userId: Number(userId),
-      policyId: policy.id,
-      nominee,
-      nomineeRelation: relation,
-    };
-
-    try {
-      await axios.post("http://localhost:8089/user-policy/purchase", payload);
-      alert("✅ Policy purchased successfully!");
-      navigate("/dashboard/policies");
-    } catch (err) {
-      console.error("Error buying policy:", err);
-      alert("❌ Failed to buy policy");
-    }
+  const handleClose = () => {
+    navigate("/health-plans");
   };
 
-  if (!policy) return <p className="loading-text">Loading policy details...</p>;
+  const handleBack = () => {
+    setShowNomineeForm(false);
+  };
+
+  const handleBuyNow = () => {
+    setShowNomineeForm(true);
+  };
+
+  const handlePurchase = () => {
+    const authData = JSON.parse(localStorage.getItem("authData"));
+    const userId = authData?.userId;
+
+    if (!userId) {
+      console.error("User ID not found in localStorage!");
+      return;
+    }
+
+    const purchaseData = {
+      userId,
+      policyPlanId: policy.id,
+      nominee,
+      nomineeRelation,
+    };
+
+    fetch("http://localhost:8089/user-policy/purchase", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(purchaseData),
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error("Purchase failed");
+        return res.json();
+      })
+      .then(() => {
+        setSuccessMessage("✅ Successfully purchased! Waiting for admin approval.");
+        setTimeout(() => {
+          navigate("/dashboard/mypolicies");
+        }, 1500);
+      })
+      .catch((err) => {
+        console.error("Purchase error:", err);
+        setSuccessMessage("❌ Failed to purchase policy. Try again later.");
+      });
+  };
+
+  if (!policy) return <div className="loading">Loading policy...</div>;
 
   return (
-    <div className="policy-details-container">
-      <h2 className="policy-name">{policy.policyName}</h2>
+    <div className="available-policies-container">
+      {successMessage && <div className="success-banner">{successMessage}</div>}
 
-      <div className="policy-content">
-        <div className="image-container">
-          <img
-            src={`http://localhost:8089/admin/policy-plans/view-image/${policy.id}`}
-            alt={policy.policyName}
-            className="policy-img"
-          />
-        </div>
+      <div className="policy-detail-card">
+        <button className="close-btn" onClick={handleClose}>✖</button>
 
-        <div className="policy-info">
-          <p><strong>Type:</strong> {policy.policyType}</p>
-          <p><strong>Coverage:</strong> ₹{policy.coverage}</p>
-          <p><strong>Premium:</strong> ₹{policy.premium}</p>
-          <p><strong>Duration:</strong> {policy.durationInYears} years</p>
+        <div className="policy-detail-content">
+          <div className="policy-detail-image">
+            <img
+              src={`http://localhost:8089/admin/policy-plans/view-image/${policy.id}`}
+              alt={policy.policyName}
+              onError={(e) => (e.target.style.display = "none")}
+            />
+          </div>
+
+          <div className="policy-detail-text">
+            <h2>{policy.policyName}</h2>
+            <p><strong>Type:</strong> {policy.policyType}</p>
+            <p><strong>Coverage:</strong> ₹{policy.coverage}</p>
+            <p><strong>Premium:</strong> ₹{policy.premium}</p>
+            <p><strong>Duration:</strong> {policy.duration} years</p>
+
+            {!showNomineeForm ? (
+              <div className="policy-description-section">
+                <p className="description">{policy.description}</p>
+                <button className="buy-btn" onClick={handleBuyNow}>
+                  Buy Now
+                </button>
+              </div>
+            ) : (
+              <div className="nominee-form">
+                <h3>Enter Nominee Details</h3>
+                <input
+                  type="text"
+                  placeholder="Nominee Name"
+                  value={nominee}
+                  onChange={(e) => setNominee(e.target.value)}
+                />
+                <input
+                  type="text"
+                  placeholder="Nominee Relation"
+                  value={nomineeRelation}
+                  onChange={(e) => setNomineeRelation(e.target.value)}
+                />
+                <div className="form-buttons">
+                  <button className="back-btn" onClick={handleBack}>
+                    Back
+                  </button>
+                  <button className="purchase-btn" onClick={handlePurchase}>
+                    Confirm Purchase
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       </div>
-
-      {!showNomineeForm ? (
-        <button className="buy-btn" onClick={() => setShowNomineeForm(true)}>
-          Buy Policy
-        </button>
-      ) : (
-        <div className="nominee-form">
-          <h3>Nominee Details</h3>
-          <input
-            type="text"
-            placeholder="Nominee Name"
-            value={nominee}
-            onChange={(e) => setNominee(e.target.value)}
-          />
-          <input
-            type="text"
-            placeholder="Nominee Relation"
-            value={relation}
-            onChange={(e) => setRelation(e.target.value)}
-          />
-          <button className="submit-btn" onClick={handleBuyPolicy}>
-            Confirm Purchase
-          </button>
-        </div>
-      )}
     </div>
   );
-}
+};
+
+export default AvailablePolicies;
