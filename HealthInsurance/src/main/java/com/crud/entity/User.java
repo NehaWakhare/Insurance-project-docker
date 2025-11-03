@@ -29,6 +29,7 @@ public class User {
 
     @JsonIgnore
     private boolean otpVerified;
+
     @JsonIgnore
     private LocalDateTime otpGeneratedAt;
 

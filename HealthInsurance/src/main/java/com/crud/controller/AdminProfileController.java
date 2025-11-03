@@ -8,35 +8,40 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/admin")
+@RequestMapping("/api/admin-profiles")
 public class AdminProfileController {
 
     @Autowired
-    private AdminProfileService adminService;
+    private AdminProfileService adminProfileService;
 
-    @PostMapping("/save")
-    public AdminProfile createAdmin(@RequestBody AdminProfile admin) {
-        return adminService.createAdmin(admin);
-    }
-
+    // Super Admin: Get all admin profiles
     @GetMapping("/all")
-    public List<AdminProfile> getAllAdmins() {
-        return adminService.getAllAdmins();
+    public List<AdminProfile> getAllAdminsForSuperAdmin() {
+        return adminProfileService.getAllAdminProfiles();
     }
 
-    @GetMapping("/{id}")
-    public AdminProfile getAdminById(@PathVariable Long id) {
-        return adminService.getAdminById(id);
+    // Create Admin Profile and link with Admin (by adminId)
+    @PostMapping("/save/{adminId}")
+    public AdminProfile createAdminProfile(@PathVariable Long adminId, @RequestBody AdminProfile adminProfile) {
+        return adminProfileService.createProfileWithAdminId(adminId, adminProfile);
     }
 
+    // Get Admin Profile by Admin ID
+    @GetMapping("/by-admin/{adminId}")
+    public AdminProfile getProfileByAdminId(@PathVariable Long adminId) {
+        return adminProfileService.getProfileByAdminId(adminId);
+    }
+
+    // Update Admin Profile
     @PutMapping("/{id}")
-    public AdminProfile updateAdmin(@PathVariable Long id, @RequestBody AdminProfile adminDetails) {
-        return adminService.updateAdmin(id, adminDetails);
+    public AdminProfile updateAdminProfile(@PathVariable Long id, @RequestBody AdminProfile updatedProfile) {
+        return adminProfileService.updateAdminProfile(id, updatedProfile);
     }
 
+    // Delete Admin Profile
     @DeleteMapping("/{id}")
-    public String deleteAdmin(@PathVariable Long id) {
-        adminService.deleteAdmin(id);
-        return "Admin deleted with id " + id;
+    public String deleteAdminProfile(@PathVariable Long id) {
+        adminProfileService.deleteAdminProfile(id);
+        return "Admin profile with ID " + id + " deleted successfully.";
     }
 }

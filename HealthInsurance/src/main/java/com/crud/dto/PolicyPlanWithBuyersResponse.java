@@ -9,6 +9,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PolicyPlanWithBuyersResponse {
+
+    
     private Long policyId;
     private String policyName;
     private String policyType;

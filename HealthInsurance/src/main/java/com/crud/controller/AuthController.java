@@ -35,8 +35,6 @@ public class AuthController {
         try {
             User user = authService.verifyOtp(dto.getEmail(), dto.getOtp());
 
-
-
                 String token = jwtUtil.generateToken(dto.getEmail(), user.getRole().name());
                 return ResponseEntity.ok(Map.of(
                         "message", "Login successful ✅",

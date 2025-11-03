@@ -6,11 +6,206 @@
   <component name="ChangeListManager">
     <list default="true" id="845bf92b-1c85-440b-bed8-5bacfa7b65cd" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/controller/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/controller/AdminController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/controller/AdminPolicyController.java" beforeDir="false" afterPath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/controller/AdminPolicyController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/controller/AdminProfileController.java" beforeDir="false" afterPath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/controller/AdminProfileController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/entity/AdminProfile.java" beforeDir="false" afterPath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/entity/AdminProfile.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/controller/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/controller/AuthController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/controller/UserProfileController.java" beforeDir="false" afterPath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/controller/UserProfileController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/dto/PolicyPlanWithBuyersResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/dto/PolicyPlanWithBuyersResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/entity/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/entity/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/service/AdminProfileService.java" beforeDir="false" afterPath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/service/AdminProfileService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/serviceimpl/AdminProfileServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/serviceimpl/AdminProfileServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/HealthInsurance/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/HealthInsurance/src/main/resources/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/HealthInsurance/target/classes/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/controller/AdminProfileController.class" beforeDir="false" afterPath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/controller/AdminProfileController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/CrudOperationApplication 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/confg/CustomUserDetailsService 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/confg/CustomUserDetailsService 3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/confg/JwtAuthFilter 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/confg/JwtAuthFilter 3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/confg/JwtAuthenticationEntryPoint 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/confg/JwtAuthenticationEntryPoint 3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/confg/JwtUtil 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/confg/JwtUtil 3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/confg/SecurityConfig 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/confg/SecurityConfig 3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/controller/AdminController 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/controller/AdminController 3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/controller/AdminController$LoginRequest 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/controller/AdminController$LoginRequest.class" beforeDir="false" afterPath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/controller/AdminController$LoginRequest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/controller/AdminController$VerifyOtpRequest 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/controller/AdminController$VerifyOtpRequest 3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/controller/AdminController$VerifyOtpRequest.class" beforeDir="false" afterPath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/controller/AdminController$VerifyOtpRequest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/controller/AdminController.class" beforeDir="false" afterPath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/controller/AdminController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/controller/AdminPolicyController 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/controller/AdminPolicyController 3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/controller/AdminPolicyController.class" beforeDir="false" afterPath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/controller/AdminPolicyController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/controller/AdminProfileController 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/controller/AppointmentController 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/controller/AuthController 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/controller/AuthController.class" beforeDir="false" afterPath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/controller/AuthController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/controller/ClaimController 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/controller/ClaimDocumentController 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/controller/ContactFormController 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/controller/DoctorController 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/controller/DocumentController 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/controller/FAQController 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/controller/HospitalController 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/controller/UserController 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/controller/UserPolicyController 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/controller/UserProfileController 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/controller/UserProfileController.class" beforeDir="false" afterPath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/controller/UserProfileController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/dto/AdminLoginDto 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/dto/AdminLoginDto 3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/dto/AdminResponse 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/dto/AdminResponse 3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/dto/AppointmentRequest 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/dto/AppointmentRequest 3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/dto/DoctorRequestDTO 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/dto/DoctorRequestDTO 3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/dto/LoginDto 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/dto/LoginDto 3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/dto/OtpRequest 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/dto/OtpRequest 3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/dto/PasswordLoginRequest 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/dto/PolicyPlanRequest 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/dto/PolicyPlanRequest 3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/dto/PolicyPlanResponse 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/dto/PolicyPlanResponse 3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/dto/PolicyPlanWithBuyersResponse 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/dto/PolicyPlanWithBuyersResponse 3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/dto/PurchaseRequest 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/dto/PurchaseRequest 3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/dto/UserDetailsResponse 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/dto/UserDetailsResponse 3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/dto/UserPolicyResponse 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/dto/UserPolicyResponse 3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/entity/Admin 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/entity/Admin 3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/entity/AdminProfile 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/entity/AdminProfile 3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/entity/Appointment 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/entity/Appointment 3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/entity/Claim 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/entity/Claim 3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/entity/ClaimDocument 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/entity/ClaimDocument 3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/entity/ContactForm 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/entity/ContactForm 3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/entity/Doctor 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/entity/Doctor 3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/entity/Document 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/entity/Document 3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/entity/FAQ 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/entity/FAQ 3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/entity/Hospital 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/entity/Hospital 3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/entity/PolicyPlan 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/entity/PolicyPlan 3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/entity/User 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/entity/User 3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/entity/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/entity/User.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/entity/UserPolicy 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/entity/UserPolicy 3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/entity/UserPolicy$UserPolicyBuilder 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/entity/UserPolicy$UserPolicyBuilder 3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/entity/UserProfile 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/entity/UserProfile 3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/enums/AdminStatus 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/enums/AdminStatus 3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/enums/ContactRole 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/enums/ContactRole 3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/enums/PolicyStatus 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/enums/PolicyStatus 3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/enums/Role 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/enums/Role 3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/repository/AdminProfileRepository 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/repository/AdminProfileRepository 3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/repository/AdminRepository 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/repository/AdminRepository 3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/repository/AppointmentRepository 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/repository/ClaimDocumentRepository 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/repository/ClaimDocumentRepository 3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/repository/ClaimRepository 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/repository/ClaimRepository 3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/repository/ContactFormRepository 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/repository/ContactFormRepository 3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/repository/DoctorRepository 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/repository/DoctorRepository 3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/repository/DocumentRepository 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/repository/DocumentRepository 3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/repository/FAQRepository 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/repository/FAQRepository 3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/repository/HospitalRepository 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/repository/HospitalRepository 3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/repository/PolicyPlanRepository 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/repository/PolicyPlanRepository 3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/repository/UserPolicyRepository 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/repository/UserPolicyRepository 3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/repository/UserProfileRepository 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/repository/UserProfileRepository 3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/repository/UserRepository 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/service/AdminProfileService 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/service/AdminProfileService 3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/service/AdminService 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/service/AdminService.class" beforeDir="false" afterPath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/service/AdminService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/service/AppointmentService 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/service/AppointmentService 3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/service/AuthService 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/service/AuthService 3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/service/ClaimDocumentService 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/service/ClaimDocumentService 3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/service/ClaimService 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/service/ClaimService 3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/service/ContactFormService 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/service/ContactFormService 3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/service/DoctorService 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/service/DocumentService 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/service/EmailService 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/service/FAQService 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/service/FAQService 3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/service/HospitalService 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/service/HospitalService 3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/service/PolicyPlanservice 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/service/PolicyPlanservice 3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/service/UserPolicyService 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/service/UserPolicyService 3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/service/UserProfileService 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/service/UserProfileService 3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/service/UserService 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/service/UserService 3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/serviceimpl/AdminProfileServiceImpl 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/serviceimpl/AdminServiceImpl 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/serviceimpl/AdminServiceImpl 3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/serviceimpl/AdminServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/serviceimpl/AdminServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/serviceimpl/AppointmentServiceImpl 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/serviceimpl/AppointmentServiceImpl 3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/serviceimpl/AuthServiceimpl 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/serviceimpl/AuthServiceimpl 3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/serviceimpl/ClaimDocumentImpl 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/serviceimpl/ClaimDocumentImpl 3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/serviceimpl/ClaimImpl 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/serviceimpl/ClaimImpl 3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/serviceimpl/ContactFormServiceImpl 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/serviceimpl/ContactFormServiceImpl 3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/serviceimpl/DoctorServiceImpl 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/serviceimpl/DoctorServiceImpl 3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/serviceimpl/DocumentServiceImpl 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/serviceimpl/DocumentServiceImpl 3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/serviceimpl/EmailServiceImpl 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/serviceimpl/FAQServiceImpl 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/serviceimpl/FAQServiceImpl 3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/serviceimpl/HospitalServiceImpl 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/serviceimpl/HospitalServiceImpl 3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/serviceimpl/PolicyPlanImpl 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/serviceimpl/PolicyPlanImpl 3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/serviceimpl/UserImpl 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/serviceimpl/UserImpl 3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/serviceimpl/UserPolicyImpl 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/serviceimpl/UserPolicyImpl 3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/serviceimpl/UserProfileServiceImpl 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/serviceimpl/UserProfileServiceImpl 3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/util/SuperAdminNotifier 2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/util/SuperAdminNotifier 3.class" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -85,6 +280,11 @@
           <properties class="org.springframework.data.mapping.PropertyReferenceException" package="org.springframework.data.mapping" />
           <option name="timeStamp" value="2" />
         </breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/entity/User.java</url>
+          <line>18</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>

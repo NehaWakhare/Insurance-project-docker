@@ -34,7 +34,6 @@ public class UserProfileController {
     }
 
 
-
     @PutMapping("/{id}")
     public UserProfile updateUserProfile(@PathVariable Long id, @RequestBody UserProfile updatedProfile) {
         return userProfileService.updateUserProfile(id, updatedProfile);
@@ -46,7 +45,7 @@ public class UserProfileController {
         return "User profile with ID " + id + " deleted successfully.";
     }
 
-    // Optional: Update by user ID
+   /* // Optional: Update by user ID
     @PutMapping("/by-user/{userId}")
     public UserProfile updateByUserId(@PathVariable Long userId, @RequestBody UserProfile updatedProfile) {
         UserProfile existing = userProfileService.getProfileByUserId(userId);
@@ -59,5 +58,5 @@ public class UserProfileController {
         UserProfile existing = userProfileService.getProfileByUserId(userId);
         userProfileService.deleteUserProfile(existing.getId());
         return "Deleted profile of user ID: " + userId;
-    }
+    }*/
 }

@@ -53,7 +53,6 @@ public class AdminPolicyController {
         return ResponseEntity.ok(plan);
     }
 
-
     @DeleteMapping("/{adminId}/policy-plans/{planId}")
     public ResponseEntity<String> deletePolicy(
             @PathVariable Long adminId,
@@ -97,8 +96,11 @@ public class AdminPolicyController {
 
 
   /*  @GetMapping("/policy-plans/download-image/{planId}")
-    public ResponseEntity<Resource> downloadPolicyImage(@PathVariable Long planId) throws IOException {
+      public ResponseEntity<Resource> downloadPolicyImage(@PathVariable Long planId) throws IOException {
         PolicyPlan plan = policyPlanservice.getPlanById(planId);
+
+
+
         String imagePath = plan.getImageUrl();
         if (imagePath == null || imagePath.isEmpty()) return ResponseEntity.notFound().build();
 
