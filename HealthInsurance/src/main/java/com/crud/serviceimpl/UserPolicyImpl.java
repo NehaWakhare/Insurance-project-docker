@@ -82,18 +82,23 @@ public class UserPolicyImpl implements UserPolicyService {
 
     @Override
     public UserPolicy updateNomineeDetails(Long policyId, String nominee, String nomineeRelation) {
-            UserPolicy policy = userPolicyRepository.findById(policyId)
-                    .orElseThrow(() -> new RuntimeException("Policy not found with id " + policyId));
+        UserPolicy policy = userPolicyRepository.findById(policyId)
+                .orElseThrow(() -> new RuntimeException("Policy not found with id " + policyId));
 
-            if (nominee != null && !nominee.isEmpty()) {
-                policy.setNominee(nominee);
-            }
-            if (nomineeRelation != null && !nomineeRelation.isEmpty()) {
-                policy.setNomineeRelation(nomineeRelation);
-            }
-
-            return userPolicyRepository.save(policy);
+        if (nominee != null && !nominee.isEmpty()) {
+            policy.setNominee(nominee);
         }
+        if (nomineeRelation != null && !nomineeRelation.isEmpty()) {
+            policy.setNomineeRelation(nomineeRelation);
+        }
+
+        return userPolicyRepository.save(policy);
+    }
+
+    @Override
+    public List<UserPolicy> getPendingPoliciesByAdminId(Long adminId) {
+        return userPolicyRepository.findByPolicyPlan_Admin_IdAndPolicyStatus(adminId, "PENDING");
+    }
 
 
     @Override

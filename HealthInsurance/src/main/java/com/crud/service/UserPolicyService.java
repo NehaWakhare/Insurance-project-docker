@@ -23,6 +23,12 @@ public interface UserPolicyService {
 
     UserPolicy updateNomineeDetails(Long policyId, String nominee, String nomineeRelation);
 
+    List<UserPolicy> getPendingPoliciesByAdminId(Long adminId);
+
+
+
+
+
 
 }
 

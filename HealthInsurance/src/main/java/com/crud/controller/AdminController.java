@@ -2,6 +2,7 @@ package com.crud.controller;
 
 import com.crud.confg.JwtUtil;
 import com.crud.dto.PasswordLoginRequest;
+import com.crud.dto.PendingPolicyResponse;
 import com.crud.dto.UserPolicyResponse;
 import com.crud.entity.Admin;
 import com.crud.entity.UserPolicy;
@@ -251,6 +252,19 @@ public class AdminController {
 
         return ResponseEntity.ok(response);
     }
+
+    @GetMapping("/pending-policies/{adminId}")
+    public ResponseEntity<?> getPendingPoliciesByAdminId(@PathVariable Long adminId) {
+        List<UserPolicy> pendingPolicies = userPolicyService.getPendingPoliciesByAdminId(adminId);
+        if (pendingPolicies.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("No pending user policies found for this admin.");
+        }
+
+        return ResponseEntity.ok(pendingPolicies);
+    }
+
+
 
     // Scheduled task: expire policies daily at midnight
     @Scheduled(cron = "0 0 0 * * ?")

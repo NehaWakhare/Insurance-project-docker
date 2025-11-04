@@ -22,4 +22,7 @@ public interface AdminService {
     UserPolicy rejectPolicy(Long policyId);
     UserPolicy updateNomineeDetails(Long policyId, String nominee, String nomineeRelation);
     void expireExpiredPolicies();
+
+
+
 }
