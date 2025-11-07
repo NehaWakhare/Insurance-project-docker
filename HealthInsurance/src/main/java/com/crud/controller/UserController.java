@@ -16,6 +16,7 @@ public class UserController {
     @Autowired
     private UserService service;
 
+
     @PostMapping("/save")
     public User creteUser(@RequestBody User user){
 

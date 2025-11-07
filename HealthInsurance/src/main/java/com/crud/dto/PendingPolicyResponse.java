@@ -12,6 +12,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 public class PendingPolicyResponse {
+    
     private Long userPolicyId;
     private Long userId;
     private String userName;

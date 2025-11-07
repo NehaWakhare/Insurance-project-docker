@@ -72,7 +72,7 @@ public class AdminPolicyController {
 
     @GetMapping("/{adminId}/policy-plans")
     public ResponseEntity<List<PolicyPlan>> getPoliciesByAdmin(@PathVariable Long adminId) {
-        List<PolicyPlan> plans = policyPlanservice.getPlansByAdmin(adminId);
+        List<PolicyPlan> plans = policyPlanservice.getPlansByAdmin (adminId);
         return ResponseEntity.ok(plans);
     }
 

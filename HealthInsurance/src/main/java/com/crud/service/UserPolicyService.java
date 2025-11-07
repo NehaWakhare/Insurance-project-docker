@@ -25,6 +25,10 @@ public interface UserPolicyService {
 
     List<UserPolicy> getPendingPoliciesByAdminId(Long adminId);
 
+    List<UserPolicy> getActivePoliciesByAdminId(Long adminId);
+
+
+
 
 
 

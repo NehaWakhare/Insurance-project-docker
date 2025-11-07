@@ -100,6 +100,11 @@ public class UserPolicyImpl implements UserPolicyService {
         return userPolicyRepository.findByPolicyPlan_Admin_IdAndPolicyStatus(adminId, "PENDING");
     }
 
+    @Override
+    public List<UserPolicy> getActivePoliciesByAdminId(Long adminId) {
+        return userPolicyRepository.findByPolicyPlan_Admin_IdAndPolicyStatus(adminId, "ACTIVE");
+    }
+
 
     @Override
     public void deletePolicy(Long policyId) {

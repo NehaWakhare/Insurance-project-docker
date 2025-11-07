@@ -30,8 +30,6 @@ public class AdminController {
     @Autowired
     private JavaMailSender mailSender;
 
-
-
     @Autowired
     private JwtUtil jwtUtil;
 
@@ -264,6 +262,17 @@ public class AdminController {
         return ResponseEntity.ok(pendingPolicies);
     }
 
+    @GetMapping("/active-policies/{adminId}")
+    public ResponseEntity<?> getActivePoliciesByAdminId(@PathVariable Long adminId) {
+        List<UserPolicy> activePolicies = userPolicyService.getActivePoliciesByAdminId(adminId);
+
+        if (activePolicies.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("No active policies found for this admin.");
+        }
+
+        return ResponseEntity.ok(activePolicies);
+    }
 
 
     // Scheduled task: expire policies daily at midnight

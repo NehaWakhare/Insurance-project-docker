@@ -37,7 +37,7 @@ public class CrudOperationApplication {
 				superAdmin.setPassword(passwordEncoder.encode(rawPassword));
 
 				adminRepository.save(superAdmin);
-				System.out.println("✅ SUPER_ADMIN created successfully!");
+				System.out.println(" SUPER_ADMIN created successfully!");
 			}
 		};
 	}

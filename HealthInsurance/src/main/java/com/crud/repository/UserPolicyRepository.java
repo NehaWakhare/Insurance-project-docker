@@ -22,4 +22,6 @@ public interface UserPolicyRepository extends JpaRepository<UserPolicy, Long> {
 
 
 
+
+
 }
