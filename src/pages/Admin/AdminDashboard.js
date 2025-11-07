@@ -5,7 +5,8 @@ import AdminNavbar from "./AdminNavbar";
 import AdminProfileForm from "./AdminProfile";
 import AdminAddPolicy from "./AdminAddPolicy";
 import AdminViewPolicy from "./AdminViewPolicy";
-import UsersPage from "./AdminUsers"; 
+import UsersPage from "./AdminUsers/AdminUserPolicies";
+
 import { getDashboardStats } from "../AdminAPI/AdminDashboard";
 
 export default function AdminDashboard() {
