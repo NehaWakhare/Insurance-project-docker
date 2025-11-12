@@ -9,12 +9,45 @@ export default function AdminRegistration() {
     panNumber: "",
     mobileNumber: "",
   });
-
   const [successMsg, setSuccessMsg] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
+  const [validationErrors, setValidationErrors] = useState({});
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+    setValidationErrors({ ...validationErrors, [e.target.name]: "" });
+  };
+
+  const validateForm = () => {
+    const errors = {};
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
+    const mobileRegex = /^[6-9]\d{9}$/;
+
+    if (!formData.username.trim()) {
+      errors.username = "Username is required.";
+    }
+
+    if (!formData.email.trim()) {
+      errors.email = "Email is required.";
+    } else if (!emailRegex.test(formData.email)) {
+      errors.email = "Please enter a valid email address.";
+    }
+
+    if (!formData.panNumber.trim()) {
+      errors.panNumber = "PAN number is required.";
+    } else if (!panRegex.test(formData.panNumber)) {
+      errors.panNumber = "Invalid PAN format (e.g., ABCDE1234F).";
+    }
+
+    if (!formData.mobileNumber.trim()) {
+      errors.mobileNumber = "Mobile number is required.";
+    } else if (!mobileRegex.test(formData.mobileNumber)) {
+      errors.mobileNumber = "Invalid mobile number (10 digits only).";
+    }
+
+    setValidationErrors(errors);
+    return Object.keys(errors).length === 0;
   };
 
   const handleSubmit = async (e) => {
@@ -22,6 +55,8 @@ export default function AdminRegistration() {
     setSuccessMsg("");
     setErrorMsg("");
 
+    if (!validateForm()) return;
+  
     try {
       await axios.post("http://localhost:8089/api/admin/register", formData);
       setSuccessMsg(
@@ -69,6 +104,8 @@ export default function AdminRegistration() {
           fullWidth
           margin="normal"
           required
+          error={!!validationErrors.username}
+          helperText={validationErrors.username}
         />
         <TextField
           label="Email"
@@ -79,6 +116,8 @@ export default function AdminRegistration() {
           fullWidth
           margin="normal"
           required
+          error={!!validationErrors.email}
+          helperText={validationErrors.email}
         />
         <TextField
           label="PAN Number"
@@ -88,6 +127,8 @@ export default function AdminRegistration() {
           fullWidth
           margin="normal"
           required
+          error={!!validationErrors.panNumber}
+          helperText={validationErrors.panNumber}
         />
         <TextField
           label="Mobile Number"
@@ -97,8 +138,9 @@ export default function AdminRegistration() {
           fullWidth
           margin="normal"
           required
+          error={!!validationErrors.mobileNumber}
+          helperText={validationErrors.mobileNumber}
         />
-
         <Button
           type="submit"
           variant="contained"

@@ -24,7 +24,7 @@ export default function AdminDetails() {
   useEffect(() => {
     fetchRequests();
   }, []);
-
+  
   if (loading) return <p style={styles.info}>⏳ Loading admin data...</p>;
   if (error) return <p style={{ ...styles.info, color: "red" }}>⚠️ {error}</p>;
 

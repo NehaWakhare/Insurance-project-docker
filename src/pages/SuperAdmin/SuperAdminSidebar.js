@@ -7,7 +7,7 @@ export default function SuperAdminSidebar() {
   const menuItems = [
     { name: "Dashboard", path: "/superadmin/dashboard", icon: <LayoutDashboard size={18} /> },
     { name: "Users", path: "/superadmin/dashboard/users", icon: <Users size={18} /> },
-    { name: "Doctors", path: "/superadmin/dashboard/doctors", icon: <Stethoscope size={18} /> },
+    { name: "Teleconsultation", path: "/superadmin/dashboard/teleconsultation", icon: <Stethoscope size={18} /> },
     { name: "Policies", path: "/superadmin/dashboard/policies", icon: <FileText size={18} /> },
     { name: "Claims", path: "/superadmin/dashboard/claims", icon: <FileText size={18} /> },
     { name: "Admins", path: "/superadmin/dashboard/admins", icon: <ShieldCheck size={18} /> },
