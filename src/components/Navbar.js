@@ -29,7 +29,7 @@ export default function Navbar() {
 
   // Fetch logged-in user details
   useEffect(() => {
-    const authData = localStorage.getItem('authData');
+    const authData = sessionStorage.getItem('authData');
     if (authData) {
       try {
         const parsedData = JSON.parse(authData);
@@ -46,7 +46,7 @@ export default function Navbar() {
             });
         }
       } catch (error) {
-        console.error('Invalid authData in localStorage:', error);
+        console.error('Invalid authData in sessionStorage:', error);
       }
     }
   }, []);
@@ -80,15 +80,15 @@ export default function Navbar() {
               <span className="nav-link" onClick={toggleExplore}>Explore ▼</span>
               {showExplore && (
                 <div className="dropdown-menu">
-                  <a href="/#hospitals" className="dropdown-item">Hospitals</a>
-                  <a href="/#teleconsult" className="dropdown-item">Teleconsultation</a>
-                  <a href="/#wellness" className="dropdown-item">Health & Wellness</a>
-                  <a href="/#policies" className="dropdown-item">Policies</a>
+                  <a href="/hospital-search" className="dropdown-item">Hospitals</a>
+                  <a href="/teleconsultation" className="dropdown-item">Teleconsultation</a>
+                  <a href="/wellness" className="dropdown-item">Health & Wellness</a>
+                  <a href="/health-plans" className="dropdown-item">Policies</a>
                 </div>
               )}
             </div>
 
-            <Link to="/claims" className="nav-link">Claims</Link>
+            {/* <Link to="/claims" className="nav-link">Claims</Link> */}
 
             {/* Profile Icon Dropdown */}
             <div className="profile-icon" ref={profileRef}>
@@ -115,12 +115,7 @@ export default function Navbar() {
           </>
         )}
 
-        {user?.role === 'ADMIN' && (
-          <>
-            <Link to="/admin/dashboard" className="nav-link">Admin Dashboard</Link>
-            <span className="nav-link logout" onClick={handleLogout}>Logout</span>
-          </>
-        )}
+        
 
         {!user && <Link to="/auth" className="nav-link">Login</Link>}
         <Link to="/support" className="nav-link contact">24*7 Contact</Link>

@@ -7,6 +7,7 @@ import { fetchAllAdmins, fetchPendingAdmins } from "../../api/superAdminApi";
 import SuperAdminFAQs from "./FAQs/SuperAdminFAQs";
 import SuperAdminNavbar from "./SuperAdminNavbar";
 import SuperAdminTeleconsultation from "./Teleconsultation/Teleconsultation";
+import PolicyList from "./Policies/PolicyList";
 export default function SuperAdminDashboard() {
   const [stats, setStats] = useState({
     users: 0,
@@ -172,7 +173,7 @@ export default function SuperAdminDashboard() {
             {/* Other routes */}
             <Route path="users" element={<h2>Manage Users (Coming Soon)</h2>} />
             <Route path="doctors" element={<SuperAdminTeleconsultation />} />
-
+               <Route path="policies" element={<PolicyList />} />
             <Route path="policies" element={<h2>Manage Policies (Coming Soon)</h2>} />
             <Route path="claims" element={<h2>Manage Claims (Coming Soon)</h2>} />
             <Route path="admins" element={<SuperAdminAdmins />} />

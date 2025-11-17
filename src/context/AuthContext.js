@@ -1,16 +1,14 @@
-
 import { createContext, useState } from "react";
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(() => {
-    const storedUser = localStorage.getItem("authData");
+    const storedUser = sessionStorage.getItem("authData");
     return storedUser ? JSON.parse(storedUser) : null;
   });
 
   const loginUser = (data) => {
-    
     const userData = {
       userId: data.userId,
       userName: data.userName,
@@ -19,10 +17,7 @@ export const AuthProvider = ({ children }) => {
     };
 
     
-    localStorage.setItem("authData", JSON.stringify(userData));
-
-    sessionStorage.setItem("userProfileId", data.userId);
-
+    sessionStorage.setItem("authData", JSON.stringify(userData));
 
     setUser(userData);
 
@@ -30,9 +25,8 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logoutUser = () => {
-    localStorage.removeItem("authData");
-     sessionStorage.removeItem("userProfileId");
-
+    
+    sessionStorage.removeItem("authData");
     setUser(null);
   };
 

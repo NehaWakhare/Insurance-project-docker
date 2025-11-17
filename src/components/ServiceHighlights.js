@@ -1,4 +1,6 @@
-import { Link } from 'react-router-dom';
+import { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../context/AuthContext';
 import './ServiceHighlights.css';
 
 import hospitalImg from '../assets/hospital.png';
@@ -6,37 +8,58 @@ import doctorImg from '../assets/doctor.png';
 import wellnessImg from '../assets/wellness.png';
 
 export default function ServiceHighlights() {
+
+  const { user } = useContext(AuthContext);   // ✅ this is the logged-in user
+  const navigate = useNavigate();
+
+  const handleProtectedClick = (path) => {
+    if (user && user.userId) {                // ✅ correct login condition
+      navigate(path);
+    } else {
+      alert("Please login first to view details");
+      navigate("/auth");
+    }
+  };
+
   return (
     <div className="service-highlights">
-      {/*  Hospital */}
+
       <div className="highlight-card">
         <img src={hospitalImg} alt="Hospital" />
         <h3>Network Hospitals</h3>
-        <p>
-          Locate cashless hospitals across India with ease. Fast admission & discharge guaranteed.
-        </p>
-        <Link to="/hospital-search" className="btn-small">Search Hospitals</Link>
+        <p>Find trusted hospitals and book appointments easily.</p>
+
+        <button
+          className="btn-small"
+          onClick={() => handleProtectedClick("/hospital-search")}
+        >
+          Search Hospitals
+        </button>
       </div>
 
-      {/*  Teleconsultation */}
       <div className="highlight-card">
         <img src={doctorImg} alt="Teleconsult" />
         <h3>Teleconsultation</h3>
-        <p>
-          Talk to certified doctors online. No queues. Expert care from home.
-        </p>
-        <Link to="/teleconsultation" className="btn-small">Book Now</Link>
+        <p>Consult experienced specialists for personalized care.</p>
+
+        <button
+          className="btn-small"
+          onClick={() => handleProtectedClick("/teleconsultation")}
+        >
+          Book Now
+        </button>
       </div>
 
-      {/*  Wellness */}
       <div className="highlight-card">
         <img src={wellnessImg} alt="Wellness" />
         <h3>Wellness Tools</h3>
-        <p>
-          Guided meditations, nutrition plans, health tips — coming soon!
-        </p>
-        <Link to="#" className="btn-small disabled">Coming Soon</Link>
+        <p>Guided meditations, nutrition plans, health tips — coming soon!</p>
+
+        <button className="btn-small disabled">
+          Coming Soon
+        </button>
       </div>
+
     </div>
   );
 }

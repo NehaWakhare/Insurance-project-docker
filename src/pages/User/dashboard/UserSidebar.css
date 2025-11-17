@@ -1,9 +1,11 @@
 
 .user-sidebar {
-  width: 50px;
+  width: 200px;
   height: 100vh;
   background-color: #afc6ea;
-  padding: 5px 0;
+   padding-top: 0;
+     padding-bottom: 5px;
+  
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -12,7 +14,9 @@
 
 
 .logo-section {
-  margin-bottom: 30px;
+
+  padding-left: 15px;
+  align-self: flex-start;
 }
 
 
@@ -45,7 +49,11 @@
   color: #373bb6;
   font-weight: 500;
   display: block;
-  padding: 10px 0;
+  padding: 10px 10px;       
+  white-space: normal;      
+  word-break: break-word;   
+  text-align: center;
+ 
   
 }
 

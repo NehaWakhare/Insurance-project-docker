@@ -28,7 +28,7 @@ export const verifyOtp = async (email, otp) => {
 
     if (response.data.token) {
    
-      localStorage.setItem("authData", JSON.stringify(response.data));
+      sessionStorage.setItem("authData", JSON.stringify(response.data));
     }
 
     return response.data;
@@ -40,10 +40,10 @@ export const verifyOtp = async (email, otp) => {
 
 // Logout
 export const logout = () => {
-  localStorage.removeItem('authData');
+  sessionStorage.removeItem('authData');
 };
 
 // Get current logged-in user/token
 export const getCurrentUser = () => {
-  return JSON.parse(localStorage.getItem('authData'));
+  return JSON.parse(sessionStorage.getItem('authData'));
 };

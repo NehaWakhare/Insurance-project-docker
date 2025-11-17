@@ -4,9 +4,9 @@ const API = axios.create({
   baseURL: "http://localhost:8089", 
 });
 
-// ✅ attach token from localStorage
+
 API.interceptors.request.use((config) => {
-  const authData = JSON.parse(localStorage.getItem("authData")); 
+  const authData = JSON.parse(sessionStorage.getItem("authData")); 
   const token = authData?.token;
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
@@ -22,7 +22,7 @@ export const fetchMyAppointments = async (userProfileId) => {
   if (!userProfileId) throw new Error("User Profile ID is required");
 
   try {
-    // ✅ match backend mapping
+    
     const response = await API.get(`/appointments/user/${userProfileId}`);
     return response.data;
   } catch (err) {

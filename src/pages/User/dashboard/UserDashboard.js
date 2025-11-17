@@ -6,7 +6,7 @@ import MyAppointments from "./MyAppointments";
 import MyPolicies from "./MyPolicies";
 import MyDocuments from "./MyDocuments";
 import { AuthContext } from "../../../context/AuthContext";
-import MyClaims from "./MyClaims";
+// import MyClaims from "./MyClaims";
 import { FaUserCircle } from "react-icons/fa";
 import axios from "axios";
 import "./UserDashboard.css";
@@ -27,9 +27,9 @@ export default function UserDashboard() {
     setShowProfile((prev) => !prev);
   };
 
-  // Fetch logged-in user details
+  // ✅ Fetch logged-in user details (use sessionStorage like Navbar)
   useEffect(() => {
-    const authData = localStorage.getItem("authData");
+    const authData = sessionStorage.getItem("authData");
     if (authData) {
       try {
         const parsedData = JSON.parse(authData);
@@ -46,14 +46,15 @@ export default function UserDashboard() {
             });
         }
       } catch (error) {
-        console.error("Invalid authData in localStorage:", error);
+        console.error("Invalid authData in sessionStorage:", error);
       }
     }
   }, []);
 
   return (
     <div className="user-dashboard-container">
-      <UserSidebar />
+       <div className="user-dashboard-sidebar">
+      <UserSidebar /></div>
       <div className="user-dashboard-main">
         <div className="dashboard-header">
           <h1 className="dashboard-heading">User Dashboard</h1>
@@ -81,7 +82,7 @@ export default function UserDashboard() {
             <Route path="appointments" element={<MyAppointments />} />
             <Route path="policies" element={<MyPolicies />} />
             <Route path="documents" element={<MyDocuments />} />
-            <Route path="claims" element={<MyClaims />} />
+            {/* <Route path="claims" element={<MyClaims />} /> */}
           </Routes>
         </div>
       </div>

@@ -19,7 +19,7 @@ axiosInstance.interceptors.request.use(
       !config.url.includes("/api/auth/login") && // login
       !config.url.includes("/api/auth/verify-otp") // otp verify
     ) {
-      const authData = JSON.parse(localStorage.getItem("authData"));
+      const authData = JSON.parse(sessionStorage.getItem("authData"));
       const token = authData?.token;
       if (token) {
         config.headers["Authorization"] = `Bearer ${token}`;
@@ -38,7 +38,7 @@ axiosInstance.interceptors.response.use(
   (error) => {
     if (error.response && error.response.status === 401) {
       console.warn("401 detected → clearing auth and redirecting to login");
-      localStorage.removeItem("authData");
+      sessionStorage.removeItem("authData");
       window.location.href = "/";
     }
     return Promise.reject(error);

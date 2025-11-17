@@ -9,7 +9,7 @@ export default function SuperAdminSidebar() {
     { name: "Users", path: "/superadmin/dashboard/users", icon: <Users size={18} /> },
     { name: "Teleconsultation", path: "/superadmin/dashboard/teleconsultation", icon: <Stethoscope size={18} /> },
     { name: "Policies", path: "/superadmin/dashboard/policies", icon: <FileText size={18} /> },
-    { name: "Claims", path: "/superadmin/dashboard/claims", icon: <FileText size={18} /> },
+    // { name: "Claims", path: "/superadmin/dashboard/claims", icon: <FileText size={18} /> },
     { name: "Admins", path: "/superadmin/dashboard/admins", icon: <ShieldCheck size={18} /> },
     { name: "FAQs", path: "/superadmin/dashboard/faqs", icon: <FileText size={18} /> },
   ];

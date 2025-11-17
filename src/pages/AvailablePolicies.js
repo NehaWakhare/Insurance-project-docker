@@ -34,7 +34,7 @@ const AvailablePolicies = () => {
   };
 
   const handlePurchase = () => {
-    const authData = JSON.parse(localStorage.getItem("authData"));
+    const authData = JSON.parse(sessionStorage.getItem("authData"));
     const userId = authData?.userId;
 
     if (!userId) {
@@ -75,7 +75,7 @@ const AvailablePolicies = () => {
   return (
     <div className="available-policies-container">
       {successMessage && <div className="success-banner">{successMessage}</div>}
-
+   
       <div className="policy-detail-card">
         <button className="close-btn" onClick={handleClose}>✖</button>
 
@@ -93,7 +93,7 @@ const AvailablePolicies = () => {
             <p><strong>Type:</strong> {policy.policyType}</p>
             <p><strong>Coverage:</strong> ₹{policy.coverage}</p>
             <p><strong>Premium:</strong> ₹{policy.premium}</p>
-            <p><strong>Duration:</strong> {policy.duration} years</p>
+            <p><strong>Duration(years):</strong> {policy.durationInYears}</p>
 
             {!showNomineeForm ? (
               <div className="policy-description-section">

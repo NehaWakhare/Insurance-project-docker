@@ -64,3 +64,16 @@
   color: red;
   text-align: center;
 }
+
+.read-more-toggle {
+  color: #0077cc;
+  font-weight: 500;
+  margin-left: 6px;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.read-more-toggle:hover {
+  color: #005fa3;
+  text-decoration: underline;
+}

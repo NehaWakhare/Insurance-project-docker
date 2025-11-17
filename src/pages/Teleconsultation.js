@@ -1,139 +1,211 @@
-import React, { useEffect, useState } from 'react';
-import './Teleconsultation.css';
-import axios from 'axios';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import {
+  Box,
+  Button,
+  Modal,
+  Typography,
+  IconButton,
+  TextField,
+  Alert,
+} from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
+import { useNavigate } from "react-router-dom";
 
 export default function Teleconsultation() {
   const [doctors, setDoctors] = useState([]);
-  const [filter, setFilter] = useState('');
-  const [successMsg, setSuccessMsg] = useState('');
-  const [date, setDate] = useState('');
-  const [time, setTime] = useState('');
-  const [userProfileId, setUserProfileId] = useState(null);
+  const [selectedDoctor, setSelectedDoctor] = useState(null);
+  const [openModal, setOpenModal] = useState(false);
+  const [successMsg, setSuccessMsg] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
+  const [loginMsg, setLoginMsg] = useState("");
 
-  
+  const navigate = useNavigate();
+
+  const [formData, setFormData] = useState({
+    doctorId: "",
+    userProfileId: "",
+    appointmentDate: "",
+    age: "",
+    gender: "",
+    weight: "",
+    reason: "",
+  });
+
+  // ⭐ Fetch teleconsultation doctors
   useEffect(() => {
-    axios.get("http://localhost:8089/api/doctors/all")
+    axios
+      .get("http://localhost:8089/api/doctors/self") // <-- Your teleconsult doctor API
       .then((res) => setDoctors(res.data))
-      .catch((err) => {
-        console.error("Error fetching doctors:", err);
-        setSuccessMsg("❌ Failed to load doctors. Try again later.");
-      });
-
-    const profileId = Number(sessionStorage.getItem("userProfileId"));
-    if (!profileId) {
-      const userId = sessionStorage.getItem("userId");
-      if (userId) {
-        axios.get(`http://localhost:8089/api/user-profiles/by-user/${userId}`)
-          .then((res) => {
-            if (res.data && res.data.id) {
-              sessionStorage.setItem("userProfileId", res.data.id);
-              setUserProfileId(res.data.id);
-            } else {
-              setSuccessMsg("⚠️ Please complete your profile before booking.");
-            }
-          })
-          .catch(() => {
-            setSuccessMsg("⚠️ Error fetching profile. Please complete your profile first.");
-          });
-      }
-    } else {
-      setUserProfileId(profileId);
-    }
+      .catch((err) => console.error("Error fetching doctors:", err));
   }, []);
 
-  // ✅ Booking handler
-  const handleBook = async (doctorId, doctorName) => {
-    if (!userProfileId) {
-      setSuccessMsg("⚠️ Please complete your profile before booking.");
-      setTimeout(() => setSuccessMsg(''), 4000);
+  // ⭐ Book appointment
+  const handleBook = (doctor) => {
+
+  // 1️⃣ PROFILE COMPLETION CHECK
+  const profileId = sessionStorage.getItem("userProfileId");
+
+  if (!profileId) {
+    alert("Please complete your profile before booking an appointment.");
+    return navigate("/dashboard/profile");
+  }
+
+  // 2️⃣ IF PROFILE EXISTS → allow booking
+  setSelectedDoctor(doctor);
+
+  setFormData({
+    doctorId: doctor.id,
+    userProfileId: Number(profileId),
+    appointmentDate: "",
+    age: "",
+    gender: "",
+    weight: "",
+    reason: "",
+  });
+
+  setOpenModal(true);
+};
+
+ 
+  const handleChange = (e) =>
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+
+  const handleSubmit = async () => {
+    const { doctorId, userProfileId, appointmentDate, age, gender, weight, reason } =
+      formData;
+
+    if (!doctorId || !userProfileId || !appointmentDate || !age || !gender || !weight || !reason) {
+      setErrorMsg("All fields are required.");
       return;
     }
-
-    if (!date || !time) {
-      setSuccessMsg("⚠️ Please select both date and time before booking.");
-      setTimeout(() => setSuccessMsg(''), 4000);
-      return;
-    }
-
-    const appointmentData = {
-      doctorId,
-      userProfileId,
-      appointmentDate: date,
-      appointmentTime: time
-    };
-
-    console.log("📦 Booking data being sent:", appointmentData);
 
     try {
-      await axios.post("http://localhost:8089/appointments/book", appointmentData);
-      setSuccessMsg(`✅ Appointment booked with ${doctorName} on ${date} at ${time}`);
-      setDate('');
-      setTime('');
-    } catch (err) {
-      console.error("❌ Booking failed:", err.response?.data || err.message);
-      const status = err.response?.status;
-      if (status === 409) {
-        setSuccessMsg("❗ This time slot is already booked.");
-      } else if (status === 404) {
-        setSuccessMsg("❗ Doctor or user not found.");
-      } else if (status === 400) {
-        setSuccessMsg("❗ Invalid input. Check your form.");
-      } else {
-        setSuccessMsg("❌ Server error. Try again later.");
-      }
-    }
+      await axios.post("http://localhost:8089/appointments/book", formData);
 
-    setTimeout(() => setSuccessMsg(''), 4000);
+      setSuccessMsg("Teleconsultation booked successfully!");
+      setErrorMsg("");
+
+      setTimeout(() => {
+        setOpenModal(false);
+        navigate("/dashboard/appointments");
+      }, 1500);
+    } catch (error) {
+      console.error("Booking error:", error);
+      setErrorMsg("Failed to book teleconsultation.");
+    }
   };
 
-  const filteredDoctors = doctors.filter((doc) =>
-    doc.specialization.toLowerCase().includes(filter.toLowerCase())
-  );
-
   return (
-  <div className="teleconsultation-container">
-    <h2>Teleconsultation</h2>
+    <Box sx={{ p: 3 }}>
+      <Typography variant="h5" sx={{ fontWeight: "bold", color: "#1e40af", mb: 2 }}>
+        🩺 Teleconsultation Doctors
+      </Typography>
 
-    {successMsg && <div className="alert-box">{successMsg}</div>}
+      {/* Doctor Cards */}
+      <Box
+        sx={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
+          gap: 2,
+        }}
+      >
+        {doctors.length > 0 ? (
+          doctors.map((doc) => (
+            <Box
+              key={doc.id}
+              sx={{
+                background: "#fff",
+                p: 2,
+                borderRadius: 2,
+                boxShadow: "0 4px 10px rgba(0,0,0,0.1)",
+                border: "1px solid #e5e7eb",
+                transition: "0.2s",
+                "&:hover": { transform: "scale(1.02)" },
+              }}
+            >
+              <Typography variant="h6" color="primary">
+                {doc.doctorName}
+              </Typography>
+              <Typography>{doc.specialization}</Typography>
+              <Typography color="text.secondary">
+                ⏰ {doc.availableTime || "N/A"}
+              </Typography>
 
-    <div className="teleconsultation-grid">
-      {/* Left Column */}
-      <div className="left-panel">
-        <input
-          type="text"
-          placeholder="Search by specialization"
-          value={filter}
-          onChange={(e) => setFilter(e.target.value)}
-          className="search-input"
-        />
-
-        <div className="datetime-picker">
-          <label>Select Date:</label>
-          <input type="date" value={date} onChange={(e) => setDate(e.target.value)} />
-
-          <label>Select Time:</label>
-          <input type="time" value={time} onChange={(e) => setTime(e.target.value)} />
-        </div>
-      </div>
-
-      {/* Right Column */}
-      <div className="right-panel doctor-list">
-        {filteredDoctors.length === 0 ? (
-          <p>No doctors available.</p>
-        ) : (
-          filteredDoctors.map((doc) => (
-            <div className="doctor-card" key={doc.id}>
-              <h3>{doc.doctorName}</h3>
-              <p><strong>Specialization:</strong> {doc.specialization}</p>
-              <p><strong>Status:</strong> {doc.status}</p>
-              <p><strong>Location:</strong> {doc.location}</p>
-              <button onClick={() => handleBook(doc.id, doc.doctorName)}>Book Now</button>
-            </div>
+              <Button
+                variant="contained"
+                sx={{ mt: 1 }}
+                onClick={() => handleBook(doc)}
+              >
+                Book Teleconsultation
+              </Button>
+            </Box>
           ))
+        ) : (
+          <Typography>No teleconsultation doctors found.</Typography>
         )}
-      </div>
-    </div>
-  </div>
-);
+      </Box>
 
+      {/* Booking Modal */}
+      <Modal
+        open={openModal}
+        onClose={() => setOpenModal(false)}
+        BackdropProps={{
+          sx: { backdropFilter: "blur(5px)" }, // ⭐ blur background
+        }}
+      >
+        <Box
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            bgcolor: "#fff",
+            width: 400,
+            p: 3,
+            borderRadius: 2,
+            boxShadow: 5,
+          }}
+        >
+          <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+            <Typography variant="h6">
+              {loginMsg
+                ? "⚠️ Login Required"
+                : `📞 Teleconsultation with ${selectedDoctor?.doctorName}`}
+            </Typography>
+
+            <IconButton onClick={() => setOpenModal(false)}>
+              <CloseIcon />
+            </IconButton>
+          </Box>
+
+          {loginMsg && <Alert severity="warning">{loginMsg}</Alert>}
+          {errorMsg && <Alert severity="error">{errorMsg}</Alert>}
+          {successMsg && <Alert severity="success">{successMsg}</Alert>}
+
+          {!loginMsg && (
+            <>
+              <TextField
+                label="Appointment Date"
+                name="appointmentDate"
+                type="date"
+                fullWidth
+                sx={{ mt: 2 }}
+                InputLabelProps={{ shrink: true }}
+                onChange={handleChange}
+              />
+              <TextField label="Age" name="age" fullWidth sx={{ mt: 2 }} onChange={handleChange} />
+              <TextField label="Gender" name="gender" fullWidth sx={{ mt: 2 }} onChange={handleChange} />
+              <TextField label="Weight" name="weight" fullWidth sx={{ mt: 2 }} onChange={handleChange} />
+              <TextField label="Reason" name="reason" fullWidth sx={{ mt: 2 }} onChange={handleChange} />
+
+              <Button variant="contained" fullWidth sx={{ mt: 2 }} onClick={handleSubmit}>
+                Confirm Booking
+              </Button>
+            </>
+          )}
+        </Box>
+      </Modal>
+    </Box>
+  );
 }

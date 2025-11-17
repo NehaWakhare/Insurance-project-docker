@@ -39,7 +39,7 @@ export default function ProfileInfo() {
   const bloodGroupOptions = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
 
   useEffect(() => {
-    const authData = JSON.parse(localStorage.getItem('authData') || '{}');
+    const authData = JSON.parse(sessionStorage.getItem('authData') || '{}');
     if (!authData.userId || !authData.token) {
       alert('Session expired. Please login again.');
       return;
@@ -111,7 +111,7 @@ export default function ProfileInfo() {
     e.preventDefault();
     if (!validateForm()) return;
 
-    const authData = JSON.parse(localStorage.getItem('authData') || '{}');
+    const authData = JSON.parse(sessionStorage.getItem('authData') || '{}');
     if (!userId || !authData.token) {
       alert('Session expired. Please login again.');
       return;
@@ -121,10 +121,21 @@ export default function ProfileInfo() {
       if (formData.id) {
         await updateUserProfileApi(formData.id, formData, authData.token);
         alert('Profile updated successfully!');
-      } else {
-        await saveUserProfileApi(userId, formData, authData.token);
-        alert('Profile created successfully!');
-      }
+        } else {
+  const created = await saveUserProfileApi(userId, formData, authData.token);
+
+  // ⭐ Save profileId in sessionStorage
+  if (created?.id) {
+    sessionStorage.setItem("userProfileId", created.id);
+  }
+
+  alert('Profile created successfully!');
+}
+
+      // } else {
+      //   await saveUserProfileApi(userId, formData, authData.token);
+      //   alert('Profile created successfully!');
+      // }
       setIsEditing(false);
     } catch (err) {
       console.error('Error saving profile:', err);
@@ -169,7 +180,6 @@ export default function ProfileInfo() {
           {Object.entries(formData).map(([key, value]) => {
             if (key === 'id' || key === 'user') return null;
 
-            // Insert checkbox after correspondenceAddress
             if (key === 'correspondenceAddress') {
               return (
                 <div key={key}>
@@ -221,7 +231,7 @@ export default function ProfileInfo() {
               );
             }
 
-            // Other fields remain unchanged
+            
             return (
               <div className="form-group" key={key}>
                 <label>{formatLabel(key)}</label>

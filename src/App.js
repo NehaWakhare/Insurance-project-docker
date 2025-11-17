@@ -7,7 +7,7 @@ import Support from "./pages/Support";
 import AvailablePolicies from "./pages/AvailablePolicies";
 import HospitalSearch from "./pages/HospitalSearch";
 import Teleconsultation from "./pages/Teleconsultation";
-import Claims from "./pages/Claims";
+// import Claims from "./pages/Claims";
 import UserDashboard from "./pages/User/dashboard/UserDashboard";
 import { AuthProvider } from "./context/AuthContext";
 import HealthPlans from "./components/HealthPlans";
@@ -55,7 +55,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/auth" element={<AuthPage />} />
         <Route path="/support" element={<Support />} />
-        <Route path="/claims" element={<Claims />} />
+        {/* <Route path="/claims" element={<Claims />} /> */}
         <Route path="/hospital-search" element={<HospitalSearch />} />
         <Route path="/teleconsultation" element={<Teleconsultation />} />
         <Route path="/health-plans" element={<HealthPlans />} />

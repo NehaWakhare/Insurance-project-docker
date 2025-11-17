@@ -17,7 +17,7 @@ export default function UserSidebar() {
         <li><Link to="/dashboard/appointments">My Appointments</Link></li>
         <li><Link to="/dashboard/policies">My Policies</Link></li>
         <li><Link to="/dashboard/documents">My Documents</Link></li>
-        <li><Link to="/dashboard/claims">My Claims</Link></li>
+        {/* <li><Link to="/dashboard/claims">My Claims</Link></li> */}
       </ul>
     </div>
   );

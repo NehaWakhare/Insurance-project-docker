@@ -3,7 +3,8 @@ import "./Faqs.css";
 
 export default function FAQs() {
   const [faqs, setFaqs] = useState([]);
-  const [openIndex, setOpenIndex] = useState(null); 
+  const [openIndex, setOpenIndex] = useState(null);
+  const [expandedAnswers, setExpandedAnswers] = useState({}); 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -24,7 +25,14 @@ export default function FAQs() {
   }, []);
 
   const toggleFAQ = (index) => {
-    setOpenIndex(openIndex === index ? null : index); 
+    setOpenIndex(openIndex === index ? null : index);
+  };
+
+  const toggleReadMore = (index) => {
+    setExpandedAnswers((prev) => ({
+      ...prev,
+      [index]: !prev[index],
+    }));
   };
 
   if (loading) return <div className="faq-container">Loading FAQs...</div>;
@@ -33,26 +41,40 @@ export default function FAQs() {
   return (
     <div className="faq-container">
       <h2 className="faq-heading">Frequently Asked Questions</h2>
-      {faqs.map((faq, index) => (
-        <div key={faq.id} className="faq-card">
-          <div
-            className="faq-question"
-            onClick={() => toggleFAQ(index)}
-          >
-            <span className="faq-number">{index + 1}.</span>{" "}
-            {faq.question}
-            <span className="faq-icon">{openIndex === index ? "−" : "+"}</span>
-          </div>
-          {openIndex === index && (
-            <div
-  className={`faq-answer ${openIndex === index ? "open" : ""}`}
->
-  {faq.answer}
-</div>
+      {faqs.map((faq, index) => {
+        const isOpen = openIndex === index;
+        const isExpanded = expandedAnswers[index];
+        const answerTooLong = faq.answer.length > 150; 
+        const displayAnswer =
+          answerTooLong && !isExpanded
+            ? faq.answer.slice(0, 150) + "..."
+            : faq.answer;
 
-          )}
-        </div>
-      ))}
+        return (
+          <div key={faq.id} className="faq-card">
+            <div className="faq-question" onClick={() => toggleFAQ(index)}>
+              <span className="faq-number">{index + 1}.</span>{" "}
+              {faq.question}
+              <span className="faq-icon">{isOpen ? "−" : "+"}</span>
+            </div>
+
+            {isOpen && (
+              <div className={`faq-answer ${isOpen ? "open" : ""}`}>
+                {displayAnswer}
+                {answerTooLong && (
+                  <span
+                    className="read-more-toggle"
+                    onClick={() => toggleReadMore(index)}
+                    style={{ color: "#007bff", cursor: "pointer", marginLeft: "5px" }}
+                  >
+                    {isExpanded ? "Read less" : "Read more"}
+                  </span>
+                )}
+              </div>
+            )}
+          </div>
+        );
+      })}
     </div>
   );
 }

@@ -6,12 +6,12 @@ export default function MyDocuments() {
   const [documents, setDocuments] = useState([]);
   const [file, setFile] = useState(null);
   const [documentName, setDocumentName] = useState("");
-  const userId = JSON.parse(localStorage.getItem("authData"))?.userId;
+  const userId = JSON.parse(sessionStorage.getItem("authData"))?.userId;
 
   useEffect(() => {
     const fetchDocuments = async () => {
       try {
-        const token = JSON.parse(localStorage.getItem("authData"))?.token;
+        const token = JSON.parse(sessionStorage.getItem("authData"))?.token;
         const res = await axios.get("http://localhost:8089/api/documents/{documentId}", {
           headers: { Authorization: `Bearer ${token}` },
         });

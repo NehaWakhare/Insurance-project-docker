@@ -17,7 +17,7 @@ export default function HealthPlans() {
   }, []);
 
   const handleViewPlan = (planId) => {
-    const authData = JSON.parse(localStorage.getItem("authData") || "null");
+    const authData = JSON.parse(sessionStorage.getItem("authData") || "null");
 
     if (!authData?.userId) {
       alert("Please login to view policies.");

@@ -9,7 +9,7 @@ export default function MyPolicies() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const storedUser = JSON.parse(localStorage.getItem('authData'));
+      const storedUser = JSON.parse(sessionStorage.getItem('authData'));
       if (!storedUser) {
         alert('Please login to view your policies.');
         setLoading(false);

@@ -1,8 +1,7 @@
 // src/api/superAdminApi.js
 
-const API_BASE_URL = "http://localhost:8089/api"; // Base URL for backend
+const API_BASE_URL = "http://localhost:8089/api";
 
-// ---------------- HELPER ----------------
 export function getAuthHeaders() {
   const token = localStorage.getItem("token");
   return token
@@ -10,7 +9,7 @@ export function getAuthHeaders() {
     : { "Content-Type": "application/json" };
 }
 
-// ---------------- SUPER ADMIN AUTH ----------------
+
 
 // Super Admin login
 export async function superAdminLogin(email, password) {
@@ -24,10 +23,10 @@ export async function superAdminLogin(email, password) {
     throw new Error("Invalid super admin credentials");
   }
 
-  return response.json(); // should contain token, role, etc.
+  return response.json(); 
 }
 
-// ---------------- ADMIN MANAGEMENT ----------------
+
 
 // Get all admins
 export async function fetchAllAdmins() {
