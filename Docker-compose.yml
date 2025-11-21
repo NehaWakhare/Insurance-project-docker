@@ -5,7 +5,7 @@ services:
     build: ./HealthInsurance
     image: neha676/insurance-backend:latest
     ports:
-      - "8089:8089"
+      - "8090:8089"
     environment:
       SERVER_PORT: 8089
       SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/insurance_db
@@ -18,7 +18,7 @@ services:
     build: .
     image: neha676/insurance-frontend:latest
     ports:
-      - "2000:80"
+      - "2001:80"
     depends_on:
       - backend
 
